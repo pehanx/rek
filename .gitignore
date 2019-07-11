@@ -1,0 +1,30 @@
+# Application
+web/app/plugins/*
+!web/app/plugins/.gitkeep
+!web/app/plugins/fix_paged_page.php
+!web/app/plugins/remove_wptrash.php
+!web/app/plugins/advanced-custom-fields-pro
+!web/app/plugins/polylang-theme-strings/mw-polylang-theme-strings.php
+web/app/mu-plugins/*/
+web/app/upgrade
+web/app/uploads/*
+!web/app/uploads/.gitkeep
+
+# WordPress
+web/wp
+
+# Dotenv
+.env
+.env.*
+!.env.example
+
+# Composer
+/vendor
+
+# WP-CLI
+wp-cli.local.yml
+
+# Custom
+/.idea
+deploy.sh
+web/deploy.php
