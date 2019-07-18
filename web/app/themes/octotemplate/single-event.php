@@ -51,7 +51,7 @@ get_header();
                     <?php if ($event_date || $duration): ?>
                         <div>
                             <div class="eventpage__titlehead">
-                                <?= pll__('Дата | время | Date(s)'); ?>
+                                <?= pll__('Дата | время'); ?>
                             </div>
                             <?php if ($event_date): ?>
                                 <div class="eventpage__titlehead-light">
