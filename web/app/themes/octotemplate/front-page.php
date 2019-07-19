@@ -55,8 +55,22 @@ get_header();
                                     <?php endforeach; ?>
                                 </div>
                             <?php endif; ?>
+                    <!-- EMAIL рассылка -->
+                        <div class="aboutclub__item">
+                            <div class="contact__wrapp">
+                                <form action="/mail.php" method="post" class="regs mailing__form" >
+                                    <span class="text" style="margin-right: 40px; font-size: 14px;)">Подпишитесь на нашу рассылку и получайте приглашение на все мероприятия,<br> проводимые Российским Экспортным Клубом:</span>
+                                    <label class="placeholder">
+                                        <input class="input textup input-email" type="text" name="Почта">
+                                        <span>E-mail</span>
+                                        <p class="info">Укажите вашу электронную почту</p>
+                                    </label>
+                                    <input type="hidden" value="participation" name="type">
+                                    <button class="submit">Подписаться</button>
+                                </form>
+                            </div>
+                        </div>
                         </section>
-
                     <?php elseif ($block['acf_fc_layout'] === 'news' && !$block['hide']): ?>
                         <section class="news">
                             <div class="news__bg"></div>

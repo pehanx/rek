@@ -6158,7 +6158,7 @@ body {
 .aboutclub {
   width: 1170px;
   margin: 0px auto;
-  padding: 0px 17px 90px 17px;
+  padding: 0px 17px 30px 17px;
 }
 
 .aboutclub__title {
@@ -8574,7 +8574,7 @@ body {
   -webkit-box-align: start;
       -ms-flex-align: start;
           align-items: flex-start;
-  margin-bottom: 150px;
+  margin-bottom: 10px;
 }
 
 .contact__wrapp a {
