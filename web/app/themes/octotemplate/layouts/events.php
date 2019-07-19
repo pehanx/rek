@@ -17,6 +17,10 @@ $wp_query = new WP_Query([
     'posts_per_page' => EVENTS_PER_PAGE,
     'paged' => $paged,
 ]);
+$query1 = new WP_Query([
+    'post_type' => 'event',
+    'posts_per_page' => -1,
+]);
 $counter = 0;
 ?>
     <section class="news__titleblock">
@@ -24,6 +28,24 @@ $counter = 0;
     <h1 class="news__titletitle title">
         <?= get_the_title(); ?>
     </h1>
+    <div class="btn_calendar">
+        <a href="" class="calendaropen">Календарь</a>
+    </div>
+    <?php 
+    $events_cal = '['; 
+       if($query1->have_posts()){
+           while($query1->have_posts()){
+               $query1->the_post();
+               $events_cal .= '{ "date": "'.get_field('start_date').' 00:00:00", "title": "'.get_the_title().'", "description": "" , "url": "'.get_permalink().'"
+                   },';
+           }
+      }
+    $events_cal .= ']';
+    ?>
+    <div class="calendar_bg">
+        <div id="eventCalendar" class="Calendar">
+        </div>
+    </div>
     <?php if ( have_posts() ) : ?>
         <div class="news__titlecontainer">
         <?php while ( have_posts()) :
@@ -111,7 +133,12 @@ $counter = 0;
         pagination($wp_query->max_num_pages, 3); ?>
     <?php endif; ?>
 </section>
-
+<script type="text/javascript">
+       var data_cal = <?php echo $events_cal; ?>
+   </script>
+   <script src="<?= template(); ?>static/js/be.js"></script>
+ 
+    
 
 <?php
 wp_reset_query();

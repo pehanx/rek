@@ -7299,7 +7299,7 @@ body {
 
 .news__titletitle {
   color: #000;
-  margin-bottom: 150px;
+  margin-bottom: 30px;
   text-align: center;
 }
 
@@ -10666,7 +10666,7 @@ input::-ms-reveal {
     padding-bottom: 60px;
   }
   .news__titletitle {
-    margin-bottom: 60px;
+    margin-bottom: 10px;
   }
   .usefulpage__title {
     font-size: 32px;
@@ -13058,4 +13058,9 @@ button.swiper-pagination-bullet {
     font-size: 10px;
     line-height: 18px;
   }
+}
+
+.btn_calendar{
+  text-align: center;
+  margin-bottom: 110px;
 }

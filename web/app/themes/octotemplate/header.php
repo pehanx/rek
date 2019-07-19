@@ -21,6 +21,8 @@
 
     <!--[if (gt IE 9)|!(IE)]><!-->
     <link href="<?= template(); ?>static/css/main.css" rel="stylesheet" type="text/css">
+    <link href="<?= template(); ?>static/css/eventCalendar_theme_responsive.css" rel="stylesheet" type="text/css">
+    <link href="<?= template(); ?>static/css/eventCalendar.css" rel="stylesheet" type="text/css">
     <!--<![endif]-->
 
     <meta property="og:title" content="" />
