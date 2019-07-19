@@ -116,16 +116,16 @@
 						</label>
 					<?php endif; ?>
 					
-					<label class="placeholder">										
-					<select name="Тип участника" class="input textup select">
-					   <option>Выберите тип участия в клубе</option>
-					   <option value="Экспортёр">Экспортёр</option>
-					   <option value="Партнёр">Партнёр</option>
-					   <option value="Спонсор">Спонсор</option>
-					   <option value="Инвестор">Инвестор</option>					   
-					</select>
-					<p class="info"><?= get_field('domain_description'); ?></p>
-					</label>
+					<label class="placeholder">
+                    <select name="Тип участника" id="typeParty" class="input textup select">
+                       <option value="">Выберите тип участия в клубе</option>
+                       <option value="Экспортёр – получает ценные знания и информацию по осуществлению экспортной деятельности">Экспортёр</option>
+                       <option value="Партнер - совместная организация мероприятий, общение с экспортерами">Партнёр</option>
+                       <option value="Спикер - получает аудиторию, популярность">Спикер</option>
+                       <option value="Инвестор – получает потенциальных клиентов среди экспортеров, консультационную поддержку экспертов">Инвестор</option>                    
+                    </select>
+                    <p class="info" id="infoTypeParty"></p>
+                </label>  
 					<input type="hidden" value="participation" name="type">
 					<?= get_field('type_member'); ?>
 

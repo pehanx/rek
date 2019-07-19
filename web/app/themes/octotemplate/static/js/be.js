@@ -16,5 +16,7 @@ $(document).ready(function() {
 		});
 	});
 	
-
+	$( "#typeParty" ).change(function() {
+		 $( "#infoTypeParty" ).text($(this).children("option:selected").val());
+	});
 });
