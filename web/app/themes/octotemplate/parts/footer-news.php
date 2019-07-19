@@ -22,7 +22,7 @@ if ($prev_post):
                     <?= pll__('Следующая новость'); ?>
                 </a>
                 <div class="next__newsdata">
-                    <?= get_the_date('', $prev_post->ID); ?>
+                     <?= get_field('event_date', $prev_post->ID); ?>
                 </div>
                 <a href="<?= $prev_post_link; ?>" class="next__newstitle link-hover-down">
                     <span class="underline-hover-link">

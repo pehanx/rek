@@ -33,7 +33,18 @@ $counter = 0;
                 ?>
                 <div>
                     <a href="<?= get_permalink(); ?>" class="news__item link-hover-down">
-                        <div class="news__img">
+                       
+                        <div class="news__img 
+                                <?php if(get_field('end_date')):?>
+                                    <?php if(get_field('end_date') < date_i18n('Y-m-d')):?>
+                                        <?php echo 'filter_gray'; ?>
+                                    <?php endif;?>
+                                <?php else:?>
+                                     <?php if(get_field('start_date') < date_i18n('Y-m-d')):?>
+                                        <?php echo 'filter_gray'; ?>
+                                    <?php endif;?>
+                                <?php endif;?>">
+
                             <?php
                             $image = get_post_image(get_queried_object_id());
                             if ($image): ?>
@@ -42,7 +53,7 @@ $counter = 0;
                             <div class="news__img__bg"></div>
                         </div>
                         <div class="news__date">
-                            <?= get_the_date('j M Y'); ?>
+                             <?=get_field('event_date'); ?>
                         </div>
                         <div class="news__title title">
                                             <span class="underline-hover-link">
@@ -61,7 +72,16 @@ $counter = 0;
                     <div class="news__container">
                         <div>
                             <a href="<?= get_permalink(); ?>" class="news__item link-hover-down">
-                                <div class="news__img">
+                                <div class="news__img 
+                                <?php if(get_field('end_date')):?>
+                                    <?php if(get_field('end_date') < date_i18n('Y-m-d')):?>
+                                        <?php echo 'filter_gray'; ?>
+                                    <?php endif;?>
+                                <?php else:?>
+                                     <?php if(get_field('start_date') < date_i18n('Y-m-d')):?>
+                                        <?php echo 'filter_gray'; ?>
+                                    <?php endif;?>
+                                <?php endif;?>">
                                     <?php
                                     $image = get_post_image(get_queried_object_id());
                                     if ($image): ?>
@@ -70,7 +90,7 @@ $counter = 0;
                                     <div class="news__img__bg"></div>
                                 </div>
                                 <div class="news__date">
-                                    <?= get_the_date('j M Y'); ?>
+                                     <?=get_field('event_date'); ?>
                                 </div>
                                 <div class="news__title title">
                                                 <span class="underline-hover-link">
@@ -84,7 +104,16 @@ $counter = 0;
                 the_post(); ?>
                 <div>
                     <a href="<?= get_permalink(); ?>" class="news__item link-hover-down">
-                        <div class="news__img">
+                        <div class="news__img 
+                                <?php if(get_field('end_date')):?>
+                                    <?php if(get_field('end_date') < date_i18n('Y-m-d')):?>
+                                        <?php echo 'filter_gray'; ?>
+                                    <?php endif;?>
+                                <?php else:?>
+                                     <?php if(get_field('start_date') < date_i18n('Y-m-d')):?>
+                                        <?php echo 'filter_gray'; ?>
+                                    <?php endif;?>
+                               <?php endif;?>">
                             <?php
                             $image = get_post_image(get_queried_object_id());
                             if ($image): ?>
@@ -93,7 +122,7 @@ $counter = 0;
                             <div class="news__img__bg"></div>
                         </div>
                         <div class="news__date">
-                            <?= get_the_date('j M Y'); ?>
+                             <?=get_field('event_date'); ?>
                         </div>
                         <div class="news__title title">
                                 <span class="underline-hover-link">
