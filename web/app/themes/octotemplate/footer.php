@@ -14,6 +14,8 @@ get_template_part('/parts/footer', 'popups');
 <!-- <script src="	" type="text/javascript"></script> -->
 <script src="<?= template(); ?>static/js/main.js"></script>
 <script src="<?= template(); ?>static/js/be.js"></script>
+<script src="<?= template(); ?>static/js/moment.js"></script>
+<script src="<?= template(); ?>static/js/jquery.eventCalendar.js"></script>
 
 <?php wp_footer(); ?>
 
