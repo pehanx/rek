@@ -16,6 +16,9 @@ $wp_query = new WP_Query([
     'post_type' => 'event',
     'posts_per_page' => EVENTS_PER_PAGE,
     'paged' => $paged,
+    'meta_key'  => 'start_date',
+    'orderby'   => 'meta_value_num',
+    'order'     => 'DESC'
 ]);
 $counter = 0;
 ?>
