@@ -8642,7 +8642,7 @@ body {
   font-family: Open Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: 18px;
+  font-size: calc(12px + 0.5vw);
   line-height: 32px;
   color: #000000;
   border: 1px solid #F9F9F9;

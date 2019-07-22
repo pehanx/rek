@@ -12,7 +12,7 @@ get_header();
 	<?php while ( have_posts() ) : the_post(); ?>
         <section class="material__title">
             <div class="material__bg"></div>
-           <?php $image = get_post_image(get_queried_object_id()); ?>
+            <?php $image = get_post_image(get_queried_object_id()); ?>
             <?php $url_img = $image['url'] ?>
             <div class="material__img" style="background-image: url('<?=$url_img?>')">
             </div>
