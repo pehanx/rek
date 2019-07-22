@@ -403,6 +403,63 @@ $(function(){
 			});
 		}
 	});
+
+	$('.mailing__form').submit(function(e){
+		e.preventDefault();
+		var form = $(this);
+		$(this).find('.input').removeClass('error-input');
+		$(this).find('.input').removeClass('succes-input');
+		$(this).find('.info').removeClass('info-error');
+		$(this).find('.info').removeClass('info-succes');
+		var error = 0;
+		var regemail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+	    if(regemail.test($(this).find('.input-email').val())){
+	    	$(this).find('.input-email').addClass('succes-input');
+	    	$(this).find('.input-email').parent().find('.info').addClass('info-succes');
+	    }else{
+	    	$(this).find('.input-email').addClass('error-input');
+	    	$(this).find('.input-email').parent().find('.info').addClass('info-error');
+	    	error++;
+	    }
+		if(error == 0){
+			var data = $(this).serialize();
+			var action = $(this).attr('action');
+			console.log(action);
+			console.log(data);
+			$.ajax({
+				type: "POST",
+				url: action,
+				data: data,
+				success: function (response) {
+					form.find('.input').val('');
+					form.find('.input').removeClass('error-input');
+					form.find('.input').removeClass('succes-input');
+					form.find('.info').removeClass('info-error');
+					form.find('.info').removeClass('info-succes');
+					form.find('.placeholder').removeClass('placeholder-active');
+					$('.succes').removeClass('succes-ok');
+					succesSendInputforData();
+
+					$('.mailup').removeClass('popupopacity');
+					$('.mailingbg').removeClass('popupbgopacity');
+					$.cookie('HideModal', true, { expires: 30, path: '/' });
+					setTimeout(function(){
+						$('.mailup').removeClass('popupblock');
+						$('.mailingbg').removeClass('popupblock');
+						$('body, html').removeClass('noscroll');
+						$('body').width('auto');
+					},500);
+					
+				},
+				error: function (response) {
+					
+				},
+			});
+		}
+	});
+
+
 	$('.search-open').on('click',function(e){
 		e.preventDefault();
 		$('.searchforheader').toggleClass('searchopen');
