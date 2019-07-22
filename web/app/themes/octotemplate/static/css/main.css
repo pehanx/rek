@@ -6158,7 +6158,7 @@ body {
 .aboutclub {
   width: 1170px;
   margin: 0px auto;
-  padding: 0px 17px 30px 17px;
+  padding: 0px 17px 90px 17px;
 }
 
 .aboutclub__title {
@@ -8690,7 +8690,6 @@ select.input.textup.select {
   border-radius: 20px;
   background-color: #fff;
   border: 2px solid #F4F4F4;
-  min-height: 500px;
 }
 
 .contact__block a {
@@ -12964,7 +12963,7 @@ button.swiper-pagination-bullet {
   -ms-perspective: 1200px;
 }
 
-.popup, .popupjoinform {
+.popup, .popupjoinform, .mailup {
   width: 570px;
   z-index: 35;
   opacity: 0;
@@ -12974,7 +12973,7 @@ button.swiper-pagination-bullet {
   transition: 0.5s;
 }
 
-.popup .contact__wrapp, .popupjoinform .contact__wrapp {
+.popup .contact__wrapp, .popupjoinform .contact__wrapp, .mailup .contact__wrapp {
   width: 100%;
 }
 
@@ -12983,7 +12982,7 @@ button.swiper-pagination-bullet {
   text-align: center;
 }
 
-.popupbg, .popupjoin {
+.popupbg, .popupjoin, .mailingbg {
   position: fixed;
   top: 0px;
   left: 0px;
@@ -13016,7 +13015,7 @@ button.swiper-pagination-bullet {
 }
 
 @media only screen and (max-width: 620px) {
-  .popup, .popupjoinform {
+  .popup, .popupjoinform, .mailup {
     width: calc(100% - 36px);
   }
   .popup .contact__blocktitle, .popupjoinform .contact__blocktitle {
@@ -13054,4 +13053,19 @@ button.swiper-pagination-bullet {
 .btn_calendar{
   text-align: center;
   margin-bottom: 110px;
+}
+
+.descript-mailing{
+  display: flex;
+}
+
+.descript-mailing span:first-child {
+  margin-right: 40px; 
+  font-size: 14px;
+}
+
+.close-modal {
+  float: left;
+  font-size: 20px;
+  cursor: pointer;
 }

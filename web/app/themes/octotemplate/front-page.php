@@ -7,7 +7,6 @@
 
 get_header();
 ?>
-
     <?php if ( have_posts() ) : ?>
         <?php while ( have_posts() ) : the_post();
             $blocks = get_field('blocks');
@@ -56,7 +55,7 @@ get_header();
                                 </div>
                             <?php endif; ?>
                     <!-- EMAIL рассылка -->
-                        <div class="aboutclub__item">
+                        <!-- <div class="aboutclub__item">
                             <div class="contact__wrapp">
                                 <form action="/mail.php" method="post" class="regs mailing__form" >
                                     <span class="text" style="margin-right: 40px; font-size: 14px;)">Подпишитесь на нашу рассылку и получайте приглашение на все мероприятия,<br> проводимые Российским Экспортным Клубом:</span>
@@ -69,7 +68,7 @@ get_header();
                                     <button class="submit">Подписаться</button>
                                 </form>
                             </div>
-                        </div>
+                        </div> -->
                         </section>
                     <?php elseif ($block['acf_fc_layout'] === 'news' && !$block['hide']): ?>
                         <section class="news">
