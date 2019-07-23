@@ -6158,7 +6158,7 @@ body {
 .aboutclub {
   width: 1170px;
   margin: 0px auto;
-  padding: 0px 17px 30px 17px;
+  padding: 0px 17px 90px 17px;
 }
 
 .aboutclub__title {
@@ -6781,6 +6781,9 @@ body {
 
 .ourevents__img {
   position: relative;
+  background-repeat: no-repeat;
+  background-position: center; 
+  background-size: cover;
 }
 
 .ourevents__imgbg {
@@ -7004,7 +7007,6 @@ body {
   width: 100%;
   height: 100%;
   top: 0px;
-  left: 0px;
   background-color: #050505;
   opacity: 0.4;
   -webkit-transition: 0.5s;
@@ -7373,6 +7375,7 @@ body {
 
 .news__titlecontainer .news__img img {
   height: 100%;
+  width: 100%;
 }
 
 .news__titlecontainer .news__date {
@@ -8172,6 +8175,10 @@ body {
       -ms-flex-pack: center;
           justify-content: center;
   overflow: hidden;
+  background-repeat: no-repeat;
+ background-position: center top; 
+  background-size: cover;
+
 }
 
 .usefulpage__container > a .useful__img img {
@@ -8248,6 +8255,10 @@ body {
 
 .usefulpage__container > a:first-child .useful__img {
   height: 400px;
+   overflow: hidden;
+  background-repeat: no-repeat;
+ background-position: center top; 
+  background-size: cover;
 }
 
 .usefulpage__container > a:first-child .useful__containertext {
@@ -8309,8 +8320,8 @@ body {
           justify-content: center;
   overflow: hidden;
   background-repeat: no-repeat;
-      background-size: 1280px;
-      background-size: cover;
+ background-position: center top; 
+  background-size: cover;
 }
 
 .material__description {
@@ -8642,7 +8653,7 @@ body {
   font-family: Open Sans;
   font-style: normal;
   font-weight: normal;
-  font-size: calc(12px + 0.5vw);
+  font-size: 18px;
   line-height: 32px;
   color: #000000;
   border: 1px solid #F9F9F9;
@@ -8690,7 +8701,6 @@ select.input.textup.select {
   border-radius: 20px;
   background-color: #fff;
   border: 2px solid #F4F4F4;
-  min-height: 500px;
 }
 
 .contact__block a {
@@ -9952,6 +9962,7 @@ input::-ms-reveal {
   }
   .useful__container > a:first-child img, .useful__container > a:first-child .useful__containerbg {
     height: 284px;
+    width: 284px;
     margin-bottom: 10px;
   }
   .useful__container > a:first-child .useful__containertitle {
@@ -11057,11 +11068,7 @@ input::-ms-reveal {
     padding-left: 17px;
     padding-right: 17px;
   }
-  .useful__container > a:first-child img, .useful__container > a:first-child .useful__containerbg {
-    width: calc(100% - 34px);
-    margin-left: 17px;
-    margin-right: 17px;
-  }
+
 }
 
 @media only screen and (max-width: 500px) {
@@ -12964,7 +12971,7 @@ button.swiper-pagination-bullet {
   -ms-perspective: 1200px;
 }
 
-.popup, .popupjoinform {
+.popup, .popupjoinform, .mailup {
   width: 570px;
   z-index: 35;
   opacity: 0;
@@ -12974,7 +12981,7 @@ button.swiper-pagination-bullet {
   transition: 0.5s;
 }
 
-.popup .contact__wrapp, .popupjoinform .contact__wrapp {
+.popup .contact__wrapp, .popupjoinform .contact__wrapp, .mailup .contact__wrapp {
   width: 100%;
 }
 
@@ -12983,7 +12990,7 @@ button.swiper-pagination-bullet {
   text-align: center;
 }
 
-.popupbg, .popupjoin {
+.popupbg, .popupjoin, .mailingbg {
   position: fixed;
   top: 0px;
   left: 0px;
@@ -13016,7 +13023,7 @@ button.swiper-pagination-bullet {
 }
 
 @media only screen and (max-width: 620px) {
-  .popup, .popupjoinform {
+  .popup, .popupjoinform, .mailup {
     width: calc(100% - 36px);
   }
   .popup .contact__blocktitle, .popupjoinform .contact__blocktitle {
@@ -13054,4 +13061,19 @@ button.swiper-pagination-bullet {
 .btn_calendar{
   text-align: center;
   margin-bottom: 110px;
+}
+
+.descript-mailing{
+  display: flex;
+}
+
+.descript-mailing span:first-child {
+  margin-right: 40px; 
+  font-size: 14px;
+}
+
+.close-modal {
+  float: left;
+  font-size: 20px;
+  cursor: pointer;
 }
