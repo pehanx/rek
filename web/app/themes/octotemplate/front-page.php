@@ -219,13 +219,14 @@ get_header();
                             <div class="ourevents__container">
                                 <?php foreach ($block['events'] as $event): ?>
                                     <div>
-                                        <div class="ourevents__img">
-                                            <?php
+                                         <?php
                                             $image = get_post_image($event->ID);
                                             if ($image): ?>
-                                                <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
+                                               <?php $url_img = $image['url'] ?>
                                             <?php endif; ?>
-                                            <div class="ourevents__imgbg"></div>
+                                        
+                                        <div class="ourevents__img" style="background-image: url('<?=$url_img?>');">
+                                                 <div class="ourevents__imgbg" ></div>
                                         </div>
                                         <div class="ourevents__description">
                                             <div class="ourevents__title bold-text">
@@ -281,9 +282,6 @@ get_header();
                                                     <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
                                                 <?php endif; ?>
                                                 <div class="useful__containerbg"></div>
-                                                <div class="useful__containertitle text">
-                                                    <?= pll__('Статья'); ?>
-                                                </div>
                                                 <div class="useful__containertext bold-text">
                                                     <span class="underline-hover-link">
                                                         <?= get_the_title($material->ID); ?>

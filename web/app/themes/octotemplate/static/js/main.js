@@ -440,7 +440,6 @@ $(function(){
 					form.find('.placeholder').removeClass('placeholder-active');
 					$('.succes').removeClass('succes-ok');
 					succesSendInputforData();
-
 					$('.mailup').removeClass('popupopacity');
 					$('.mailingbg').removeClass('popupbgopacity');
 					$.cookie('HideModal', true, { expires: 30, path: '/' });
@@ -450,7 +449,6 @@ $(function(){
 						$('body, html').removeClass('noscroll');
 						$('body').width('auto');
 					},500);
-					
 				},
 				error: function (response) {
 					

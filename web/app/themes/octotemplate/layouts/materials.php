@@ -30,16 +30,14 @@ $counter = 0;
 
                 <?php while ( have_posts()): the_post(); ?>
                 <a href="<?= get_permalink(); ?>" class="link-hover-down">
-                    <div class="useful__img set-back-img">
-                        <?php
+                    <?php
                         $image = get_post_image(get_queried_object_id());
                         if ($image): ?>
-                            <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>" class="get-back-img">
+                            <?php $url_img = $image['url'] ?>
                         <?php endif; ?>
+                    <div class="useful__img" style="background-image: url('<?=$url_img?>')">
+                        
                         <div class="useful__containerbg"></div>
-                        <div class="useful__containertitle">
-                            <?= pll__('Статья'); ?>
-                        </div>
                     </div>
                     <div class="useful__containerdate">
                         <?= get_the_date('j M Y'); ?>
