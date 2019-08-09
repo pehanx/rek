@@ -151,6 +151,7 @@ sub {
  */
 img {
   border: 0;
+  object-fit: cover;
 }
 
 /**
