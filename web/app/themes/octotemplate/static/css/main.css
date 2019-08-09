@@ -10109,6 +10109,9 @@ input::-ms-reveal {
     font-size: 16px;
     line-height: 28px;
   }
+  .mailup .text{
+    text-align: center;
+  }
 }
 
 @media only screen and (max-width: 1250px) {
