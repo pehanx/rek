@@ -24,21 +24,6 @@ $(document).ready(function() {
 		jsonData:data_cal
 	});
 
-	$(".Calendar").css('display','none');
-
-	$('.calendaropen').on('click',function(e){
-		e.preventDefault();
-		var width = $('body').innerWidth();
-		$('.Calendar').css('display', 'block');
-		$('.calendar_bg').css('display', 'block');
-		$('body, html').addClass('noscroll');
-		$('body').width(width);
-		setTimeout(function(){
-			$('.calendar_bg').css('background-color', 'rgba(0,0,0,0.7)');
-			$('.Calendar').css('opacity',1);
-		},200);
-	});
-
 	$('.Calendar').on('click',function(e){
 		e.stopPropagation()
 	});
@@ -53,4 +38,22 @@ $(document).ready(function() {
 			$('body').width('auto');
 		},200);
 	});
+
+	$(".Calendar").css('display','none');
+
+	$('.calendaropen').on('click',function(e){
+		e.preventDefault();
+		var width = $('body').innerWidth();
+		$('.Calendar').css('display', 'block');
+		$('.calendar_bg').css('display', 'block');
+		$('body, html').addClass('noscroll');
+		$('body').width(width);
+		setTimeout(function(){
+			$('.calendar_bg').css('background-color', 'rgba(0,0,0,0.7)');
+			$('.Calendar').css('opacity',1);
+		},200);
+	});
+		
+		
+
 });

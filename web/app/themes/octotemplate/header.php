@@ -62,4 +62,3 @@ get_template_part('/parts/header', 'svgs');
 
 get_template_part('/parts/header', 'menu');
 ?>
-
