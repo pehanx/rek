@@ -2,10 +2,15 @@
     <div class="mailup">
         <div class="contact__wrapp">
             <div class="contact__block">
+                <div class="contact__blocktitle">
+                    <?= pll__('Подписка'); ?>
+                </div>
+                <div>
+                    <span class="close-modal">&#10006;</span>
+                </div>
                 <form action="/mail.php" method="post" class="reg mailing__form" >
                     <div class="descript-mailing">
-                        <span class="text">Подпишитесь на нашу рассылку и получайте приглашение на все мероприятия,<br> проводимые Российским Экспортным Клубом:</span>
-                        <span class="close-modal">&#10006;</span>
+                        <p class="text">Подпишитесь на нашу рассылку и получайте приглашение на все мероприятия,<br> проводимые Российским Экспортным Клубом:</p>
                     </div>
                     <label class="placeholder">
                         <input class="input textup input-email" type="text" name="Почта">

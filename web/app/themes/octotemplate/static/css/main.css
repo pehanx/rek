@@ -12986,7 +12986,7 @@ button.swiper-pagination-bullet {
   width: 100%;
 }
 
-.popup .contact__blocktitle, .popupjoinform .contact__blocktitle {
+.popup .contact__blocktitle, .popupjoinform .contact__blocktitle, .mailup .contact__blocktitle{
   color: #000;
   text-align: center;
 }
@@ -13027,7 +13027,7 @@ button.swiper-pagination-bullet {
   .popup, .popupjoinform, .mailup {
     width: calc(100% - 36px);
   }
-  .popup .contact__blocktitle, .popupjoinform .contact__blocktitle {
+  .popup .contact__blocktitle, .popupjoinform .contact__blocktitle, .mailup .contact__blocktitle{
     font-size: 24px;
     line-height: 32px;
     margin-bottom: 20px;
@@ -13066,6 +13066,7 @@ button.swiper-pagination-bullet {
 
 .descript-mailing{
   display: flex;
+  margin-bottom: 40px;
 }
 
 .descript-mailing span:first-child {
@@ -13074,7 +13075,14 @@ button.swiper-pagination-bullet {
 }
 
 .close-modal {
-  float: left;
-  font-size: 20px;
+ line-height: 12px;
+     width: 18px;
+     font-size: 18pt;
+     font-family: tahoma;
+     margin-top: 16px;
+     margin-right: 35px;
+     position:absolute;
+     top:0;
+     right:0;
   cursor: pointer;
 }
