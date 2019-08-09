@@ -71,6 +71,13 @@ get_header();
                         </div> -->
                         </section>
                     <?php elseif ($block['acf_fc_layout'] === 'news' && !$block['hide']): ?>
+                        <?php
+                            $news_query = new WP_Query([
+                                'post_type' => 'post',
+                                'post_status' => 'publish',
+                                'posts_per_page' => 6,
+                            ]);
+                        ?>
                         <section class="news">
                             <div class="news__bg"></div>
                             <div class="news__maintitle">
@@ -79,45 +86,45 @@ get_header();
                             </div>
                             <div class="news__items">
                                 <div>
-                                    <a href="<?= get_permalink($block['news'][0]->ID); ?>" class="news__item">
+                                    <a href="<?= get_permalink($news_query->posts[0]); ?>" class="news__item">
                                         <div class="news__img">
                                             <?php
-                                            $image = get_post_image($block['news'][0]->ID);
+                                            $image = get_post_image($news_query->posts[0]);
                                             if ($image): ?>
                                                 <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
                                             <?php endif; ?>
                                             <div class="news__img__bg"></div>
                                         </div>
                                         <div class="news__date">
-                                            <?= get_the_date('j M Y', $block['news'][0]->ID); ?>
+                                            <?= get_the_date('j M Y', $news_query->posts[0]); ?>
                                         </div>
                                         <div class="news__title title">
-                                            <?= get_the_title($block['news'][0]->ID); ?>
+                                            <?= get_the_title($news_query->posts[0]); ?>
                                         </div>
                                     </a>
                                 </div>
                                 <div>
                                     <a class="news__item"></a>
                                     <a class="news__item"></a>
-                                    <a href="<?= get_permalink($block['news'][1]->ID); ?>" class="news__item">
+                                    <a href="<?= get_permalink($news_query->posts[1]); ?>" class="news__item">
                                         <div class="news__img">
                                             <?php
-                                            $image = get_post_image($block['news'][1]->ID);
+                                            $image = get_post_image($news_query->posts[1]);
                                             if ($image): ?>
                                                 <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
                                             <?php endif; ?>
                                             <div class="news__img__bg"></div>
                                         </div>
                                         <div class="news__date">
-                                            <?= get_the_date('j M Y', $block['news'][1]->ID); ?>
+                                            <?= get_the_date('j M Y', $news_query->posts[1]); ?>
                                         </div>
                                         <div class="news__title title">
-                                            <?= get_the_title($block['news'][1]->ID); ?>
+                                            <?= get_the_title($news_query->posts[1]); ?>
                                         </div>
                                     </a>
                                 </div>
                                 <?php
-                                $rest_news = array_chunk(array_slice($block['news'], 2), 4);
+                                $rest_news = array_chunk(array_slice($news_query->posts, 2), 4);
                                 if ($rest_news):
                                     foreach ($rest_news as $key => $news_sublist):
                                         if ($key % 2 === 0): ?>
@@ -209,6 +216,7 @@ get_header();
                                 endif; ?>
                             </div>
                         </section>
+                        
 
                     <?php elseif ($block['acf_fc_layout'] === 'events' && !$block['hide']): ?>
                         <section class="ourevents">
