@@ -231,14 +231,20 @@
 		.eventCalendar-list li .eventCalendar-eventTitle {
 			display:block;
 			clear:both;
-
-			font-weight:bold;
+			font-family: Open Sans;
+			font-style: normal;
+		    line-height: 20px;
+			font-weight:normal;
 			text-decoration:none;
 		}
-			.eventCalendar-list li a.eventCalendar-eventTitle {
-				color:#0E8EAB;
+			.eventCalendar-list li a.eventCalendar-eventTitle {	
+				color: #333;
+
 			}
-			.eventCalendar-list li a.eventCalendar-eventTitle:hover { text-decoration:underline;}
+			.eventCalendar-list li a.eventCalendar-eventTitle:hover { 
+
+   	text-decoration: underline;
+		}
 		.eventCalendar-list li .eventDesc {
 			clear: both;
 			margin:0 0 5px 0;
