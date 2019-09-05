@@ -19,6 +19,20 @@ $wp_query = new WP_Query([
     'meta_key'  => 'start_date',
     'orderby'   => 'meta_value_num',
     'order'     => 'DESC'
+
+ // 'meta_query' => array(
+ //    'start' => array(
+ //      'key' => 'start_date',
+ //    ),
+ //    'end' => array(
+ //      'key' => 'end_date',
+ //    )
+ //  ),
+ // 'orderby' => array(
+ //        'start'       => 'ASC',
+ //        'end'     => 'ASC',
+ //    )
+
 ]);
 $query1 = new WP_Query([
     'post_type' => 'event',
