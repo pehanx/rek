@@ -12,28 +12,86 @@
 
 get_header();
 $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
-$wp_query = new WP_Query([
+// $wp_query = new WP_Query([
+//     'post_type' => 'event',
+//     'posts_per_page' => EVENTS_PER_PAGE,
+//     'paged' => $paged,
+//     'meta_key'  => 'start_date',
+//     'orderby'   => 'meta_value_num',
+//     'order'     => 'DESC'
+// ]);
+
+$query_select_events = "SELECT *
+                        FROM (SELECT *, 0 as ordinal
+                        FROM `wp_posts` inner join wp_postmeta on wp_posts.id = wp_postmeta.post_id
+                        WHERE 
+                        `post_type` = 'event' AND wp_postmeta.meta_key = 'start_date' AND 
+                        meta_value > now() AND `post_status` = 'publish'
+                        order by meta_value
+                        ) AS A1
+
+                        UNION ALL
+
+                        SELECT *
+                        FROM (SELECT *, 1 as ordinal
+                        FROM `wp_posts` inner join wp_postmeta on wp_posts.id = wp_postmeta.post_id
+                        WHERE 
+                        `post_type` = 'event' AND wp_postmeta.meta_key = 'start_date' AND 
+                        meta_value < now() AND `post_status` = 'publish'
+                        order by meta_value desc
+                        ) AS A2
+                        ORDER BY Ordinal";
+
+
+$query11 = (array(
     'post_type' => 'event',
-    'posts_per_page' => EVENTS_PER_PAGE,
+    // 'posts_per_page' => EVENTS_PER_PAGE,
+    'posts_per_page' => -1,
     'paged' => $paged,
-    'meta_key'  => 'start_date',
-    'orderby'   => 'meta_value_num',
-    'order'     => 'DESC'
 
- // 'meta_query' => array(
- //    'start' => array(
- //      'key' => 'start_date',
- //    ),
- //    'end' => array(
- //      'key' => 'end_date',
- //    )
- //  ),
- // 'orderby' => array(
- //        'start'       => 'ASC',
- //        'end'     => 'ASC',
- //    )
+    'meta_query' => array(
+        array(
+            'key' => 'start_date',
+            'value' => date('Ymd'),
+            'compare' => '>'
+        ),
+    ),
+    'meta_key' => 'start_date',
+    'orderby' => 'meta_value_num',
+    'order' => 'ASC'
 
-]);
+));
+
+$wp_query1 = new WP_Query($query11);
+ 
+$query2 = (array(
+    'post_type' => 'event',
+    // 'posts_per_page' => EVENTS_PER_PAGE - $wp_query1->post_count,
+    'posts_per_page' => -1,
+    'paged' => $paged,
+    // 'posts_per_page' => 7 - $wp_query1->post_count,
+
+    'meta_query' => array(
+        array(
+            'key' => 'start_date',
+            'value' => date('Ymd'),
+            'compare' => '<='
+        ),
+    ),
+    'meta_key' => 'start_date',
+    'orderby' => 'meta_value_num',
+    'order' => 'DESC'
+
+));
+ 
+$wp_query2 = new WP_Query($query2);
+
+$wp_query = new WP_Query();
+$wp_query->posts = array_merge($wp_query1->posts, $wp_query2->posts);
+$wp_query->post_count = $wp_query1->post_count + $wp_query2->post_count;
+// $wp_query->post_count = 7;
+// $wp_query->paged = $paged;
+
 $query1 = new WP_Query([
     'post_type' => 'event',
     'posts_per_page' => -1,
@@ -47,6 +105,7 @@ $counter = 0;
     </h1>
     <div class="btn_calendar">
         <a href="" class="calendaropen">Календарь</a>
+        <br>
     </div>
     <?php 
     $events_cal = '['; 
@@ -173,7 +232,7 @@ $counter = 0;
             <?php endif; ?>
         <?php endwhile; ?>
         </div>
-    <?php endif; ?>
+    <?php endif;?> 
     </div>
     <?php if ($wp_query->max_num_pages > 1) :
         pagination($wp_query->max_num_pages, 3); ?>
