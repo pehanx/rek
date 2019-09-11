@@ -73,6 +73,13 @@ $wp_query = new WP_Query([
 $query1 = new WP_Query([
     'post_type' => 'event',
     'posts_per_page' => -1,
+    'meta_query' => array(
+        array(
+            'key' => 'start_date',
+            'value' => date('Ymd'),
+            'compare' => '>'
+        ),
+    )
 ]);
 $counter = 0;
 ?>
