@@ -209,7 +209,7 @@ $(function(){
 	    	$(this).find('.input-company').parent().find('.info').addClass('info-error'); 
 	    	error++;	
 	    }
-	    /* if(regpass.test($(this).find('.input-password').val()) && regpass.test($(this).find('.input-passwordtoo').val()) && $(this).find('.input-password').val()==$(this).find('.input-passwordtoo').val() && $(this).find('.input-password').val().length>7 && $(this).find('.input-password').val().length>7){
+	     if(regpass.test($(this).find('.input-password').val()) && regpass.test($(this).find('.input-passwordtoo').val()) && $(this).find('.input-password').val()==$(this).find('.input-passwordtoo').val() && $(this).find('.input-password').val().length>7 && $(this).find('.input-password').val().length>7){
 	    	$(this).find('.input-password').addClass('succes-input');
 	    	$(this).find('.input-passwordtoo').addClass('succes-input');
 	    	$(this).find('.input-password').parent().find('.info').addClass('info-succes');
@@ -218,7 +218,7 @@ $(function(){
 	    	$(this).find('.input-passwordtoo').addClass('error-input');
 	    	$(this).find('.input-password').parent().find('.info').addClass('info-error');
 	    	error++;
-	    } */
+	    } 
 	    if(regemail.test($(this).find('.input-email').val())){
 	    	$(this).find('.input-email').addClass('succes-input');
 	    	$(this).find('.input-email').parent().find('.info').addClass('info-succes');
@@ -227,14 +227,14 @@ $(function(){
 	    	$(this).find('.input-email').parent().find('.info').addClass('info-error');
 	    	error++;
 	    }
-	    /* if(reglogin.test($(this).find('.input-login').val())){
+	     if(reglogin.test($(this).find('.input-login').val())){
 	    	$(this).find('.input-login').addClass('succes-input');
 	    	$(this).find('.input-login').parent().find('.info').addClass('info-succes');
 	    }else{
 	    	$(this).find('.input-login').addClass('error-input');
 	    	$(this).find('.input-login').parent().find('.info').addClass('info-error');
 	    	error++;
-	    } */
+	    } 
 		if(error == 0){
 			var data = $(this).serialize();
 			var action = $(this).attr('action');
@@ -565,4 +565,141 @@ $(function(){
 			},500);
 		});
 
+	//Авторизация
+		$("#auth_send").submit(function(event){
+		event.preventDefault();
+		var data = $(this).serialize();
+			$.ajax({
+			  url: "/func.php?func=authorization",
+			  type: "POST",
+			  data: data,
+			  	success: function(result) {
+				  	$("#error_auth").html(result);
+				  	if(!result){
+			  		 	setTimeout(function() {
+						  window.location = "http://rec.test/profile/";
+						}, 500);
+				  	}else{
+				  		alert(result);
+				  	}
+			 	}
+			});
+		});
+
+		//Регистрация
+		$("#reg_send").submit(function(event){
+		event.preventDefault();
+		var form = $(this);
+		$(this).find('.input').removeClass('error-input');
+		$(this).find('.input').removeClass('succes-input');
+		$(this).find('.info').removeClass('info-error');
+		$(this).find('.info').removeClass('info-succes');
+		var error = 0;
+		var regemail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+		var regpass = /^[a-zA-Z0-9]+$/;
+	    var reglogin = /^[A-Za-z0-9_\-\.]+$/;
+	    if($(this).find('.input-name').val().length>0){
+	    	$(this).find('.input-name').addClass('succes-input');
+	    	$(this).find('.input-name').parent().find('.info').addClass('info-succes');
+	    }else{
+			$(this).find('.input-name').addClass('error-input');
+	    	$(this).find('.input-name').parent().find('.info').addClass('info-error');
+	    	error++;
+	    }
+	    if($(this).find('.input-tel').val().length>16){
+	    	$(this).find('.input-tel').addClass('succes-input');
+	    	$(this).find('.input-tel').parent().find('.info').addClass('info-succes');
+	    }else{
+	    	$(this).find('.input-tel').addClass('error-input');
+	    	$(this).find('.input-tel').parent().find('.info').addClass('info-error');
+	    	error++;
+	    }
+	    if($(this).find('.input-company').val().length>0){
+	    	$(this).find('.input-company').addClass('succes-input');
+	    	$(this).find('.input-company').parent().find('.info').addClass('info-succes');
+	    }else{
+	    	$(this).find('.input-company').addClass('error-input');
+	    	$(this).find('.input-company').parent().find('.info').addClass('info-error'); 
+	    	error++;	
+	    }
+	     if(regpass.test($(this).find('.input-password').val()) && regpass.test($(this).find('.input-passwordtoo').val()) && $(this).find('.input-password').val()==$(this).find('.input-passwordtoo').val() && $(this).find('.input-password').val().length>7 && $(this).find('.input-password').val().length>7){
+	    	$(this).find('.input-password').addClass('succes-input');
+	    	$(this).find('.input-passwordtoo').addClass('succes-input');
+	    	$(this).find('.input-password').parent().find('.info').addClass('info-succes');
+	    }else{
+	    	$(this).find('.input-password').addClass('error-input');
+	    	$(this).find('.input-passwordtoo').addClass('error-input');
+	    	$(this).find('.input-password').parent().find('.info').addClass('info-error');
+	    	error++;
+	    } 
+	    if(regemail.test($(this).find('.input-email').val())){
+	    	$(this).find('.input-email').addClass('succes-input');
+	    	$(this).find('.input-email').parent().find('.info').addClass('info-succes');
+	    }else{
+	    	$(this).find('.input-email').addClass('error-input');
+	    	$(this).find('.input-email').parent().find('.info').addClass('info-error');
+	    	error++;
+	    }
+	     if(reglogin.test($(this).find('.input-login').val())){
+	    	$(this).find('.input-login').addClass('succes-input');
+	    	$(this).find('.input-login').parent().find('.info').addClass('info-succes');
+	    }else{
+	    	$(this).find('.input-login').addClass('error-input');
+	    	$(this).find('.input-login').parent().find('.info').addClass('info-error');
+	    	error++;
+	    } 
+	    // alert("error: " + error);
+		if(error == 0){
+			var data = $(this).serialize();
+			$.ajax({
+			  url: "/func.php?func=register",
+			  type: "POST",
+			  data: data,
+			  	success: function(result) {
+			  		if(!result){
+					  	$(this).find('.input').val('');
+						$(this).find('.input').removeClass('error-input');
+						$(this).find('.input').removeClass('succes-input');
+						$(this).find('.info').removeClass('info-error');
+						$(this).find('.info').removeClass('info-succes');
+						$(this).find('.placeholder').removeClass('placeholder-active');
+						$('.succes').removeClass('succes-ok');
+				  		alert("Вы успешно зарегистрировались\nМожете войти");
+			  		 	setTimeout(function() {
+						  // window.location = "http://"+document.location.host+"/vstuplenie-v-klub/";
+						  window.location = window.location.href;
+						}, 500);
+				  	}else{
+				  		alert(result);
+				  	}
+			 	}
+
+			});
+		}
+		});
+	
+	//Переключение между вкладками регистрация и вход	
+	$("#show_reg").on('click',function () {
+		$("#auth_send").addClass('hide_form');
+		$("#reg_send").removeClass('hide_form');
+		$("html, body").animate({ scrollTop: 0 }, "slow");
+	});
+	$("#show_auth").on('click',function () {
+		$("#reg_send").addClass('hide_form');
+		$("#auth_send").removeClass('hide_form');
+		$("html, body").animate({ scrollTop: 0 }, "slow");
+	});
+
+	//Выход из сайта
+	$(".exit_from_site").on('click',function () {
+		$.ajax({
+		  url: "/func.php?func=exit_from_site",
+		  type: "POST",
+		  	success: function(result) {
+	  		 	setTimeout(function() {
+				  window.location = window.location.href;
+				}, 500);
+		 	}
+		});
+	});
 });
