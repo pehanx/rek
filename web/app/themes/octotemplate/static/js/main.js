@@ -543,6 +543,8 @@ $(function(){
 				var width = $('body').innerWidth();
 				$('.mailup').addClass('popupblock');
 				$('.mailingbg').addClass('popupblock');
+				$('.menujs').css('display','none');
+				$('.upscrollpage').css('display','none');
 				$('body, html').addClass('noscroll');
 				$('body').width(width);
 				$('.mailup').addClass('popupopacity');
@@ -554,6 +556,8 @@ $(function(){
 			$('.mailingbg').removeClass('popupbgopacity');
 			$.cookie('HideModal', true, { expires: 30, path: '/' });
 			setTimeout(function(){
+				$('.menujs').removeAttr('style');
+				$('.upscrollpage').removeAttr('style');
 				$('.mailup').removeClass('popupblock');
 				$('.mailingbg').removeClass('popupblock');
 				$('body, html').removeClass('noscroll');
