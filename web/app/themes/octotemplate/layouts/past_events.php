@@ -1,6 +1,6 @@
 <?php
 /*
- * Template Name: События
+ * Template Name: Прошедшие События
  *
  * Template Post Type: page
  *
@@ -21,12 +21,12 @@ $wp_query = new WP_Query([
         array(
             'key' => 'start_date',
             'value' => date('Ymd'),
-            'compare' => '>'
+            'compare' => '<='
         ),
     ),
     'meta_key' => 'start_date',
     'orderby' => 'meta_value_num',
-    'order' => 'ASC'
+    'order' => 'DESC'
 ]);
 
 // $query_select_events = "SELECT *
