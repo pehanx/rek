@@ -13100,3 +13100,7 @@ button.swiper-pagination-bullet {
      right:0;
   cursor: pointer;
 }
+
+.hide_form{
+  display: none !important;
+}
