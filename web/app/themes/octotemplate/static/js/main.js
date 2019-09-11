@@ -695,16 +695,10 @@ $(function(){
 		$.ajax({
 		  url: "/func.php?func=exit_from_site",
 		  type: "POST",
-		  data: data,
 		  	success: function(result) {
-			  	$("#error_auth").html(result);
-			  	if(!result){
-		  		 	setTimeout(function() {
-					  window.location = "http://rec.test/profile/";
-					}, 500);
-			  	}else{
-			  		alert(result);
-			  	}
+	  		 	setTimeout(function() {
+				  window.location = window.location.href;
+				}, 500);
 		 	}
 		});
 	});
