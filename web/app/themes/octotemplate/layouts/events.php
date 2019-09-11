@@ -100,9 +100,10 @@ $counter = 0;
         </div>
     </div>
     <?php if ( have_posts() ) : ?>
-        <div class="news__titlecontainer">
+        <!-- <div class="news__titlecontainer"> -->
+            <div class="news__container" style="margin-top: 70px">
         <?php while ( have_posts()) :
-            if ($counter < 2):
+            if ($counter < 1):
                 the_post();
                 $counter++;
                 ?>
@@ -127,24 +128,31 @@ $counter = 0;
                             <?php endif; ?>
                             <div class="news__img__bg"></div>
                         </div>
-                        <div class="news__date">
+                        <!-- <div class="news__date">
                              <?=get_field('event_date'); ?>
-                        </div>
+                        </div> -->
                         <div class="news__title title">
-                                            <span class="underline-hover-link">
-                                                <?= get_the_title(); ?>
-                                            </span>
+                            <div>
+                                <span class="news__date">
+                                     <?=get_field('event_date'); ?>
+                                </span>
+                                <br>
+                                <span class="underline-hover-link">
+                                    <?= get_the_title(); ?>
+                                </span>
+                            </div>
                         </div>
                     </a>
                 </div>
-            <?php elseif ($counter === 2):
-                $counter++;
-                the_post(); ?>
-                        </div>
+             </div>
                     </div>
                 </section>
                 <section class="news__news">
-                    <div class="news__container">
+                        <!-- <div class="news__container"> -->
+                        <div class="news__titlecontainer" >
+            <?php elseif (($counter === 1) or ($counter === 2) ):
+                $counter++;
+                the_post(); ?>
                         <div>
                             <a href="<?= get_permalink(); ?>" class="news__item link-hover-down">
                                 <div class="news__img 
@@ -174,6 +182,12 @@ $counter = 0;
                                 </div>
                             </a>
                         </div>
+             <?php elseif ($counter === 3):?>
+                <?php
+                $counter++;?>
+                </div>
+                <div class="news__container">
+                <div></div>   
             <?php else:
                 $counter++;
                 the_post(); ?>
