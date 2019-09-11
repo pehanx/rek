@@ -7318,6 +7318,7 @@ body {
 }
 
 .news__titlecontainer {
+
   margin-top: 70px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -7327,6 +7328,10 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+
+  max-width: 1200px;
+  margin: 0 auto; 
+  margin-bottom: 40px
 }
 
 .news__titlecontainer {
@@ -7405,12 +7410,14 @@ body {
 }
 
 .news__container > div:first-child .news__title {
-  display: block;
-  padding-top: 135px;
+  /*display: block;*/
+  /*padding-top: 135px;*/
+  display: flex; 
+  align-items: center;
 }
 
 .news__container > div:first-child .news__date {
-  position: absolute;
+  /*position: absolute;*/
   left: 670px;
   top: 110px;
 }
@@ -7497,7 +7504,7 @@ body {
 
 .news__container > div:first-child .news__date {
   width: 375px;
-  margin-left: 125px;
+  /*margin-left: 125px;*/
   margin-bottom: 10px;
   font-family: Open Sans;
   font-style: normal;
@@ -7516,6 +7523,10 @@ body {
   font-size: 60px;
   line-height: 80px;
   color: #333333;
+
+line-height: 60px;
+   font-size: 50px;
+  margin-left: 60px;
 }
 
 .news__container > div:nth-child(n+2) {
@@ -10128,6 +10139,9 @@ input::-ms-reveal {
     font-size: 16px;
     line-height: 28px;
   }
+  .mailup .text{
+    text-align: center;
+  }
 }
 
 @media only screen and (max-width: 1250px) {
@@ -10149,8 +10163,8 @@ input::-ms-reveal {
   }
   .news__container {
     width: calc(100% - 34px);
-    padding-left: 17px;
-    padding-right: 17px;
+   /* padding-left: 17px;
+    padding-right: 17px;*/
   }
   .news__container > div:first-child .news__title {
     margin-left: 58px;
@@ -13008,7 +13022,7 @@ button.swiper-pagination-bullet {
   width: 100%;
 }
 
-.popup .contact__blocktitle, .popupjoinform .contact__blocktitle {
+.popup .contact__blocktitle, .popupjoinform .contact__blocktitle, .mailup .contact__blocktitle{
   color: #000;
   text-align: center;
 }
@@ -13049,7 +13063,7 @@ button.swiper-pagination-bullet {
   .popup, .popupjoinform, .mailup {
     width: calc(100% - 36px);
   }
-  .popup .contact__blocktitle, .popupjoinform .contact__blocktitle {
+  .popup .contact__blocktitle, .popupjoinform .contact__blocktitle, .mailup .contact__blocktitle{
     font-size: 24px;
     line-height: 32px;
     margin-bottom: 20px;
@@ -13088,6 +13102,7 @@ button.swiper-pagination-bullet {
 
 .descript-mailing{
   display: flex;
+  margin-bottom: 40px;
 }
 
 .descript-mailing span:first-child {
@@ -13096,7 +13111,14 @@ button.swiper-pagination-bullet {
 }
 
 .close-modal {
-  float: left;
-  font-size: 20px;
+ line-height: 12px;
+     width: 18px;
+     font-size: 18pt;
+     font-family: tahoma;
+     margin-top: 16px;
+     margin-right: 35px;
+     position:absolute;
+     top:0;
+     right:0;
   cursor: pointer;
 }
