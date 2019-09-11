@@ -9,6 +9,11 @@
  * @package wptemplate
  *
  */
+if(isset($_COOKIE['id'])){
+    header("Location: http://".$_SERVER['SERVER_NAME']."/404"); 
+    exit; 
+}
+
 get_header();
 ?>
 <section class="contact">
@@ -18,8 +23,12 @@ get_header();
     </div>
     <div class="contact__wrapp">
         <div class="contact__block">
+            
             <!-- <form action="/mail.php" method="post" class="reg reg__form"> -->
             <form  method="post" id="reg_send" class="hide_form">
+                <div class="contact__blocktitle">
+                    Регистрация
+                </div>
                 <?php
                 $name_placeholder = get_field('name_placeholder');
                 $phone_number_placeholder = get_field('phone_number_placeholder');
@@ -43,7 +52,7 @@ get_header();
 
                 <?php if ($phone_number_placeholder): ?>
                     <label class="placeholder">
-                        <input class="input textup input-tel mask-for-input" type="text" name="Номер телефона">
+                        <input class="input textup input-tel mask-for-input" type="text" name="Телефон">
                         <span><?= $phone_number_placeholder; ?></span>
                         <p class="info"><?= get_field('phone_number_description'); ?></p>
                     </label>
@@ -59,7 +68,7 @@ get_header();
 
                 <?php if ($entity_placeholder): ?>
                     <label class="placeholder">
-                        <input class="input textup input-company" type="text">
+                        <input class="input textup input-company" type="text" name="Юридическое_лицо">
                         <span><?= $entity_placeholder; ?></span>
                         <p class="info"><?= get_field('entity_description'); ?></p>
                     </label>
@@ -82,7 +91,7 @@ get_header();
                 <?php endif; ?>
 				
                 <label class="placeholder">
-                    <select name="Тип участника" id="typeParty" class="input textup select">
+                    <select name="Тип_участника" id="typeParty" class="input textup select">
                        <option value="">Выберите тип участия в клубе</option>
                        <option value="Экспортёр – получает ценные знания и информацию по осуществлению экспортной деятельности">Экспортёр</option>
                        <option value="Партнер - совместная организация мероприятий, общение с экспортерами">Партнёр</option>
@@ -142,9 +151,13 @@ get_header();
                 <?php endif; ?>
                 <span id="show_auth" style="margin-top: 20px; font-size: 18px; cursor: pointer;">Войти</span>
                 </form>
-
+                
+                
                 <!-- <form action="/mail.php" method="post" class="reg reg__form" style=""> -->
                 <form  method="post" id="auth_send">
+                <div class="contact__blocktitle">
+                    Вход
+                </div>
                 <?php
                 $name_placeholder = get_field('name_placeholder');
                 $phone_number_placeholder = get_field('phone_number_placeholder');
@@ -163,15 +176,17 @@ get_header();
                 <?php if ($login_placeholder): ?>
                     <label class="placeholder">
                         <input class="input textup input-login" type="text" name="Логин">
-                        <span><?= $login_placeholder; ?></span>
-                        <p class="info"><?= get_field('login_description'); ?></p>
+                        <span>Логин</span>
+                        <!-- <span><?= $login_placeholder; ?></span> -->
+                        <!-- <p class="info"><?= get_field('login_description'); ?></p> -->
                     </label>
                 <?php endif;?>
 
                 <?php if ($password_placeholder): ?>
                     <label class="placeholder">
-                        <input class="input input-forpass textup passwordone input-password" type="password" name="Пароль">
-                        <span><?= $password_placeholder; ?></span>
+                        <input class="input input-forpass textup passwordone input-password" type="Пароль" name="Пароль">
+                        <span>Пароль</span>
+                        <!-- <span><?= $password_placeholder; ?></span> -->
                         <div class="eye">
                             <svg class="icon__eyepass" width="20px" height="20px">
                                 <use xlink:href="#eyepass"></use>
@@ -182,12 +197,13 @@ get_header();
                                 <use xlink:href="#eyepassnot"></use>
                             </svg>
                         </div>
-                        <p class="info"><?= get_field('password_description'); ?></p>
+                        <!-- <p class="info"><?= get_field('password_description'); ?></p> -->
                     </label>
                 <?php endif;?>
 
                 <?php if ($submit_button_text): ?>
-                    <button class="submit"><?= $submit_button_text; ?></button>
+                    <!-- <button class="submit"><?= $submit_button_text; ?></button> -->
+                    <button class="submit">Войти</button>
                 <?php endif; ?>
                 <span id="show_reg" style="margin-top: 20px; font-size: 18px; cursor: pointer;">Регистрация</span>
                 </form>

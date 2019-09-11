@@ -568,21 +568,19 @@ $(function(){
 	//Авторизация
 		$("#auth_send").submit(function(event){
 		event.preventDefault();
-		var log  =  $("input[name='Логин']").val();
-		var pass =  $("input[name='Пароль']").val();
+		var data = $(this).serialize();
 			$.ajax({
-			  url: "/auth_send.php",
+			  url: "/func.php?func=authorization",
 			  type: "POST",
-			  data: {
-			  	login : log,
-			  	pass  : pass
-			  },
+			  data: data,
 			  	success: function(result) {
 				  	$("#error_auth").html(result);
 				  	if(!result){
 			  		 	setTimeout(function() {
 						  window.location = "http://rec.test/profile/";
 						}, 500);
+				  	}else{
+				  		alert(result);
 				  	}
 			 	}
 			});
@@ -650,7 +648,7 @@ $(function(){
 	    	$(this).find('.input-login').parent().find('.info').addClass('info-error');
 	    	error++;
 	    } 
-	    alert("error: " + error);
+	    // alert("error: " + error);
 		if(error == 0){
 			var data = $(this).serialize();
 			$.ajax({
@@ -658,17 +656,18 @@ $(function(){
 			  type: "POST",
 			  data: data,
 			  	success: function(result) {
-				  	$(this).find('.input').val('');
-					$(this).find('.input').removeClass('error-input');
-					$(this).find('.input').removeClass('succes-input');
-					$(this).find('.info').removeClass('info-error');
-					$(this).find('.info').removeClass('info-succes');
-					$(this).find('.placeholder').removeClass('placeholder-active');
-					$('.succes').removeClass('succes-ok');
-				  	if(!result){
+			  		if(!result){
+					  	$(this).find('.input').val('');
+						$(this).find('.input').removeClass('error-input');
+						$(this).find('.input').removeClass('succes-input');
+						$(this).find('.info').removeClass('info-error');
+						$(this).find('.info').removeClass('info-succes');
+						$(this).find('.placeholder').removeClass('placeholder-active');
+						$('.succes').removeClass('succes-ok');
 				  		alert("Вы успешно зарегистрировались\nМожете войти");
 			  		 	setTimeout(function() {
-						  window.location = "http://rec.test/auth/";
+						  // window.location = "http://"+document.location.host+"/vstuplenie-v-klub/";
+						  window.location = window.location.href;
 						}, 500);
 				  	}else{
 				  		alert(result);
@@ -678,7 +677,8 @@ $(function(){
 			});
 		}
 		});
-
+	
+	//Переключение между вкладками регистрация и вход	
 	$("#show_reg").on('click',function () {
 		$("#auth_send").addClass('hide_form');
 		$("#reg_send").removeClass('hide_form');
@@ -690,4 +690,22 @@ $(function(){
 		$("html, body").animate({ scrollTop: 0 }, "slow");
 	});
 
+	//Выход из сайта
+	$(".exit_from_site").on('click',function () {
+		$.ajax({
+		  url: "/func.php?func=exit_from_site",
+		  type: "POST",
+		  data: data,
+		  	success: function(result) {
+			  	$("#error_auth").html(result);
+			  	if(!result){
+		  		 	setTimeout(function() {
+					  window.location = "http://rec.test/profile/";
+					}, 500);
+			  	}else{
+			  		alert(result);
+			  	}
+		 	}
+		});
+	});
 });
