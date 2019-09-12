@@ -565,7 +565,13 @@ $(function(){
 			},500);
 		});
 
-	function to_past_events(){
-		 window.location = "http://"+window.location.hostname+"/past-events";
-	}
+	$("#to_past_events").on('click',function(){
+		window.location = "http://" + window.location.hostname + "/past-sobytiya/";
+	});
+
+	$("#to_events").on('click',function(){
+		window.location = "http://" + window.location.hostname + "/sobytiya/";
+	});
+		 
+	
 });

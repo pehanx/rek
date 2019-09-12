@@ -235,6 +235,11 @@ $counter = 0;
     <?php if ($wp_query->max_num_pages > 1) :
         pagination($wp_query->max_num_pages, 3); ?>
     <?php endif; ?>
+    <div class="news__containerpaggination">
+        <span id="to_events" style="cursor: pointer;">
+            <a>Cобытия</a>
+        </span>
+    </div>
 </section>
 <script type="text/javascript">
        var data_cal = <?php echo $events_cal; ?>

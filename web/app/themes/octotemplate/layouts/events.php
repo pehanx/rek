@@ -232,13 +232,13 @@ $counter = 0;
         </div>
     <?php endif;?> 
     </div>
-    <div style="display: flex;">
-        <div>
-        <?php if ($wp_query->max_num_pages > 1) :
-            pagination($wp_query->max_num_pages, 3); ?>
-        <?php endif; ?>
-        </div>
-        <div><a href="javascript:void(0);" onclick="to_past_events();">Прошедшие события</a></div>
+    <?php if ($wp_query->max_num_pages > 1) :
+        pagination($wp_query->max_num_pages, 3); ?>
+    <?php endif; ?>
+    <div class="news__containerpaggination">
+        <span id="to_past_events" style="cursor: pointer;">
+            <a>Прошедшие события</a>
+        </span>
     </div>
 </section>
 <script type="text/javascript">
