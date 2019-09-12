@@ -7124,7 +7124,7 @@ body {
   font-weight: bold;
   font-size: 12px;
   line-height: 14px;
-  color: #FFFFFF;
+  color: #000;
   position: relative;
   z-index: 2;
   -webkit-transition: 0.5s;
@@ -7150,7 +7150,7 @@ body {
 }
 
 .menu__links .active-login {
-  color: #000;
+  color: #fff;
 }
 
 .menu__links .active-red {
@@ -13108,4 +13108,8 @@ button.swiper-pagination-bullet {
      top:0;
      right:0;
   cursor: pointer;
+}
+
+.hide_form{
+  display: none !important;
 }
