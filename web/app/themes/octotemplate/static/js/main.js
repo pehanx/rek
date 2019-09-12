@@ -565,4 +565,7 @@ $(function(){
 			},500);
 		});
 
+	function to_past_events(){
+		 window.location = "http://"+window.location.hostname+"/past-events";
+	}
 });
