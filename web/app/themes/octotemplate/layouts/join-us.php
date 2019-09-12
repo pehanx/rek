@@ -203,8 +203,9 @@ get_header();
 
                 <?php if ($submit_button_text): ?>
                     <!-- <button class="submit"><?= $submit_button_text; ?></button> -->
-                    <button class="submit">Войти</button>
+                    <button class="submit">Зарегистрироваться</button>
                 <?php endif; ?>
+
                 <span id="show_auth" style="margin-top: 20px; font-size: 18px; cursor: pointer;">Войти</span>
                 </form>
                 
@@ -260,6 +261,7 @@ get_header();
                     <!-- <button class="submit"><?= $submit_button_text; ?></button> -->
                     <button class="submit">Войти</button>
                 <?php endif; ?>
+
                 <span id="show_reg" style="margin-top: 20px; font-size: 18px; cursor: pointer;">Регистрация</span>
                 </form>
         </div>

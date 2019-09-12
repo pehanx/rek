@@ -1,6 +1,6 @@
 <?php
 /*
- * Template Name: События
+ * Template Name: Прошедшие события
  *
  * Template Post Type: page
  *
