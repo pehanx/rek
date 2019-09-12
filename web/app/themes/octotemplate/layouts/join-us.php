@@ -23,7 +23,6 @@ get_header();
     </div>
     <div class="contact__wrapp">
         <div class="contact__block">
-            
             <!-- <form action="/mail.php" method="post" class="reg reg__form"> -->
             <form  method="post" id="reg_send" class="hide_form">
                 <div class="contact__blocktitle">
@@ -145,8 +144,6 @@ get_header();
                         <p class="succes"><?= get_field('password_confirm_description'); ?></p>
                     </label>
                 <?php endif;?>
-<<<<<<< HEAD
-=======
 
                 <?php if ($submit_button_text): ?>
                     <!-- <button class="submit"><?= $submit_button_text; ?></button> -->
@@ -203,16 +200,13 @@ get_header();
                         <!-- <p class="info"><?= get_field('password_description'); ?></p> -->
                     </label>
                 <?php endif;?>
->>>>>>> 66ad1c599ab8303be1d9fbfd14350d0fbf8089c1
 
                 <?php if ($submit_button_text): ?>
                     <!-- <button class="submit"><?= $submit_button_text; ?></button> -->
                     <button class="submit">Войти</button>
                 <?php endif; ?>
-<<<<<<< HEAD
                 <span id="show_auth" style="margin-top: 20px; font-size: 18px; cursor: pointer;">Войти</span>
                 </form>
-                
                 
                 <!-- <form action="/mail.php" method="post" class="reg reg__form" style=""> -->
                 <form  method="post" id="auth_send">
@@ -266,8 +260,6 @@ get_header();
                     <!-- <button class="submit"><?= $submit_button_text; ?></button> -->
                     <button class="submit">Войти</button>
                 <?php endif; ?>
-=======
->>>>>>> 66ad1c599ab8303be1d9fbfd14350d0fbf8089c1
                 <span id="show_reg" style="margin-top: 20px; font-size: 18px; cursor: pointer;">Регистрация</span>
                 </form>
         </div>
