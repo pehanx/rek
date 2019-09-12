@@ -76,7 +76,9 @@ get_header();
                                 <a href="<?= $place_link; ?>">
                             <?php endif; ?>
 
-                            <?= $place; ?>
+                            <div class="eventpage__place">
+                                <?= $place; ?>
+                            </div>
 
                             <?php if ($place_link):?>
                                 </a>

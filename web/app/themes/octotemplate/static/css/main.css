@@ -6340,7 +6340,7 @@ body {
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
-  line-height: 26px;
+  line-height: 23px;
   color: #404040;
   width: 100%;
 }
@@ -6388,7 +6388,7 @@ body {
   font-style: normal;
   font-weight: 600;
   font-size: 18px;
-  line-height: 26px;
+  line-height: 23px;
   color: #404040;
   width: 100%;
 }
@@ -8067,6 +8067,15 @@ line-height: 60px;
   font-size: 24px;
   line-height: 32px;
   color: #000000;
+}
+
+.eventpage__titlewrapp .eventpage__place {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 32px;
+  color: #3465E2;
 }
 
 .eventpage__titlewrapp .eventpage__titlehead-light {

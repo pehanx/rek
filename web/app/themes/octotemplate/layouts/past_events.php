@@ -21,12 +21,12 @@ $wp_query = new WP_Query([
         array(
             'key' => 'start_date',
             'value' => date('Ymd'),
-            'compare' => '>'
+            'compare' => '<='
         ),
     ),
     'meta_key' => 'start_date',
     'orderby' => 'meta_value_num',
-    'order' => 'ASC'
+    'order' => 'DESC'
 ]);
 
 // $query_select_events = "SELECT *
@@ -77,7 +77,7 @@ $query1 = new WP_Query([
         array(
             'key' => 'start_date',
             'value' => date('Ymd'),
-            'compare' => '>'
+            'compare' => '<='
         ),
     )
 ]);
@@ -236,8 +236,8 @@ $counter = 0;
         pagination($wp_query->max_num_pages, 3); ?>
     <?php endif; ?>
     <div class="news__containerpaggination">
-        <span id="to_past_events" style="cursor: pointer;">
-            <a>Прошедшие события</a>
+        <span id="to_events" style="cursor: pointer;">
+            <a>Cобытия</a>
         </span>
     </div>
 </section>
