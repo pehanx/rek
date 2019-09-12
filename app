@@ -1,1 +1,0 @@
-/home/bitrix/www/web/app

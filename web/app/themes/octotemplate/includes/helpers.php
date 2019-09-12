@@ -174,3 +174,14 @@ function shorten_text($text, $max_length = 140, $cut_off = '...', $keep_word = t
 
     return $text;
 }
+
+/**
+ * Проверка авторизован ли пользователь
+ */
+function isAuth() {
+    if(isset($_COOKIE['id'])){
+        return true;
+    }else{
+        return false;
+    }
+}

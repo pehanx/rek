@@ -107,6 +107,8 @@ $counter = 0;
     </h1>
     <div class="btn_calendar">
         <a href="" class="calendaropen">Календарь</a>
+        <br>
+        <?php echo $sas = isAuth(); ?>
     </div>
     <?php 
     $events_cal = '['; 
