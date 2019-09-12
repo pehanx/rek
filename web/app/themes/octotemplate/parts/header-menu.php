@@ -37,7 +37,11 @@ if ($header_menu): ?>
                 </a>
             <?php endforeach; ?>
             <?php if(isset($_COOKIE['id'])):?>
+<<<<<<< HEAD
                 <a href="javascript:void(0);" class="menu__link exit_from_site">ВЫЙТИ</a>
+=======
+                <a href="javascript:void(0);" class="exit_from_site" class="menu__link">ВЫЙТИ</a>
+>>>>>>> 66ad1c599ab8303be1d9fbfd14350d0fbf8089c1
             <?php endif;?>
 
             <!--add class active-red for red font color-->

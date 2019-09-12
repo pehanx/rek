@@ -145,10 +145,71 @@ get_header();
                         <p class="succes"><?= get_field('password_confirm_description'); ?></p>
                     </label>
                 <?php endif;?>
+<<<<<<< HEAD
+=======
 
                 <?php if ($submit_button_text): ?>
-                    <button class="submit"><?= $submit_button_text; ?></button>
+                    <!-- <button class="submit"><?= $submit_button_text; ?></button> -->
+                    <button class="submit">Зарегистрироваться</button>
                 <?php endif; ?>
+                <span id="show_auth" style="margin-top: 20px; font-size: 18px; cursor: pointer;">Войти</span>
+                </form>
+                
+                
+                <!-- <form action="/mail.php" method="post" class="reg reg__form" style=""> -->
+                <form  method="post" id="auth_send">
+                <div class="contact__blocktitle">
+                    Вход
+                </div>
+                <?php
+                $name_placeholder = get_field('name_placeholder');
+                $phone_number_placeholder = get_field('phone_number_placeholder');
+                $email_placeholder = get_field('email_placeholder');
+                $entity_placeholder = get_field('entity_placeholder');
+                $region_placeholder = get_field('region_placeholder');
+                $domain_placeholder = get_field('domain_placeholder');
+                $login_placeholder = get_field('login_placeholder');
+                $password_placeholder = get_field('password_placeholder');
+                $password_confirm_placeholder = get_field('password_confirm_placeholder');
+                $submit_button_text = get_field('submit_button_text');
+                ?>
+
+                <input type="hidden" value="participation" name="type">
+
+                <?php if ($login_placeholder): ?>
+                    <label class="placeholder">
+                        <input class="input textup input-login" type="text" name="Логин">
+                        <span>Логин</span>
+                        <!-- <span><?= $login_placeholder; ?></span> -->
+                        <!-- <p class="info"><?= get_field('login_description'); ?></p> -->
+                    </label>
+                <?php endif;?>
+
+                <?php if ($password_placeholder): ?>
+                    <label class="placeholder">
+                        <input class="input input-forpass textup passwordone input-password" type="password" name="Пароль">
+                        <span>Пароль</span>
+                        <!-- <span><?= $password_placeholder; ?></span> -->
+                        <div class="eye">
+                            <svg class="icon__eyepass" width="20px" height="20px">
+                                <use xlink:href="#eyepass"></use>
+                            </svg>
+                        </div>
+                        <div class="eyenot eye_active">
+                            <svg class="icon__eyepassnot" width="20px" height="20px">
+                                <use xlink:href="#eyepassnot"></use>
+                            </svg>
+                        </div>
+                        <!-- <p class="info"><?= get_field('password_description'); ?></p> -->
+                    </label>
+                <?php endif;?>
+>>>>>>> 66ad1c599ab8303be1d9fbfd14350d0fbf8089c1
+
+                <?php if ($submit_button_text): ?>
+                    <!-- <button class="submit"><?= $submit_button_text; ?></button> -->
+                    <button class="submit">Войти</button>
+                <?php endif; ?>
+<<<<<<< HEAD
                 <span id="show_auth" style="margin-top: 20px; font-size: 18px; cursor: pointer;">Войти</span>
                 </form>
                 
@@ -205,6 +266,8 @@ get_header();
                     <!-- <button class="submit"><?= $submit_button_text; ?></button> -->
                     <button class="submit">Войти</button>
                 <?php endif; ?>
+=======
+>>>>>>> 66ad1c599ab8303be1d9fbfd14350d0fbf8089c1
                 <span id="show_reg" style="margin-top: 20px; font-size: 18px; cursor: pointer;">Регистрация</span>
                 </form>
         </div>

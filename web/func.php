@@ -106,6 +106,7 @@ if(isset($_GET['func'])){
         case 'exit_from_site':
 
             setcookie("id","", time() - 3600, "/", "", 0);
+            header("Location: http://rec.test/auth/"); 
             break;
     }   
 }

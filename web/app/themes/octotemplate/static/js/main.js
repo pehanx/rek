@@ -565,6 +565,18 @@ $(function(){
 			},500);
 		});
 
+<<<<<<< HEAD
+=======
+
+	$("#to_past_events").on('click',function(){
+		window.location = "http://" + window.location.hostname + "/past-sobytiya/";
+	});
+
+	$("#to_events").on('click',function(){
+		window.location = "http://" + window.location.hostname + "/sobytiya/";
+	});
+
+>>>>>>> 66ad1c599ab8303be1d9fbfd14350d0fbf8089c1
 	//Авторизация
 		$("#auth_send").submit(function(event){
 		event.preventDefault();
