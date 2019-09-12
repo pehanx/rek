@@ -147,7 +147,8 @@ get_header();
                 <?php endif;?>
 
                 <?php if ($submit_button_text): ?>
-                    <button class="submit"><?= $submit_button_text; ?></button>
+                    <!-- <button class="submit"><?= $submit_button_text; ?></button> -->
+                    <button class="submit">Зарегистрироваться</button>
                 <?php endif; ?>
                 <span id="show_auth" style="margin-top: 20px; font-size: 18px; cursor: pointer;">Войти</span>
                 </form>
@@ -184,7 +185,7 @@ get_header();
 
                 <?php if ($password_placeholder): ?>
                     <label class="placeholder">
-                        <input class="input input-forpass textup passwordone input-password" type="Пароль" name="Пароль">
+                        <input class="input input-forpass textup passwordone input-password" type="password" name="Пароль">
                         <span>Пароль</span>
                         <!-- <span><?= $password_placeholder; ?></span> -->
                         <div class="eye">
