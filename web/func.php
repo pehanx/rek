@@ -40,11 +40,8 @@ if(isset($_GET['func'])){
             $words_typeParty = explode(" ", $typeParty);
             $typeParty = $words_typeParty[0];
 
-            $options_pass = [
-                'salt' => 'asdasd76879asd12qedas12edcasDacsdxas90-0655651zsdqwaxz',
-                'cost' => 12 
-            ];
-            $pass = password_hash($pass, PASSWORD_DEFAULT, $options_pass);
+            
+            $pass = password_hash($pass, PASSWORD_DEFAULT);
 
             require_once 'wp/wp-load.php';
             global $wpdb;
