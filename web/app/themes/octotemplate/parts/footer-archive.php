@@ -6,9 +6,10 @@ if ($line_in_footer && !$line_in_footer['hide']): ?>
             <div class="inclub__text">
                 <?= $line_in_footer['title']; ?>
             </div>
-            <a href="javascript:;" class="inclub__button popupopen">
+            <!-- <a href="javascript:;" class="inclub__button popupopen">
                 <?= $line_in_footer['button_text']; ?>
-            </a>
+            </a> -->
+            <a href="javascript:void(0);" class="inclub__button to_auth_page"><?= $line_in_footer['button_text']; ?></a>
         </div>
     </section>
 <?php endif; ?>

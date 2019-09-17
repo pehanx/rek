@@ -179,7 +179,7 @@ function shorten_text($text, $max_length = 140, $cut_off = '...', $keep_word = t
  * Проверка авторизован ли пользователь
  */
 function isAuth() {
-    if(isset($_COOKIE['id'])){
+    if(isset($_SESSION['user_id'])){   
         return true;
     }else{
         return false;

@@ -21,7 +21,8 @@ get_header();
                                 <div class="headblock__title">
                                     <h1 class="title"><?= $block['title']; ?></h1>
                                     <p class="text"><?= $block['description']; ?></p>
-                                    <a href="" class="popupopen"><?= $block['button_text']; ?></a>
+                                    <!-- <a href="" class="popupopen"><?= $block['button_text']; ?></a> -->
+                                    <a href="javascript:void(0);" class="to_auth_page"><?= $block['button_text']; ?></a>
                                 </div>
                                 <?php
                                 $background_image = $block['background_image'];
@@ -269,7 +270,7 @@ get_header();
                                 <div class="inclub__text">
                                     <?= $block['title']; ?>
                                 </div>
-                                <a href="javascript:;" class="inclub__button popupopen"><?= $block['button_text']; ?></a>
+                                <a href="javascript:void(0);" class="inclub__button to_auth_page"><?= $block['button_text']; ?></a>
                             </div>
                         </section>
 

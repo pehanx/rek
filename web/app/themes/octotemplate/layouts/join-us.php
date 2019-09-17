@@ -9,8 +9,8 @@
  * @package wptemplate
  *
  */
-if(isset($_COOKIE['id'])){
-    header("Location: http://".$_SERVER['SERVER_NAME']."/404"); 
+if(isAuth()){
+    header("Location: http://".$_SERVER['SERVER_NAME']); 
     exit; 
 }
 
@@ -101,7 +101,7 @@ get_header();
                     <p class="info" id="infoTypeParty"></p>
                 </label>  
                 <input type="hidden" value="participation" name="type">
-
+                
                 <?php if ($login_placeholder): ?>
                     <label class="placeholder">
                         <input class="input textup input-login" type="text" name="Логин">
