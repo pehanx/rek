@@ -40,7 +40,6 @@ if(isset($_GET['func'])){
             $words_typeParty = explode(" ", $typeParty);
             $typeParty = $words_typeParty[0];
 
-            
             $pass = password_hash($pass, PASSWORD_DEFAULT);
 
             require_once 'wp/wp-load.php';
