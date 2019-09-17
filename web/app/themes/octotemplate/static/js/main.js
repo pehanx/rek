@@ -457,7 +457,6 @@ $(function(){
 		}
 	});
 
-
 	$('.search-open').on('click',function(e){
 		e.preventDefault();
 		$('.searchforheader').toggleClass('searchopen');
@@ -573,25 +572,56 @@ $(function(){
 		window.location = "http://" + window.location.hostname + "/sobytiya/";
 	});
 
-	//Авторизация
+		//Авторизация
 		$("#auth_send").submit(function(event){
 		event.preventDefault();
-		var data = $(this).serialize();
+		var form = $(this);
+		$(this).find('.input').removeClass('error-input');
+		$(this).find('.input').removeClass('succes-input');
+		$(this).find('.info').removeClass('info-error');
+		$(this).find('.info').removeClass('info-succes');
+		var error = 0;
+		var regpass = /^[a-zA-Z0-9]+$/;
+	    var reglogin = /^[A-Za-z0-9_\-\.]+$/;
+	    if($.trim($(this).find('.input-login').val()).length>0){
+	    	$(this).find('.input-login').addClass('succes-input');
+	    	$(this).find('.input-login').parent().find('.info').addClass('info-succes');
+	    }else{
+	    	$(this).find('.input-login').addClass('error-input');
+	    	$(this).find('.input-login').parent().find('.info').addClass('info-error');
+	    	error++;
+	    }
+	    if($.trim($(this).find('.input-password').val()).length>0){
+	    	$(this).find('.input-password').addClass('succes-input');
+	    	$(this).find('.input-password').parent().find('.info').addClass('info-succes');
+	    }else{
+	    	$(this).find('.input-password').addClass('error-input');
+	    	$(this).find('.input-password').parent().find('.info').addClass('info-error');
+	    	error++;
+	    }
+	    if(error == 0){
+			var data = $(this).serialize();
 			$.ajax({
 			  url: "/func.php?func=authorization",
 			  type: "POST",
 			  data: data,
+			  cache:false,
 			  	success: function(result) {
-				  	$("#error_auth").html(result);
-				  	if(!result){
+				  	if(result.length < 2){
 			  		 	setTimeout(function() {
-						  window.location = "http://"+document.location.host;
+			  		 	  if(!$.cookie('event_link')){
+			  		 	  	window.location = "http://"+document.location.host;
+			  		 	  }else{
+			  		 	  	window.location = $.cookie('event_link');
+			  		 	  	$.removeCookie('event_link', { path: '/' });
+			  		 	  }
 						}, 500);
 				  	}else{
 				  		alert(result);
 				  	}
 			 	}
 			});
+		}
 		});
 
 		//Регистрация
@@ -606,7 +636,7 @@ $(function(){
 		var regemail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 		var regpass = /^[a-zA-Z0-9]+$/;
 	    var reglogin = /^[A-Za-z0-9_\-\.]+$/;
-	    if($(this).find('.input-name').val().length>0){
+	    if( $.trim($(this).find('.input-name').val()).length > 0){
 	    	$(this).find('.input-name').addClass('succes-input');
 	    	$(this).find('.input-name').parent().find('.info').addClass('info-succes');
 	    }else{
@@ -614,7 +644,7 @@ $(function(){
 	    	$(this).find('.input-name').parent().find('.info').addClass('info-error');
 	    	error++;
 	    }
-	    if($(this).find('.input-tel').val().length>16){
+	    if($.trim($(this).find('.input-tel').val()).length>16){
 	    	$(this).find('.input-tel').addClass('succes-input');
 	    	$(this).find('.input-tel').parent().find('.info').addClass('info-succes');
 	    }else{
@@ -622,7 +652,7 @@ $(function(){
 	    	$(this).find('.input-tel').parent().find('.info').addClass('info-error');
 	    	error++;
 	    }
-	    if($(this).find('.input-company').val().length>0){
+	    if($.trim($(this).find('.input-company').val()).length>0){
 	    	$(this).find('.input-company').addClass('succes-input');
 	    	$(this).find('.input-company').parent().find('.info').addClass('info-succes');
 	    }else{
@@ -664,7 +694,7 @@ $(function(){
 			  type: "POST",
 			  data: data,
 			  	success: function(result) {
-			  		if(!result){
+			  		if(result.length < 2){
 					  	$(this).find('.input').val('');
 						$(this).find('.input').removeClass('error-input');
 						$(this).find('.input').removeClass('succes-input');
@@ -709,5 +739,62 @@ $(function(){
 				}, 500);
 		 	}
 		});
+	});
+
+	//Фильтр для событий
+	$("#place_event").change(function() {
+		var place_event_val = $(this).children("option:selected").val();
+		if(place_event_val){
+			$.ajax({
+				url: "/func.php?func=show_events_list_place",
+				type: "POST",
+				data: {place_for_query : place_event_val},
+			  	success: function(result) {
+			  		if(result) 
+			  			$(".events_list").html(result);
+			  		else 
+			  			document.location.reload(true);
+			 	}
+			});
+		}else document.location.reload(true);
+	});
+
+	//Фильтр для прошедших событий
+	$("#place_past_event").change(function() {
+		var place_past_event_val = $(this).children("option:selected").val();
+		if(place_past_event_val){
+			$.ajax({
+				url: "/func.php?func=show_past_events_list_place",
+				type: "POST",
+				data: {place_for_query_past : place_past_event_val},
+			  	success: function(result) {
+			  		if(result) 
+			  			$(".past_events_list").html(result);
+			  		else 
+			  			document.location.reload(true);
+			 	}
+			});
+		}else document.location.reload(true);
+	});
+	
+	//redirect с "Вступлениев в клуб" на авторизацию
+	$('.to_auth_page').on('click',function(){
+		window.location = "http://"+document.location.host+"//vstuplenie-v-klub/";
+	});
+
+	//redirect с ссылки на авторизацию
+	$('.to_auth_page_of_event').on('click',function(){
+		var event_link = window.location;
+		var hostname = document.location.host;
+		$.ajax({
+				url: "/func.php?func=set_event_link",
+				type: "POST",
+				data: 'host='+hostname+'&event_link_to='+event_link,
+				cache:false,
+			  	success: function(result) {
+			  		window.location.assign(result);
+
+			 	}
+			});
 	});
 });

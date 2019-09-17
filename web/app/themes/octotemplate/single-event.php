@@ -15,6 +15,9 @@ get_header();
         $duration = get_field('duration');
         $place = get_field('place');
         $place_link = get_field('place_link');
+        $sticky_event = get_field('sticky_event');
+        $link_sign = get_field('link_sign');
+
 
         $footer_info = get_field('footer_info');
         ?>
@@ -36,11 +39,17 @@ get_header();
 					<div class="description__date">
 						<?= $event_date; ?>
 					</div>
-                    <a href="javascript:;"
-                       class="button popup-join-open"
-                       data-title="<?= get_the_title(); ?>">
-                        <?= pll__('Записаться'); ?>
-                    </a>
+
+                    <?php if ($link_sign): ?>
+
+                        <a href="<?= $link_sign; ?>"
+                           class="button "
+                           data-title="<?= get_the_title(); ?>">
+                            <?= pll__('Записаться'); ?>
+                        </a>
+
+                    <?php endif; ?>
+                    
 				</div>
 			</div>
 		</section>
@@ -66,7 +75,9 @@ get_header();
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
-
+                    <?php
+                    $field = get_field_object('place');
+                    ?>
                     <?php if ($place): ?>
                         <div>
                             <div class="eventpage__titlehead">
@@ -84,6 +95,7 @@ get_header();
                                 </a>
                             <?php endif; ?>
                         </div>
+
 
                     <?php endif; ?>
 					<?if ($additional_info):?>
@@ -112,7 +124,15 @@ get_header();
 
         <section class="typical">
             <div class="typical__wrapp">
-                <?php the_content(); ?>
+                <?php if(isAuth()):?>
+                    <?php the_content(); ?>
+                <?php else:?>
+                    <p>
+                    Что бы получить доступ к более подробной информации и к контактам данного мероприятия, Вам необходимо зарегистрироваться/авторизоваться на нашем сайте. И стать полноценным членом Российского Экспортного Клуба. 
+                    <!-- <a href="http://russianexport.club/vstuplenie-v-klub/">Вступить</a> -->
+                    <a href="javascript:void(0);" class="to_auth_page_of_event">Вступить</a>
+                    </p>
+                <?php endif;?>
             </div>
         </section>
 

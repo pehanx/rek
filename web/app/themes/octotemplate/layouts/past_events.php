@@ -1,6 +1,6 @@
 <?php
 /*
- * Template Name: Прошедшие события
+ * Template Name: Прошедшие обытия
  *
  * Template Post Type: page
  *
@@ -11,64 +11,8 @@
  */
 
 get_header();
+
 $paged = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
-
-$wp_query = new WP_Query([
-    'post_type' => 'event',
-    'posts_per_page' => EVENTS_PER_PAGE,
-    'paged' => $paged,
-    'meta_query' => array(
-        array(
-            'key' => 'start_date',
-            'value' => date('Ymd'),
-            'compare' => '<='
-        ),
-    ),
-    'meta_key' => 'start_date',
-    'orderby' => 'meta_value_num',
-    'order' => 'DESC'
-]);
-
-// $query_select_events = "SELECT *
-//                         FROM (SELECT *, 0 as ordinal
-//                         FROM `wp_posts` inner join wp_postmeta on wp_posts.id = wp_postmeta.post_id
-//                         WHERE 
-//                         `post_type` = 'event' AND wp_postmeta.meta_key = 'start_date' AND 
-//                         meta_value > now()
-//                         order by meta_value
-//                         ) AS A1
-
-//                         UNION ALL
-
-//                         SELECT *
-//                         FROM (SELECT *, 1 as ordinal
-//                         FROM `wp_posts` inner join wp_postmeta on wp_posts.id = wp_postmeta.post_id
-//                         WHERE 
-//                         `post_type` = 'event' AND wp_postmeta.meta_key = 'start_date' AND 
-//                         meta_value < now() 
-//                         order by meta_value desc
-//                         ) AS A2
-//                         LIMIT $start,$end";
-
-// $query2 = (array(
-//     'post_type' => 'event',
-//     // 'posts_per_page' => EVENTS_PER_PAGE - $wp_query1->post_count,
-//     'posts_per_page' => -1,
-//     'paged' => $paged,
-//     // 'posts_per_page' => 7 - $wp_query1->post_count,
-
-//     'meta_query' => array(
-//         array(
-//             'key' => 'start_date',
-//             'value' => date('Ymd'),
-//             'compare' => '<='
-//         ),
-//     ),
-//     'meta_key' => 'start_date',
-//     'orderby' => 'meta_value_num',
-//     'order' => 'DESC'
-// ));
-
 
 $query1 = new WP_Query([
     'post_type' => 'event',
@@ -81,31 +25,114 @@ $query1 = new WP_Query([
         ),
     )
 ]);
-$counter = 0;
+
 ?>
     <section class="news__titleblock">
     <div class="news__titleblockwrapp">
     <h1 class="news__titletitle title">
         <?= get_the_title(); ?>
     </h1>
-    <div class="btn_calendar">
-        <a href="" class="calendaropen">Календарь</a>
-    </div>
-    <?php 
-    $events_cal = '['; 
-       if($query1->have_posts()){
-           while($query1->have_posts()){
-               $query1->the_post();
-               $events_cal .= '{ "date": "'.get_field('start_date').' 00:00:00", "title": "'.get_the_title().'", "description": "" , "url": "'.get_permalink().'"
-                   },';
-           }
-      }
-    $events_cal .= ']';
-    ?>
-    <div class="calendar_bg">
-        <div id="eventCalendar" class="Calendar">
+    
+    <?php if($paged === 1):?>
+        <div class="btn_calendar">
+            <a href="" class="calendaropen">Календарь</a>
+            <br>
+            <?php echo $sas = isAuth(); ?>
         </div>
+
+        <?php 
+        $events_cal = '['; 
+           if($query1->have_posts()){
+               while($query1->have_posts()){
+                   $query1->the_post();
+                   $events_cal .= '{ "date": "'.get_field('start_date').' 00:00:00", "title": "'.get_the_title().'", "description": "" , "url": "'.get_permalink().'"
+                       },';
+               }
+          }
+        $events_cal .= ']';
+        ?>
+        <div class="calendar_bg">
+            <div id="eventCalendar" class="Calendar">
+            </div>
+        </div>
+
+        <?php
+                $added = array();
+                $args = array(
+                    'post_type' => 'event',
+                    'posts_per_page' => -1,
+                    'meta_query' => array(
+                        'key1' => array(
+                            'key' => 'start_date',
+                            'value' => date('Ymd'),
+                            'compare' => '<='
+                        ),
+                        'key2' => array(
+                            'key' => 'place',
+                        ),
+                    ),
+                );      
+
+                $query_select_events = new WP_Query( $args ); 
+        ?>
+
+        
+                <?php if($query_select_events->have_posts()):?>
+                    <div class="contact__wrapp">
+                    <div class="contact__block" style="margin-bottom: 0px; padding: 30px">                                            
+                    <form>
+                        <label class="placeholder" style="margin-bottom: 0px">
+                            <select name="Местоположение" id="place_past_event" class="input textup select" style="padding-top: 15px; padding-bottom: 15px">
+                            <option value="">Выберите регион</option>
+                        <?php
+                        while($query_select_events->have_posts()):
+                            $query_select_events->the_post();
+                            if(empty(get_field('place')))
+                                continue;
+                                $country = get_field('place');
+
+                            if( in_array($country, $added) )
+                            {
+                                continue;
+                            }
+
+                            $added[] = $country;
+                            echo "<option>".$country."</option>";
+                        endwhile;
+                    endif;
+                ?>
+                </select>
+            </label> 
+        </form>
+        </div>
+        </div>
+    <?php endif;?>
+
+
     </div>
+    </section>
+    <section class="news__news past_events_list">
+    
+    <?php
+    
+
+    $wp_query = new WP_Query([
+        'post_type' => 'event',
+        'posts_per_page' => EVENTS_PER_PAGE,
+        'paged' => $paged,
+        'meta_query' => array(
+            array(
+                'key' => 'start_date',
+                'value' => date('Ymd'),
+                'compare' => '<='
+            ),
+        ),
+        'meta_key' => 'start_date',
+        'orderby' => 'meta_value_num',
+        'order' => 'DESC'
+    ]);
+    $counter = 0;?>
+
     <?php if ( have_posts() ) : ?>
         <!-- <div class="news__titlecontainer"> -->
             <div class="news__container" style="margin-top: 70px">
@@ -152,9 +179,9 @@ $counter = 0;
                     </a>
                 </div>
              </div>
-                    </div>
-                </section>
-                <section class="news__news">
+                    <!-- </div>
+                </section> -->
+                <!-- <section class="news__news"> -->
                         <!-- <div class="news__container"> -->
                         <div class="news__titlecontainer" >
             <?php elseif (($counter === 1) or ($counter === 2) ):
@@ -235,12 +262,12 @@ $counter = 0;
     <?php if ($wp_query->max_num_pages > 1) :
         pagination($wp_query->max_num_pages, 3); ?>
     <?php endif; ?>
+    </section>
     <div class="news__containerpaggination">
         <span id="to_events" style="cursor: pointer;">
-            <a>Cобытия</a>
+            <a>События</a>
         </span>
     </div>
-</section>
 <script type="text/javascript">
        var data_cal = <?php echo $events_cal; ?>
    </script>

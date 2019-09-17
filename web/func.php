@@ -1,10 +1,12 @@
 <?php
 require_once 'wp/wp-load.php';
     global $wpdb;
+    session_start();
 
-    if(isset($_COOKIE['id'])){
-        $my_id = $_COOKIE['id'];
-    }
+
+    // if(isset($_COOKIE['user_id'])){
+    //     $my_id = $_COOKIE['user_id'];
+    // }
     
 
     $table_clients = $wpdb->get_blog_prefix() . 'clients';
@@ -28,14 +30,21 @@ if(isset($_GET['func'])){
             $fio = $_POST['ФИО'];
             $tel = $_POST['Телефон'];
             $email = $_POST['Почта'];
-            // $company = $_POST['Компания'];
             $company = $_POST['Юридическое_лицо'];
-            // $job = $_POST['Должность'];
             $region = $_POST['Регион'];
             $sphere = $_POST['Направление'];
             $typeParty = $_POST['Тип_участника'];
             $login = $_POST['Логин'];
             $pass = $_POST['Пароль'];
+
+            $words_typeParty = explode(" ", $typeParty);
+            $typeParty = $words_typeParty[0];
+
+            $options_pass = [
+                'salt' => 'asdasd76879asd12qedas12edcasDacsdxas90-0655651zsdqwaxz',
+                'cost' => 12 
+            ];
+            $pass = password_hash($pass, PASSWORD_DEFAULT, $options_pass);
 
             require_once 'wp/wp-load.php';
             global $wpdb;
@@ -92,22 +101,139 @@ if(isset($_GET['func'])){
             global $wpdb;
 
             //Проверка на существование пользователя
-            $check_login_pass = $wpdb->get_row( " SELECT * FROM {$table_clients} WHERE login = '$login' AND pass = '$pass'");
+            $check_login_pass = $wpdb->get_row( " SELECT * FROM {$table_clients} WHERE login = '$login'");
 
             if(empty($check_login_pass)){
                 echo "Вы неправильно ввели логин или пароль";
             }else{
-                setcookie("id", $check_login_pass->id, time()+3600*30, "/"); 
+                if (password_verify($pass, $check_login_pass->pass)){
+                    $_SESSION["user_id"] = $check_login_pass->id;
+                }else{
+                   echo "Вы неправильно ввели логин или пароль"; 
+                }
+                
             }
-
         break;
 
         //Выход из сайта
         case 'exit_from_site':
+            // setcookie("user_id","", time() - (86400 * 30), "/", "", 0);
+            unset($_SESSION["user_id"]);
+            setcookie("event_link","", time() - (1800), "/", "", 0);
+        break;
 
-            setcookie("id","", time() - 3600, "/", "", 0);
-            break;
+        //Фильтр для событий
+        case 'show_events_list_place':
+            $place = $_POST['place_for_query'];
+                $wp_query = new WP_Query([
+                    'post_type' => 'event',
+                    'meta_query' => array(
+                        array(
+                            'key' => 'start_date',
+                            'value' => date('Ymd'),
+                            'compare' => '>'
+                        ),
+                        array(
+                            'key' => 'place',
+                            'value' => $place,
+                        ),
+                    )
+                ]);
+
+                if( have_posts() ) : ?>
+                    <div class="news__container" style="margin-top: 70px">
+                    <?php 
+                        while ( have_posts()) :
+                            the_post();
+                            event_list_by_place();
+                        endwhile; 
+                    ?>
+                    </div>
+                <?php endif;?> 
+        <?php
+        break;
+
+        //Фильтр для прошедших событий
+        case 'show_past_events_list_place':
+            $place_past = $_POST['place_for_query_past'];
+                $wp_query = new WP_Query([
+                    'post_type' => 'event',
+                    'meta_query' => array(
+                        array(
+                            'key' => 'start_date',
+                            'value' => date('Ymd'),
+                            'compare' => '<='
+                        ),
+                        array(
+                            'key' => 'place',
+                            'value' => $place_past,
+                        ),
+                    )
+                ]);
+
+                if( have_posts() ) : ?>
+                    <div class="news__container" style="margin-top: 70px">
+                    <?php 
+                        while ( have_posts()) :
+                            the_post();
+                            event_list_by_place();
+                        endwhile; 
+                    ?>
+                    </div>
+                <?php endif;?> 
+        <?php
+        break;
+
+        //Установка cookie для перехода к событию после авторизацию
+        case 'set_event_link':
+
+            $event_link_to = $_POST['event_link_to'];
+            setcookie("event_link", $event_link_to, time() + (1800), "/"); 
+            $host = $_POST['host'];
+            echo "http:/".$host."/vstuplenie-v-klub/";
+        break;
     }   
 }
   
+?>
+
+<?php 
+//functions
+function event_list_by_place(){
+?>
+<div>
+    <a href="<?= get_permalink(); ?>" class="news__item link-hover-down">
+        <div class="news__img 
+            <?php if(get_field('end_date')):?>
+                <?php if(get_field('end_date') < date_i18n('Y-m-d')):?>
+                    <?php echo 'filter_gray'; ?>
+                <?php endif;?>
+            <?php else:?>
+                 <?php if(get_field('start_date') < date_i18n('Y-m-d')):?>
+                    <?php echo 'filter_gray'; ?>
+                <?php endif;?>
+            <?php endif;?>">
+
+            <?php
+            $image = get_post_image(get_queried_object_id());
+            if ($image): ?>
+                <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
+            <?php endif; ?>
+            <div class="news__img__bg"></div>
+        </div>
+        <div class="news__title title">
+            <div>
+                <span class="news__date">
+                     <?=get_field('event_date'); ?>
+                </span>
+                <br>
+                <span class="underline-hover-link">
+                    <?= get_the_title(); ?>
+                </span>
+            </div>
+        </div>
+    </a>
+</div>
+<?php
+}
 ?>

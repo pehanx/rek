@@ -1,4 +1,5 @@
 <?php
+session_start();
 /**
  * The header for our theme
  *

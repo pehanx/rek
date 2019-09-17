@@ -25,7 +25,7 @@ if ($header_menu): ?>
         </div>
         <div class="menu__links">
             <?php foreach ($header_menu as $menu_element): ?>
-            <?php if(isset($_COOKIE['id']))
+            <?php if(isAuth())
                     if($menu_element['title']=="ВСТУПИТЬ")
                         continue;?>
                 <a href="<?= $menu_element['link']; ?>"
@@ -36,7 +36,8 @@ if ($header_menu): ?>
                     <?= $menu_element['title']; ?>
                 </a>
             <?php endforeach; ?>
-            <?php if(isset($_COOKIE['id'])):?>
+            
+            <?php if(isAuth()):?>
                 <a href="javascript:void(0);" class="menu__link exit_from_site">ВЫЙТИ</a>
             <?php endif;?>
 
@@ -61,12 +62,12 @@ if ($header_menu): ?>
 </section>
 <div class="dropdown">
     <?php foreach ($header_menu as $menu_element): ?>
-        <?php if(isset($_COOKIE['id']))
+        <?php if(isAuth())
                 if($menu_element['title']=="ВСТУПИТЬ")
                     continue;?>
         <a href="<?= $menu_element['link']; ?>" class="<?= $menu_element['active'] ? ' active' : ''; ?>"><?= $menu_element['title']; ?></a>
     <?php endforeach; ?>
-    <?php if(isset($_COOKIE['id'])):?>
+    <?php if(isAuth()):?>
         <a href="javascript:void(0);" class="exit_from_site">ВЫЙТИ</a>
     <?php endif;?>
 
