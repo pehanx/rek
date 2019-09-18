@@ -144,8 +144,8 @@ $query1 = new WP_Query([
         )
     ),
     'orderby' => array(
-        'date'       => 'ASC',
         'sticky'     => 'DESC',
+        'date'       => 'ASC',
     )
 
 
