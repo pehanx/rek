@@ -782,7 +782,6 @@ $(function(){
 		$.ajax({
 				url: "/func.php?func=check_auth",
 				type: "POST",
-				cache:false,
 			  	success: function(result) {
 			  		if(result.length<2)
 			  		{
