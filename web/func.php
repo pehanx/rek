@@ -124,15 +124,21 @@ if(isset($_GET['func'])){
                 $wp_query = new WP_Query([
                     'post_type' => 'event',
                     'meta_query' => array(
-                        array(
+                    array(
+                        'relation' => 'AND',
+                        'date' =>    array(
                             'key' => 'start_date',
                             'value' => date('Ymd'),
                             'compare' => '>'
                         ),
-                        array(
+                        'place' => array(
                             'key' => 'place',
                             'value' => $place,
                         ),
+                    )
+                ),
+                    'orderby' => array(
+                        'date'       => 'ASC',
                     )
                 ]);
 
@@ -155,15 +161,21 @@ if(isset($_GET['func'])){
                 $wp_query = new WP_Query([
                     'post_type' => 'event',
                     'meta_query' => array(
-                        array(
+                    array(
+                        'relation' => 'AND',
+                        'date' =>    array(
                             'key' => 'start_date',
                             'value' => date('Ymd'),
                             'compare' => '<='
                         ),
-                        array(
+                        'place' => array(
                             'key' => 'place',
                             'value' => $place_past,
                         ),
+                    )
+                ),
+                    'orderby' => array(
+                        'date'       => 'ASC',
                     )
                 ]);
 

@@ -117,18 +117,6 @@ $query1 = new WP_Query([
         'post_type' => 'event',
         'posts_per_page' => EVENTS_PER_PAGE,
         'paged' => $paged,
-        // 'meta_query' => array(
-        //     array(
-        //         'key' => 'start_date',
-        //         'value' => date('Ymd'),
-        //         'compare' => '>'
-        //     ),
-        // ),
-        // 'meta_key' => 'start_date',
-        // 'orderby' => 'meta_value_num',
-        // 'order' => 'ASC'
-
-
         'meta_query'    => array(
         array(
             'relation' => 'AND',
@@ -144,11 +132,9 @@ $query1 = new WP_Query([
         )
     ),
     'orderby' => array(
-        'date'       => 'ASC',
         'sticky'     => 'DESC',
+        'date'       => 'ASC',
     )
-
-
 
     ]);
     $counter = 0;?>
