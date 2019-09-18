@@ -6277,7 +6277,8 @@ body {
 }
 
 .news__items > div:nth-child(4n-3) .news__img img, .news__items > div:nth-child(4n) .news__img img {
-  height: 100%;
+  /*height: 100%;*/
+  height:570px;
 }
 
 .news__items > div:nth-child(4n-3) .news__title, .news__items > div:nth-child(4n) .news__title {
