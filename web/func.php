@@ -200,6 +200,15 @@ if(isset($_GET['func'])){
             $host = $_POST['host'];
             echo "http:/".$host."/vstuplenie-v-klub/";
         break;
+
+        case 'check_auth':
+
+            if(isAuth())
+            {
+                echo "Вы уже вступили в клуб";
+            }
+
+            break;
     }   
 }
   

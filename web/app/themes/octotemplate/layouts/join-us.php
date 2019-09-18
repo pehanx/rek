@@ -9,12 +9,13 @@
  * @package wptemplate
  *
  */
-if(isAuth()){
-    header("Location: http://".$_SERVER['SERVER_NAME']); 
-    exit; 
-}
-
 get_header();
+if(isAuth()):?>
+    <script type="text/javascript">
+        window.location.assign("http://"+document.location.host);
+    </script>
+<?php endif;
+
 ?>
 <section class="contact">
     <div class="contact__bg"></div>

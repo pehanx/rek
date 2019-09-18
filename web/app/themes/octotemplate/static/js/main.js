@@ -779,10 +779,22 @@ $(function(){
 	
 	//redirect с "Вступлениев в клуб" на авторизацию
 	$('.to_auth_page').on('click',function(){
-		window.location = "http://"+document.location.host+"//vstuplenie-v-klub/";
+		$.ajax({
+				url: "/func.php?func=check_auth",
+				type: "POST",
+				cache:false,
+			  	success: function(result) {
+			  		if(result.length<2)
+			  		{
+						window.location.assign("http://"+document.location.host+"//vstuplenie-v-klub/");
+			  		}else{
+			  			alert(result);
+			  		}
+			 	}
+			});
 	});
 
-	//redirect с ссылки на авторизацию
+	//redirect (с ссылки "Вступить" в описании события) -> (авторизация/Вступление в клуб)
 	$('.to_auth_page_of_event').on('click',function(){
 		var event_link = window.location;
 		var hostname = document.location.host;
@@ -793,7 +805,6 @@ $(function(){
 				cache:false,
 			  	success: function(result) {
 			  		window.location.assign(result);
-
 			 	}
 			});
 	});
