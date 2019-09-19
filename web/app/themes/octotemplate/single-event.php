@@ -95,9 +95,8 @@ get_header();
                                 </a>
                             <?php endif; ?>
                         </div>
-
-
                     <?php endif; ?>
+
 					<?if ($additional_info):?>
                     <?php foreach ($additional_info as $info): ?>
                         <div>

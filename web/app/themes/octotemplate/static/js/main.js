@@ -548,7 +548,7 @@ $(function(){
 				$('body').width(width);
 				$('.mailup').addClass('popupopacity');
 				$('.mailingbg').addClass('popupbgopacity');
-			},1000*3);
+			},1000*10);
 	}
 		$('.close-modal').on('click',function(){
 			$('.mailup').removeClass('popupopacity');
@@ -723,11 +723,13 @@ $(function(){
 				            }
 				        }
 				        http.send(null);
-				  		alert(params);
+
+						yaCounter55383022.reachGoal('order'); //Яндекс цель
+						mail_after_register(data);
 				  		alert("Вы успешно зарегистрировались\nМожете войти");
 			  		 	setTimeout(function() {
 						  // window.location = "http://"+document.location.host+"/vstuplenie-v-klub/";
-						  window.location = window.location.href;
+						  window.location = window.location.href;//
 						}, 500);
 				  	}else{
 				  		alert(result);
@@ -735,8 +737,23 @@ $(function(){
 			 	}
 
 			});
+			
 		}
 		});
+	//Отправка письма на почту при успешной регистрации
+	function mail_after_register(data){
+		$.ajax({
+				type: "POST",
+				url: "/mail.php",
+				data: data,
+				success: function (response) {
+
+				},
+				error: function (response) {
+					
+				},
+			});
+	}
 	
 	//Переключение между вкладками регистрация и вход	
 	$("#show_reg").on('click',function () {

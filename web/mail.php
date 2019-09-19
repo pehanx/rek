@@ -2,7 +2,8 @@
     require_once 'wp/wp-load.php';
 
     $to = "info@russianexport.club" ;//get_bloginfo('admin_email');
-    $from = "РЭК<info@russianexport.club>";
+    // $to_g2r_ru = "export@g2r.ru";//get_bloginfo('admin_email');
+    $from = "<info@russianexport.club>";
     $site = "РЭК";
     $subject = "";
 
@@ -22,9 +23,17 @@
 		$typeMessage = 'Заявка на участие в клубе';
 	} else if ($_POST['type'] == 'contact') {
 		$typeMessage = 'Сообщение из формы обратной связи';
-	}
+	}else if ($_POST['type'] == 'subscription') {
+        $typeMessage = 'Подписка на рассылку';
+    }else if ($_POST['type'] == 'register') {
+        $typeMessage = 'Регистрация в экспортном клубе';
+    }
 	
 	unset($_POST['type']);
+    unset($_POST['Логин']);
+    unset($_POST['Пароль']);
+    unset($_POST['Подтверждение_пароля']);
+    unset($_POST['Подтверждение_паролe12easdasdя']);
 	
     if (empty($_POST['js'])) {
         $mes= "<table style='width: 100%; background-color: #f8f8f8;'>";
@@ -45,15 +54,18 @@
         $subject = "=?utf-8?b?" . base64_encode($subject) . "?=";
 
         $boundary = "--".md5(uniqid(time()));
-        $mailheaders = "MIME-Version: 1.0;\r\n";
-        $mailheaders .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
-        $mailheaders .= "From: {$from} \r\n";
 
-        $multipart = "--$boundary\r\n";
-        $multipart .= "Content-Type: text/html; charset=\"utf-8\"\r\n";
-        $multipart .= "Content-Transfer-Encoding: 7bit\r\n";
-        $multipart .= "\r\n";
-        $multipart .= $mes;
+
+        // $mailheaders = "MIME-Version: 1.0;\r\n";
+        // $mailheaders .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
+        $mailheaders .= "Content-Type: text/html; charset=\"utf-8\"\r\n";
+        $mailheaders .= "From: РЭК {$from} \r\n";
+
+        // $multipart = "--$boundary\r\n";
+        // $multipart .= "Content-Type: text/html; charset=\"utf-8\"\r\n";
+        // $multipart .= "Content-Transfer-Encoding: 7bit\r\n";
+        // $multipart .= "\r\n";
+        $multipart = $mes;
 
         // $message_part = '';
         // if (is_uploaded_file($_FILES['usr_file']['tmp_name'])) {
@@ -77,6 +89,11 @@
             }else{
                 echo "Не отправлено";
             }
+            // if (mail($to_g2r_ru, $subject, $multipart, $mailheaders)) {
+            //     echo "Отправлено";
+            // }else{
+            //     echo "Не отправлено";
+            // }
         // }
         // else {
         //     echo "Размер всех файлов превышает 25 МБ";

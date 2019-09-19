@@ -17,7 +17,7 @@
                         <span>E-mail</span>
                         <p class="info">Укажите вашу электронную почту</p>
                     </label>
-                    <input type="hidden" value="participation" name="type">
+                    <input type="hidden" value="subscription" name="type">
                     <button class="submit">Подписаться</button>
                 </form>
             </div>
