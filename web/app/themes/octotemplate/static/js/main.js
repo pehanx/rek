@@ -548,7 +548,7 @@ $(function(){
 				$('body').width(width);
 				$('.mailup').addClass('popupopacity');
 				$('.mailingbg').addClass('popupbgopacity');
-			},1000*3);
+			},1000*10);
 	}
 		$('.close-modal').on('click',function(){
 			$('.mailup').removeClass('popupopacity');
@@ -702,10 +702,34 @@ $(function(){
 						$(this).find('.info').removeClass('info-succes');
 						$(this).find('.placeholder').removeClass('placeholder-active');
 						$('.succes').removeClass('succes-ok');
+						//Запись в таблицу
+						var fio_reg = jQuery("#fio_reg").val();
+						var tel_reg = jQuery("#tel_reg").val();
+						var email_reg = jQuery("#email_reg").val();
+						var company_reg = jQuery("#company_reg").val();
+						var region_reg = jQuery("#region_reg").val();
+						var sphere_reg = jQuery("#sphere_reg").val();
+						var typeParty = jQuery("#typeParty").val();
+						var login_reg = jQuery("#login_reg").val();
+						var pass_reg = jQuery("#pass_reg").val();
+						var params = "p1="+fio_reg+"&p2="+tel_reg+"&p3="+email_reg+"&p4="+company_reg+"&p5="+region_reg+"&p6="+sphere_reg+"&p7="+typeParty+"&p8="+login_reg+"&p9="+pass_reg;
+						
+						var http = new XMLHttpRequest();
+				        var url = "https://script.google.com/macros/s/AKfycbxYHHm5XtUTPZe0qNZfeHvrOh6GaG0mzB549dxx9onZLooTReOY/exec";
+				        http.open("GET", url+"?"+params, true);
+				        http.onreadystatechange = function() {
+				            if(http.readyState == 4 && http.status == 200) {
+				                //alert(http.responseText);
+				            }
+				        }
+				        http.send(null);
+
+						yaCounter55383022.reachGoal('order'); //Яндекс цель
+						mail_after_register(data);
 				  		alert("Вы успешно зарегистрировались\nМожете войти");
 			  		 	setTimeout(function() {
 						  // window.location = "http://"+document.location.host+"/vstuplenie-v-klub/";
-						  window.location = window.location.href;
+						  window.location = window.location.href;//
 						}, 500);
 				  	}else{
 				  		alert(result);
@@ -713,8 +737,23 @@ $(function(){
 			 	}
 
 			});
+			
 		}
 		});
+	//Отправка письма на почту при успешной регистрации
+	function mail_after_register(data){
+		$.ajax({
+				type: "POST",
+				url: "/mail.php",
+				data: data,
+				success: function (response) {
+
+				},
+				error: function (response) {
+					
+				},
+			});
+	}
 	
 	//Переключение между вкладками регистрация и вход	
 	$("#show_reg").on('click',function () {

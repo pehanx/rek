@@ -42,10 +42,6 @@ if(isset($_GET['func'])){
 
             $pass = password_hash($pass, PASSWORD_DEFAULT);
 
-            require_once 'wp/wp-load.php';
-            global $wpdb;
-            $charset_collate = "DEFAULT CHARACTER SET {$wpdb->charset} COLLATE {$wpdb->collate}";
-
             require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
             $sql = "CREATE TABLE {$table_clients} (
                 id int(11) unsigned NOT NULL auto_increment,
@@ -71,10 +67,10 @@ if(isset($_GET['func'])){
 
             if(!empty($check_login)){
                 echo "Пользователь с таким логином уже существует";
-            }elseif(!empty($check_email)){
+            }else if(!empty($check_email)){
                 echo "Пользователь с такой почтой уже зарегистрирован";
             }else{
-                // Вставить в таблицу
+                //Вставить в таблицу
                 $wpdb->insert($table_clients, array(
                 'fio' => $fio,
                 'tel' => $tel,
@@ -86,6 +82,9 @@ if(isset($_GET['func'])){
                 'login' => $login,
                 'pass' => $pass
                 ));
+
+                //Отправить на почту
+
             }
         break;
 
@@ -103,7 +102,7 @@ if(isset($_GET['func'])){
                 echo "Вы неправильно ввели логин или пароль";
             }else{
                 if (password_verify($pass, $check_login_pass->pass)){
-                    $_SESSION["user_id"] = $check_login_pass->id;
+                    $_SESSION["user_id"] = $check_login_pass->id; 
                 }else{
                    echo "Вы неправильно ввели логин или пароль"; 
                 }
