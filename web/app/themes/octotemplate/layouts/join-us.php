@@ -45,7 +45,7 @@ if(isAuth()):?>
 
                 <?php if ($name_placeholder): ?>
                     <label class="placeholder">
-                        <input class="input textup input-name" type="text" name="ФИО">
+                        <input class="input textup input-name" type="text" name="ФИО" id="fio_reg">
                         <span><?= $name_placeholder; ?></span>
                         <p class="info"><?= get_field('name_description'); ?></p>
                     </label>
@@ -53,7 +53,7 @@ if(isAuth()):?>
 
                 <?php if ($phone_number_placeholder): ?>
                     <label class="placeholder">
-                        <input class="input textup input-tel mask-for-input" type="text" name="Телефон">
+                        <input class="input textup input-tel mask-for-input" type="text" name="Телефон" id="tel_reg">
                         <span><?= $phone_number_placeholder; ?></span>
                         <p class="info"><?= get_field('phone_number_description'); ?></p>
                     </label>
@@ -61,7 +61,7 @@ if(isAuth()):?>
 
                 <?php if ($email_placeholder): ?>
                     <label class="placeholder">
-                        <input class="input textup input-email" type="text" name="Почта">
+                        <input class="input textup input-email" type="text" name="Почта" id="email_reg">
                         <span><?= $email_placeholder; ?></span>
                         <p class="info"><?= get_field('email_description'); ?></p>
                     </label>
@@ -69,7 +69,7 @@ if(isAuth()):?>
 
                 <?php if ($entity_placeholder): ?>
                     <label class="placeholder">
-                        <input class="input textup input-company" type="text" name="Юридическое_лицо">
+                        <input class="input textup input-company" type="text" name="Юридическое_лицо" id="company_reg">
                         <span><?= $entity_placeholder; ?></span>
                         <p class="info"><?= get_field('entity_description'); ?></p>
                     </label>
@@ -77,7 +77,7 @@ if(isAuth()):?>
 
                 <?php if ($region_placeholder): ?>
                     <label class="placeholder">
-                        <input class="input textup" type="text" name="Регион">
+                        <input class="input textup" type="text" name="Регион" id="region_reg">
                         <span><?= $region_placeholder; ?></span>
                         <p class="info"><?= get_field('region_description'); ?></p>
                     </label>
@@ -85,7 +85,7 @@ if(isAuth()):?>
 
                 <?php if ($domain_placeholder): ?>
                     <label class="placeholder">
-                        <input class="input textup" type="text" name="Направление">
+                        <input class="input textup" type="text" name="Направление" id="sphere_reg">
                         <span><?= $domain_placeholder; ?></span>
                         <p class="info"><?= get_field('domain_description'); ?></p>
                     </label>
@@ -105,7 +105,7 @@ if(isAuth()):?>
                 
                 <?php if ($login_placeholder): ?>
                     <label class="placeholder">
-                        <input class="input textup input-login" type="text" name="Логин">
+                        <input class="input textup input-login" type="text" name="Логин" id="login_reg">
                         <span><?= $login_placeholder; ?></span>
                         <p class="info"><?= get_field('login_description'); ?></p>
                     </label>
@@ -113,7 +113,7 @@ if(isAuth()):?>
 
                 <?php if ($password_placeholder): ?>
                     <label class="placeholder">
-                        <input class="input input-forpass textup passwordone input-password" type="password" name="Пароль">
+                        <input class="input input-forpass textup passwordone input-password" type="password" name="Пароль" id="pass_reg">
                         <span><?= $password_placeholder; ?></span>
                         <div class="eye">
                             <svg class="icon__eyepass" width="20px" height="20px">
