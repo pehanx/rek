@@ -38,7 +38,7 @@ get_header();
 					</div>
                     <a href="javascript:;"
                        class="button popup-join-open"
-                       data-title="<?= get_the_title(); ?>">
+                       data-title="<?= get_permalink(); ?>">
                         <?= pll__('Записаться'); ?>
                     </a>
 

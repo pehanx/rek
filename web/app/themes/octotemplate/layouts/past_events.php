@@ -81,7 +81,7 @@ $query1 = new WP_Query([
                     <div class="contact__wrapp">
                     <div class="contact__block" style="margin-bottom: 0px; padding: 30px">                                            
                     <form id="form_show_past_events">
-                        <label class="placeholder" style="margin-bottom: 0px">
+                        <label class="placeholder" style="margin-bottom: 20px;">
                             <select name="Местоположение" id="place_past_event" class="input textup select" style="padding-top: 15px; padding-bottom: 15px">
                             <option value="">Выберите регион</option>
                         <?php

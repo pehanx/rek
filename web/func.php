@@ -145,12 +145,11 @@ if(isset($_GET['func'])){
                         'place' => array(
                             'key' => 'place',
                             'value' => $place,
-                            'compare' => 'LIKE'
                         ),
                     )
                 ),
                     'orderby' => array(
-                        'date'       => 'ASC',
+                        'date' => 'ASC',
                     )
                 ]);
 

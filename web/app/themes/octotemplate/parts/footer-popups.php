@@ -181,6 +181,7 @@
                             <p class="info"><?= get_field('email_placeholder'); ?></p>
                         </label>
                     <?php endif; ?>
+                    <input type="hidden" value="sign_event" name="type">
                     <input class="input textup input-company" type="hidden" value="entity">
                     <input class="input textup" type="hidden" value="region">
                     <input class="input textup" type="hidden" value="domain">

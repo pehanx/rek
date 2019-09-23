@@ -27,6 +27,8 @@
         $typeMessage = 'Подписка на рассылку';
     }else if ($_POST['type'] == 'register') {
         $typeMessage = 'Регистрация в экспортном клубе';
+    }else if ($_POST['type'] == 'sign_event') {
+        $typeMessage = 'Запись на событие';
     }
 	
 	unset($_POST['type']);
