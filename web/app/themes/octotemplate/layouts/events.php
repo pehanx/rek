@@ -78,8 +78,8 @@ $query1 = new WP_Query([
                 <?php if($query_select_events->have_posts()):?>
                     <div class="contact__wrapp">
                     <div class="contact__block" style="margin-bottom: 0px; padding: 30px">                                          
-                    <form>
-                        <label class="placeholder" style="margin-bottom: 0px">
+                    <form id="form_show_events">
+                        <label class="placeholder" style="margin-bottom: 20px;">
                             <select name="Местоположение" id="place_event" class="input textup select" style="padding-top: 15px; padding-bottom: 15px">
                             <option value="">Выберите регион</option>
                         <?php
@@ -99,6 +99,29 @@ $query1 = new WP_Query([
                         endwhile;?>
                         </select>
                         </label> 
+
+                        <div class="checkbox-list" id="events_checkbox_list">
+                            <div style="display: flex; align-items: center;">
+                                <input value="25" type="checkbox" name="show_events_type[]" class="regular-checkbox" />
+                                <span>Бизнес-миссии</span>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <input value="23" type="checkbox" name="show_events_type[]" class="regular-checkbox" />
+                                <span>Конференции</span>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <input value="27" type="checkbox" name="show_events_type[]" class="regular-checkbox" />
+                                <span>Выставки</span>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <input value="29" type="checkbox" name="show_events_type[]" class="regular-checkbox" />
+                                <span>Семинары</span>
+                            </div>
+                            <div style="display: flex; align-items: center;">
+                                <input value="31" type="checkbox" name="show_events_type[]" class="regular-checkbox" />
+                                <span>Вебинары</span>
+                            </div>
+                        </div>
                     </form>
                     </div>
                     </div>

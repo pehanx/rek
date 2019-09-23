@@ -118,10 +118,22 @@ if(isset($_GET['func'])){
         break;
 
         //Фильтр для событий
-        case 'show_events_list_place':
-            $place = $_POST['place_for_query'];
+        case 'show_events_list':
+
+            $place = $_POST['Местоположение'];
+
+            if(isset($_POST['show_events_type'])){
+                $type_event_array = $_POST['show_events_type'];
+            }else{
+                if(!empty($place)){
+                    $type_event_array = array(23,25,27,29,31);
+                }else{
+                    break;
+                }
+            }
                 $wp_query = new WP_Query([
                     'post_type' => 'event',
+                    'category__in' => $type_event_array,
                     'meta_query' => array(
                     array(
                         'relation' => 'AND',
@@ -133,6 +145,7 @@ if(isset($_GET['func'])){
                         'place' => array(
                             'key' => 'place',
                             'value' => $place,
+                            'compare' => 'LIKE'
                         ),
                     )
                 ),
@@ -155,10 +168,22 @@ if(isset($_GET['func'])){
         break;
 
         //Фильтр для прошедших событий
-        case 'show_past_events_list_place':
-            $place_past = $_POST['place_for_query_past'];
+        case 'show_past_events_list':
+            $place_past = $_POST['Местоположение'];
+
+            if(isset($_POST['show_events_type'])){
+                $type_event_array = $_POST['show_events_type'];
+            }else{
+                if(!empty($place_past)){
+                    $type_event_array = array(23,25,27,29,31);
+                }else{
+                    break;
+                }
+            }
+
                 $wp_query = new WP_Query([
                     'post_type' => 'event',
+                    'category__in' => $type_event_array,
                     'meta_query' => array(
                     array(
                         'relation' => 'AND',
@@ -193,21 +218,20 @@ if(isset($_GET['func'])){
 
         //Установка cookie для перехода к событию после авторизацию
         case 'set_event_link':
-
             $event_link_to = $_POST['event_link_to'];
             setcookie("event_link", $event_link_to, time() + (1800), "/"); 
             $host = $_POST['host'];
             echo "http:/".$host."/vstuplenie-v-klub/";
         break;
 
+        //Проверка зарегистрирован ли пользователь при нажатии на кнопку "Вступить в клуб"
         case 'check_auth':
-
             if(isAuth())
             {
                 echo "Вы уже вступили в клуб";
             }
-
             break;
+  
     }   
 }
   
@@ -231,7 +255,8 @@ function event_list_by_place(){
             <?php endif;?>">
 
             <?php
-            $image = get_post_image(get_queried_object_id());
+            // $image = get_post_image(get_queried_object_id());
+            $image = get_post_image();
             if ($image): ?>
                 <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
             <?php endif; ?>

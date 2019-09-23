@@ -515,7 +515,6 @@ $(function(){
 		});
 	};
 	$('.popup-join-open').on('click',function(e){
-		console.log('sdsds');
 		e.preventDefault();
 		var width = $('body').innerWidth();
 		var title = $(this).attr('data-title');
@@ -780,41 +779,9 @@ $(function(){
 		});
 	});
 
-	//Фильтр для событий
-	$("#place_event").change(function() {
-		var place_event_val = $(this).children("option:selected").val();
-		if(place_event_val){
-			$.ajax({
-				url: "/func.php?func=show_events_list_place",
-				type: "POST",
-				data: {place_for_query : place_event_val},
-			  	success: function(result) {
-			  		if(result) 
-			  			$(".events_list").html(result);
-			  		else 
-			  			document.location.reload(true);
-			 	}
-			});
-		}else document.location.reload(true);
-	});
+	
 
-	//Фильтр для прошедших событий
-	$("#place_past_event").change(function() {
-		var place_past_event_val = $(this).children("option:selected").val();
-		if(place_past_event_val){
-			$.ajax({
-				url: "/func.php?func=show_past_events_list_place",
-				type: "POST",
-				data: {place_for_query_past : place_past_event_val},
-			  	success: function(result) {
-			  		if(result) 
-			  			$(".past_events_list").html(result);
-			  		else 
-			  			document.location.reload(true);
-			 	}
-			});
-		}else document.location.reload(true);
-	});
+	
 	
 	//redirect с "Вступлениев в клуб" на авторизацию
 	$('.to_auth_page').on('click',function(){
@@ -846,4 +813,53 @@ $(function(){
 			 	}
 			});
 	});
+
+	//Показать список событий по выбору его региона
+	$("#place_event").change(function() {
+		show_events();
+	});
+	//Показать список событий по выбору его типа
+	$('#events_checkbox_list input[type=checkbox]' ).on( 'change', function(){
+		show_events();
+	});
+
+	//Показать список прошедших событий по выбору его региона
+	$("#place_past_event").change(function() {
+		show_past_events();
+	});
+	//Показать список прошедших событий по выбору его типа
+	$('#past_events_checkbox_list input[type=checkbox]' ).on( 'change', function(){
+		show_events();
+	});
+
+
+	function show_events(){
+		var data = $("#form_show_events").serialize();
+			$.ajax({
+				url: "/func.php?func=show_events_list",
+				type: "POST",
+				data: data,
+			  	success: function(result) {
+			  		if(result.length>2) 
+			  			$(".events_list").html(result);
+			  		else 
+			  			document.location.reload(true);
+			 	}
+			});
+	}
+
+	function show_past_events(){
+		var data = $("#form_show_past_events").serialize();
+			$.ajax({
+				url: "/func.php?func=show_past_events_list",
+				type: "POST",
+				data: data,
+			  	success: function(result) {
+			  		if(result.length>2) 
+			  			$(".past_events_list").html(result);
+			  		else 
+			  			document.location.reload(true);
+			 	}
+			});
+	}
 });
