@@ -38,6 +38,10 @@ require get_parent_theme_file_path( '/includes/kama-excerpt.php' );
  * Для вывода пагинации
  */
 require get_parent_theme_file_path( '/includes/pagination-helper.php' );
+/**
+ * Для функций экспертов
+ */
+require get_parent_theme_file_path( '/includes/speaker-helper.php' );
 
 /**
  * Константы
@@ -48,8 +52,11 @@ define('PAGE_JOIN_US_ID', 13);
 define('PAGE_NEWS_ID', 7);
 define('PAGE_EVENTS_ID', 9);
 define('PAGE_MATERIALS_ID', 11);
-define('EVENTS_PER_PAGE', 7);
-define('NEWS_PER_PAGE', 7);
+define('PAGE_SPEAKERS_ID', 3343);
+
+define('EVENTS_PER_PAGE', 12);
+define('NEWS_PER_PAGE', 12);
+define('SPEAKERS_PER_PAGE', 12);
 
 /**
  * Убрать не нужные пункты из админки
@@ -145,6 +152,42 @@ function loadmore()
 add_action('wp_ajax_loadmore', 'loadmore');
 add_action('wp_ajax_nopriv_loadmore', 'loadmore');
 
+function loadmore_events()
+{
+	$args = unserialize(stripslashes($_POST['query']));
+	$args['paged'] = $_POST['page'] + 1; // следующая страница
+	$args['post_status'] = 'publish';
+	$q = new WP_Query($args);
+
+	if ($q->have_posts()): ?>
+		<?php while ($q->have_posts()): $q->the_post();
+			get_template_part('parts/list_element', 'event');
+		endwhile; ?>
+	<?php endif;
+	wp_reset_postdata();
+	wp_die();
+}
+add_action('wp_ajax_loadmore_events', 'loadmore_events');
+add_action('wp_ajax_nopriv_loadmore_events', 'loadmore_events');
+
+function loadmore_news()
+{
+	$args = unserialize(stripslashes($_POST['query']));
+	$args['paged'] = $_POST['page'] + 1; // следующая страница
+	$args['post_status'] = 'publish';
+	$q = new WP_Query($args);
+	if ($q->have_posts()): ?>
+		<?php while ($q->have_posts()): $q->the_post();
+			get_template_part('parts/list_element', 'news');
+		endwhile; ?>
+	<?php endif;
+	wp_reset_postdata();
+	wp_die();
+}
+add_action('wp_ajax_loadmore_news', 'loadmore_news');
+add_action('wp_ajax_nopriv_loadmore_news', 'loadmore_news');
+
+
 /**
  * Размеры изображений
  */
@@ -180,3 +223,7 @@ function arphabet_widgets_init() {
 
 }
 add_action( 'widgets_init', 'arphabet_widgets_init' );
+
+add_action( 'after_setup_theme', function() {
+    add_theme_support( 'pageviews' );
+});

@@ -1,5 +1,4 @@
-<div>
-
+ <div>
     <a href="<?= get_permalink(); ?>" class="news__item link-hover-down">
         <div class="news__img">
             <?php

@@ -40,9 +40,13 @@ $(function(){
 		text.on('input', function(){
 			resize($(this));
 		});
+		text.on('click', function(){
+			resize($(this));
+		});
 		function resize ($text) {
 			$text.css('height', 'auto');
 			$text.css('height', $text[0].scrollHeight+'px');
+			if($text.css('height') == '0px') $text.css('height', 'auto');
 		}
 	}
 	console.log($(window).width(),$(document).width());
@@ -53,8 +57,10 @@ $(function(){
 	};
 	if($(window).scrollTop()>1100){
 		$('.upscrollpage').addClass('upscrollpagesteep');
+		$('.update_site_button').addClass('update_site_show');
 	}else{
 		$('.upscrollpage').removeClass('upscrollpagesteep');
+		$('.update_site_button').removeClass('update_site_show');
 	};
 	$(window).scroll(function(){
 		if($(window).scrollTop()>0){
@@ -66,8 +72,10 @@ $(function(){
 	$(window).scroll(function(){
 		if($(window).scrollTop()>1100){
 			$('.upscrollpage').addClass('upscrollpagesteep');
+			$('.update_site_button').addClass('update_site_show');
 		}else{
 			$('.upscrollpage').removeClass('upscrollpagesteep');
+			$('.update_site_button').removeClass('update_site_show');
 		}
 	});
 	$('.upscrollpage').on('click',function(){
@@ -311,6 +319,7 @@ $(function(){
 			});
 		}
 	});
+
 	$('.popup__form').submit(function(e){
 		e.preventDefault();
 		var form = $(this);
@@ -518,7 +527,9 @@ $(function(){
 		e.preventDefault();
 		var width = $('body').innerWidth();
 		var title = $(this).attr('data-title');
+		var id_post = $(this).attr('data-id-post');
 		$('.be-event-title').val(title);
+		$('.id_current_post').val(id_post);
 		$('.menujs').css('display','none');
 		$('.upscrollpage').css('display','none');
 		$('.popupjoinform').addClass('popupblock');
@@ -535,20 +546,20 @@ $(function(){
 		$(this).find('.get-back-img').css('display','none');
 		$(this).css({'background-image' : 'url(' + src + ')', 'background-position' : 'center center', 'background-size' : 'cover'})
 	});
-	if(!$.cookie('HideModal'))
-	{
-		setTimeout(function(){
-				var width = $('body').innerWidth();
-				$('.mailup').addClass('popupblock');
-				$('.mailingbg').addClass('popupblock');
-				$('.menujs').css('display','none');
-				$('.upscrollpage').css('display','none');
-				$('body, html').addClass('noscroll');
-				$('body').width(width);
-				$('.mailup').addClass('popupopacity');
-				$('.mailingbg').addClass('popupbgopacity');
-			},1000*10);
-	}
+	// if(!$.cookie('HideModal'))
+	// {
+	// 	setTimeout(function(){
+	// 			var width = $('body').innerWidth();
+	// 			$('.mailup').addClass('popupblock');
+	// 			$('.mailingbg').addClass('popupblock');
+	// 			$('.menujs').css('display','none');
+	// 			$('.upscrollpage').css('display','none');
+	// 			$('body, html').addClass('noscroll');
+	// 			$('body').width(width);
+	// 			$('.mailup').addClass('popupopacity');
+	// 			$('.mailingbg').addClass('popupbgopacity');
+	// 		},1000*10);
+	// }
 		$('.close-modal').on('click',function(){
 			$('.mailup').removeClass('popupopacity');
 			$('.mailingbg').removeClass('popupbgopacity');
@@ -562,6 +573,47 @@ $(function(){
 				$('body').width('auto');
 			},500);
 		});
+
+	var registerUser = "another"
+	$( "#typeParty" ).change(function() {
+
+		$( "#infoTypeParty" ).text($(this).children("option:selected").val());
+		var curentSelectedVal = $(this).find('option:selected').val();
+		var input_what_buy = $('.input-what_buy');
+		var region_reg = $('#region_reg');
+		var country_reg = $('#country_reg');
+
+		if (curentSelectedVal == 'Покупатель – импортер не из Российской Федерации') {
+			registerUser = "buyer";
+		    input_what_buy.parent().removeAttr('style');
+		    country_reg.parent().removeAttr('style');
+			region_reg.parent().css('display','none');
+		    region_reg.parent().removeClass('placeholder-active');
+		    region_reg.val('');
+
+		} else {
+		    registerUser = "another"
+		    region_reg.parent().removeAttr('style');
+		    input_what_buy.parent().css('display','none');
+		    input_what_buy.parent().removeClass('placeholder-active');
+		    input_what_buy.val('');
+		    country_reg.parent().css('display','none');
+		    country_reg.parent().removeClass('placeholder-active');
+		    country_reg.val('');
+		}
+	});
+
+	$( ".input-typeParty" ).change(function() {
+		var curentSelectedVal = $(this).find('option:selected').val();
+		var $input_what_buy = $('.input-what_buy');
+		if (curentSelectedVal == 'Покупатель – импортер не из Российской Федерации') {
+		    $input_what_buy.parent().removeAttr('style');
+		} else {
+		    $input_what_buy.parent().css('display','none');
+		    $input_what_buy.parent().removeClass('placeholder-active');
+		    $input_what_buy.val('');
+		}
+	});
 
 	$("#to_past_events").on('click',function(){
 		window.location = "http://" + window.location.hostname + "/past-sobytiya/";
@@ -616,7 +668,7 @@ $(function(){
 			  		 	  }
 						}, 500);
 				  	}else{
-				  		alert(result);
+				  		modal(result, 'Ошибка');
 				  	}
 			 	}
 			});
@@ -635,6 +687,15 @@ $(function(){
 		var regemail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 		var regpass = /^[a-zA-Z0-9]+$/;
 	    var reglogin = /^[A-Za-z0-9_\-\.]+$/;
+
+	    if( $.trim($(this).find('.input-surname').val()).length > 0){
+	    	$(this).find('.input-surname').addClass('succes-input');
+	    	$(this).find('.input-surname').parent().find('.info').addClass('info-succes');
+	    }else{
+			$(this).find('.input-surname').addClass('error-input');
+	    	$(this).find('.input-surname').parent().find('.info').addClass('info-error');
+	    	error++;
+	    }
 	    if( $.trim($(this).find('.input-name').val()).length > 0){
 	    	$(this).find('.input-name').addClass('succes-input');
 	    	$(this).find('.input-name').parent().find('.info').addClass('info-succes');
@@ -659,6 +720,54 @@ $(function(){
 	    	$(this).find('.input-company').parent().find('.info').addClass('info-error'); 
 	    	error++;	
 	    }
+	    if(registerUser != "buyer"){
+		    if($(this).find('.input-region').val().length>0){
+		    	$(this).find('.input-region').addClass('succes-input');
+		    	$(this).find('.input-region').parent().find('.info').addClass('info-succes');
+
+		    }else{
+		    	$(this).find('.input-region').addClass('error-input');
+		    	$(this).find('.input-region').parent().find('.info').addClass('info-error');
+		    	error++;	
+		    }
+		}
+	     if($(this).find('.input-sphere').val().length>0){
+	    	$(this).find('.input-sphere').addClass('succes-input');
+	    	$(this).find('.input-sphere').parent().find('.info').addClass('info-succes');
+
+	    }else{
+	    	$(this).find('.input-sphere').addClass('error-input');
+	    	$(this).find('.input-sphere').parent().find('.info').addClass('info-error');
+	    	error++;	
+	    }
+	     if($(this).find('.input-typeParty').val().length>0){
+	    	$(this).find('.input-typeParty').addClass('succes-input');
+	    	$(this).find('.input-typeParty').parent().find('.info').addClass('info-succes');
+
+	    }else{
+	    	$(this).find('.input-typeParty').addClass('error-input');
+	    	$(this).find('.input-typeParty').parent().find('.info').addClass('info-error');
+	    	error++;	
+	    }
+	    if(registerUser == "buyer"){
+		    if($(this).find('.input-what_buy').val().length>0){
+		    	$(this).find('.input-what_buy').addClass('succes-input');
+		    	$(this).find('.input-what_buy').parent().find('.info').addClass('info-succes');
+		    }else{
+		    	$(this).find('.input-what_buy').addClass('error-input');
+		    	$(this).find('.input-what_buy').parent().find('.info').addClass('info-error');
+		    	error++;	
+		    }
+
+		    if($(this).find('.input-country').val().length>0){
+		    	$(this).find('.input-country').addClass('succes-input');
+		    	$(this).find('.input-country').parent().find('.info').addClass('info-succes');
+		    }else{
+		    	$(this).find('.input-country').addClass('error-input');
+		    	$(this).find('.input-country').parent().find('.info').addClass('info-error');
+		    	error++;	
+		    }		    
+		}
 	     if(regpass.test($(this).find('.input-password').val()) && regpass.test($(this).find('.input-passwordtoo').val()) && $(this).find('.input-password').val()==$(this).find('.input-passwordtoo').val() && $(this).find('.input-password').val().length>7 && $(this).find('.input-password').val().length>7){
 	    	$(this).find('.input-password').addClass('succes-input');
 	    	$(this).find('.input-passwordtoo').addClass('succes-input');
@@ -684,7 +793,8 @@ $(function(){
 	    	$(this).find('.input-login').addClass('error-input');
 	    	$(this).find('.input-login').parent().find('.info').addClass('info-error');
 	    	error++;
-	    } 
+	    }
+	    console.log("Тип участника "+registerUser);
 	    // alert("error: " + error);
 		if(error == 0){
 			var data = $(this).serialize();
@@ -702,7 +812,10 @@ $(function(){
 						$(this).find('.placeholder').removeClass('placeholder-active');
 						$('.succes').removeClass('succes-ok');
 						//Запись в таблицу
-						var fio_reg = jQuery("#fio_reg").val();
+						var surname_reg = jQuery("#surname_reg").val();
+						var name_reg = jQuery("#name_reg").val();
+						var patronymic_reg = jQuery("#patronymic_reg").val();
+						var fio_reg = surname_reg + " " + name_reg + " " + patronymic_reg;
 						var tel_reg = jQuery("#tel_reg").val();
 						var email_reg = jQuery("#email_reg").val();
 						var company_reg = jQuery("#company_reg").val();
@@ -710,8 +823,7 @@ $(function(){
 						var sphere_reg = jQuery("#sphere_reg").val();
 						var typeParty = jQuery("#typeParty").val();
 						var login_reg = jQuery("#login_reg").val();
-						var pass_reg = jQuery("#pass_reg").val();
-						var params = "p1="+fio_reg+"&p2="+tel_reg+"&p3="+email_reg+"&p4="+company_reg+"&p5="+region_reg+"&p6="+sphere_reg+"&p7="+typeParty+"&p8="+login_reg+"&p9="+pass_reg;
+						var params = "p1="+fio_reg+"&p2="+tel_reg+"&p3="+email_reg+"&p4="+company_reg+"&p5="+region_reg+"&p6="+sphere_reg+"&p7="+typeParty+"&p8="+login_reg;
 						
 						var http = new XMLHttpRequest();
 				        var url = "https://script.google.com/macros/s/AKfycbxYHHm5XtUTPZe0qNZfeHvrOh6GaG0mzB549dxx9onZLooTReOY/exec";
@@ -725,7 +837,7 @@ $(function(){
 
 						yaCounter55383022.reachGoal('order'); //Яндекс цель
 						mail_after_register(data);
-				  		alert("Вы успешно зарегистрировались\nМожете войти");
+				  		modal("Вы успешно зарегистрировались<br>Можете войти","Успешно");
 			  		 	setTimeout(function() {
 						  // window.location = "http://"+document.location.host+"/vstuplenie-v-klub/";
 						  window.location = window.location.href;//
@@ -777,39 +889,43 @@ $(function(){
 				}, 500);
 		 	}
 		});
-	});
-
-	
-
-	
+	});	
 	
 	//redirect с "Вступлениев в клуб" на авторизацию
 	$('.to_auth_page').on('click',function(){
 		$.ajax({
-				url: "/func.php?func=check_auth",
-				type: "POST",
-			  	success: function(result) {
-			  		if(result.length<2)
-			  		{
-						window.location.assign("http://"+document.location.host+"//vstuplenie-v-klub/");
-			  		}else{
-			  			alert(result);
-			  		}
-			 	}
-			});
+			url: "/func.php?func=check_auth",
+			type: "POST",
+		  	success: function(result) {
+		  		if(result.length<2)
+		  		{
+					window.location.assign("http://"+document.location.host+"//vstuplenie-v-klub/");
+		  		}else{
+		  			modal(result, 'Ошибка');
+		  		}
+		 	}
+		});
 	});
+
+	
+	if($.cookie('auth_register')){
+		$('body').find('#show_reg').trigger('click');
+		$.removeCookie('auth_register', { path: '/' });
+	}
+		
+	
 
 	//redirect (с ссылки "Вступить" в описании события) -> (авторизация/Вступление в клуб)
 	$('.to_auth_page_of_event').on('click',function(){
-		var event_link = window.location;
-		var hostname = document.location.host;
+		var event_link = window.location.href;
+		var type = $(this).attr('data-type');
 		$.ajax({
 				url: "/func.php?func=set_event_link",
 				type: "POST",
-				data: 'host='+hostname+'&event_link_to='+event_link,
+				data: {event_link:event_link, type:type},
 				cache:false,
 			  	success: function(result) {
-			  		window.location.assign(result);
+			  		window.location.assign("https://"+document.location.host+"//vstuplenie-v-klub/");
 			 	}
 			});
 	});
@@ -829,16 +945,119 @@ $(function(){
 	});
 	//Показать список прошедших событий по выбору его типа
 	$('#past_events_checkbox_list input[type=checkbox]' ).on( 'change', function(){
-		show_events();
+		show_past_events();
 	});
 
+	//Открыть форму для улучшения сайта
+	$('.update_site_open').on('click',function(e){
+		e.preventDefault();
+		var width = $('body').innerWidth();
+		$('.menujs').css('display','none');
+		$('.upscrollpage').css('display','none');
+		$('.update_site_button').css('display','none');
+		$('.updatesiteup').addClass('popupblock');
+		$('.updatesitebg').addClass('popupblock');
+		$('body, html').addClass('noscroll');
+		$('body').width(width);
+		setTimeout(function(){
+			$('.updatesiteup').addClass('popupopacity');
+			$('.updatesitebg').addClass('popupbgopacity');
+		},200);
+	});
+	$('.updatesiteup').on('click',function(e){
+		e.stopPropagation()
+	});
+	$('.updatesitebg').on('click',function(){
+		$('.updatesiteup').removeClass('popupopacity');
+		$(this).removeClass('popupbgopacity');
+		setTimeout(function(){
+			$('.updatesiteup').removeClass('popupblock');
+			$('.updatesitebg').removeClass('popupblock');
+			$('body, html').removeClass('noscroll');
+			$('body').width('auto');
+			$('.menujs').width('100%');
+			$('.menujs').removeAttr('style');
+			$('.upscrollpage').removeAttr('style');
+			$('.update_site_button').removeAttr('style');
+		},500);
+	});
 
+	//Отправка формы по улучшению сайта
+	$('.updatesite__form').submit(function(e){
+		e.preventDefault();
+		var form = $(this);
+		$(this).find('.input').removeClass('error-input');
+		$(this).find('.input').removeClass('succes-input');
+		$(this).find('.info').removeClass('info-error');
+		$(this).find('.info').removeClass('info-succes');
+		var error = 0;
+		var regemail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+		if( $.trim($(this).find('.input-name').val()).length > 0){
+	    	$(this).find('.input-name').addClass('succes-input');
+	    	$(this).find('.input-name').parent().find('.info').addClass('info-succes');
+	    }else{
+			$(this).find('.input-name').addClass('error-input');
+	    	$(this).find('.input-name').parent().find('.info').addClass('info-error');
+	    	error++;
+	    }
+	    if( $.trim($(this).find('.input-text').val()).length > 2){
+	    	$(this).find('.input-text').addClass('succes-input');
+	    	$(this).find('.input-text').parent().find('.info').addClass('info-succes');
+	    }else{
+			$(this).find('.input-text').addClass('error-input');
+	    	$(this).find('.input-text').parent().find('.info').addClass('info-error');
+	    	error++;
+	    }
+	    if(regemail.test($(this).find('.input-email').val())){
+	    	$(this).find('.input-email').addClass('succes-input');
+	    	$(this).find('.input-email').parent().find('.info').addClass('info-succes');
+	    }else{
+	    	$(this).find('.input-email').addClass('error-input');
+	    	$(this).find('.input-email').parent().find('.info').addClass('info-error');
+	    	error++;
+	    }
+		if(error == 0){
+			var data = $(this).serialize();
+			var action = $(this).attr('action');
+			console.log(action);
+			console.log(data);
+			$.ajax({
+				type: "POST",
+				url: action,
+				data: data,
+				success: function (response) {
+					form.find('.input').val('');
+					form.find('.input').removeClass('error-input');
+					form.find('.input').removeClass('succes-input');
+					form.find('.info').removeClass('info-error');
+					form.find('.info').removeClass('info-succes');
+					form.find('.placeholder').removeClass('placeholder-active');
+					$('.succes').removeClass('succes-ok');
+					succesSendInputforData();
+					$('.updatesite').removeClass('popupopacity');
+					$('.updatesitebg').removeClass('popupbgopacity');
+					setTimeout(function(){
+						$('.updatesite').removeClass('popupblock');
+						$('.updatesitebg').removeClass('popupblock');
+						$('body, html').removeClass('noscroll');
+						$('body').width('auto');
+					},500);
+				},
+				error: function (response) {
+					
+				},
+			});
+		}
+	});
+
+	//Фильтр для событий
 	function show_events(){
 		var data = $("#form_show_events").serialize();
 			$.ajax({
 				url: "/func.php?func=show_events_list",
 				type: "POST",
 				data: data,
+				cache: false,
 			  	success: function(result) {
 			  		if(result.length>2) 
 			  			$(".events_list").html(result);
@@ -848,18 +1067,1983 @@ $(function(){
 			});
 	}
 
+	//Фильтр для прошедших событий
 	function show_past_events(){
 		var data = $("#form_show_past_events").serialize();
 			$.ajax({
 				url: "/func.php?func=show_past_events_list",
 				type: "POST",
 				data: data,
+				cache: false,
 			  	success: function(result) {
-			  		if(result.length>2) 
+			  		if(result.length>2) {
 			  			$(".past_events_list").html(result);
-			  		else 
+			  			update_calendar_events(data);
+			  		}
+			  		else {
 			  			document.location.reload(true);
+			  		}
 			 	}
 			});
 	}
+
+	//Отправка письма на почту при успешной регистрации
+	function update_calendar_events(data){
+		$.ajax({
+				type: "POST",
+				url: "/func.php?func=update_calendar_events",
+				data: data,
+				success: function (result) {
+					$(".contact__wrapp_calendar").html(result);
+				}
+			});
+	}
+
+	$(document).mouseup(function (e){ // событие клика по веб-документу
+		var div = $(".eventCalendar-list-wrap"); // тут указываем ID элемента
+		if (!div.is(e.target) // если клик был не по нашему блоку
+		    && div.has(e.target).length === 0) { // и не по его дочерним элементам
+			div.hide(); // скрываем его
+		}
+	});
+	
+	$(".submenu-link_about_club").on('click', function(){
+		$( ".submenu_about_club" ).toggle();
+	});
+
+	$(".submenu-link_profile").on('click', function(){
+		$( ".submenu_profile" ).toggle();
+	});
+
+	$(".submenu-link_material").on('click', function(){
+		$( ".submenu_material" ).toggle();
+	});
+
+	$('.owl-carousel').owlCarousel({
+    loop:true,
+    autoplay:true, // автопрокрутка
+    autoplayTimeout:5000,
+    // center: true,
+    margin:10,
+    responsive:{
+        0:{
+            items:1,
+            center: false,
+        },
+        761:{
+            items:2
+        },
+        1200:{
+            items:3
+        }
+    }
+	});
+
+	// //Добавить мероприятие в избранное
+	// $(".add_like_event").on('click', function(){
+	// 	var id_post = $(this).attr('data-artid');
+	// 	var this_star = this;
+	// 	$.ajax({
+	// 	        url: "/func.php?func=add_like_event",
+	// 	        type: "POST",
+	// 	        data: {id_post:id_post},
+	// 	        success: function(response){
+	// 	        	$(this_star).attr('src', response);
+	// 	        }
+	// 	});
+	// });
+	//Удаление избранного покупателя
+	$(document).on("click",".delete_like_customer",function(e) {
+		var id_post = $(this).attr('data-artid');
+		confirm_modal("Удалить этот контакт из базы?", (ans) => {
+			if (ans) {
+			  	$.ajax({
+				        url: "/func.php?func=delete_like_customer",
+				        type: "POST",
+				        data: {id_post:id_post},
+				        success: function(response){
+				        	$(".customer_list").html(response);
+				        }
+				});
+			}
+		});
+	});
+	//Удаление избранного покупателя в форме выбранного покупателя 
+	$(document).on("click",".delete_like_customer_select",function(e) {
+		var id_post = $(this).attr('data-artid');
+		confirm_modal("Удалить этот контакт из базы?", (ans) => {
+			if(ans){
+				$.ajax({
+				        url: "/func.php?func=delete_like_customer_select",
+				        type: "POST",
+				        data: {id_post:id_post},
+				        success: function(response){
+				        	setTimeout(function() {
+							  window.location = "https://russianexport.club/profile/?tab=favorites&sub_tab=favorites_customers";
+							}, 500);
+				        }
+
+					});
+			}
+		});
+	});
+
+	//Удаление избранного события
+	$(document).on("click",".delete_like_event",function(e) {
+		var id_post = $(this).attr('data-artid');
+		var type_post = $(this).attr('data_type_post');
+		$.ajax({
+		        url: "/func.php?func=delete_like_event",
+		        type: "POST",
+		        data: {id_post:id_post, type_post:type_post},
+		        success: function(response){
+		        	$(".my_events").html(response);
+		        }
+		});
+	});
+
+	// //Добавить мероприятие в избранное или удалить из избранных
+	// $(document).on("click",".like_event",function(e) {
+	// // $(".star_img").on('click', function(e){
+	// 	e.preventDefault();
+	// 	var id_post = $(this).attr('data-artid');
+	// 	var this_star = this;
+	// 	var btn_class = $(this).attr('class');
+	// 	$.ajax({
+	// 	        url: "/func.php?func=star_like_event",
+	// 	        type: "POST",
+	// 	        data: {id_post:id_post, btn_class:btn_class},
+	// 	        success: function(response){
+	// 	        	if(response.length > 50){
+	// 	        		$(this_star).attr('src', response);
+	// 	        	}else{
+	// 	        		$(this_star).html(response);
+	// 	        	}
+	// 	        }
+	// 	});
+	// });
+
+	//Добавить в избранное через звездочку
+	// $(".star_img").on('click', function(e){
+	$(document).on("click",".star_img",function(e) {
+		e.preventDefault();
+		var id_post = $(this).attr('data-postid');
+		var type_notify = $(this).attr('data-notify');
+		var this_star = this;
+		if(id_post == 'null'){
+			notification_show(type_notify);
+		}else{
+			$.ajax({
+			        url: "/func.php?func=like_event",
+			        type: "POST",
+			        data: {id_post:id_post},
+			        success: function(response){
+						$(this_star).toggleClass('active');
+			        }
+			});
+			if(type_notify != null){
+				notification_show(type_notify);
+			}
+		}
+	});      
+
+	$(document).on("click",".like_event_btn",function(e) {
+		e.preventDefault();
+		var id_post = $(this).attr('data-postid');
+		var type_notify = $(this).attr('data-notify');
+		var this_btn = this;
+		if(id_post == 'null'){
+			notification_show(type_notify);
+		}else{
+			$.ajax({
+			        url: "/func.php?func=like_event",
+			        type: "POST",
+			        data: {id_post:id_post},
+			        success: function(response){
+						$(this_btn).text(function(i, v){
+			               return $.trim(v) === 'В избранном' ? 'Запомнить' : 'В избранном'
+			            });
+			        }
+			});
+			if(type_notify != null){
+				notification_show(type_notify);
+			}
+		}
+	});
+
+	function notification_show(text_block, text = ''){
+		let notifyBlock = $('.notification__block');
+		let textBlock = $('.notification__'+text_block);
+ 		notifyBlock.addClass('popupblock');
+ 		textBlock.addClass('popupblock');
+		setTimeout(function(){
+			notifyBlock.addClass('popupopacity');
+			if( text != ''){
+				notifyBlock.find('.notification__text').html(text);
+			}
+		},200);
+		closeNotifyTimeout = setTimeout(function(){
+			close_notification();
+		},4000);
+		$('.notification__close').on('click',function(){
+			close_notification();
+		});
+		function close_notification(){
+			notifyBlock.removeClass('popupopacity');
+			setTimeout(function(){
+				notifyBlock.removeClass('popupblock');
+				notifyBlock.find('.notification__text').removeClass('popupblock');
+			},500);
+		}
+	}
+
+	//Открытие формы изменение фото профиля
+	$(".change_avatar_text").on('click', function(e){
+		e.preventDefault();
+		var width = $('body').innerWidth();
+		$('.menujs').css('display','none');
+		$('.upscrollpage').css('display','none');
+		$('.update_site_button').css('display','none');
+		$('#uploadavatar').addClass('popupblock');
+		$('#uploadavatarbg').addClass('popupblock');
+		$('body, html').addClass('noscroll');
+		$('body').width(width);
+		setTimeout(function(){
+			$('#uploadavatar').addClass('popupopacity');
+			$('#uploadavatarbg').addClass('popupbgopacity');
+		},200);
+	});
+
+	$('#uploadavatar').on('click',function(e){
+		e.stopPropagation()
+	});
+	$('#uploadavatarbg').on('click',function(){
+		$('#uploadavatar').removeClass('popupopacity');
+		$(this).removeClass('popupbgopacity');
+		setTimeout(function(){
+			$('#uploadavatar').removeClass('popupblock');
+			$('#uploadavatarbg').removeClass('popupblock');
+			$('body, html').removeClass('noscroll');
+			$('body').width('auto');
+			$('.menujs').width('100%');
+			$('.menujs').removeAttr('style');
+			$('.upscrollpage').removeAttr('style');
+			$('.update_site_button').removeAttr('style');
+		},500);
+	});
+
+	//Появление кнопки загрузить при выборе файла
+	 $("#my_image_upload").change(function(){
+         var filename = $(this).val().replace(/.*\\/, "");
+         if(filename == ""){
+         	$("#fl_nm").html("Файл не выбран");
+         	$("#submit_my_image_upload").removeAttr('style');
+         }else{
+         	$("#fl_nm").html(filename);
+         	$("#submit_my_image_upload").css('display', 'block');
+         }
+    });
+
+	//Открытие формы "Забыли пароль"
+	$(".forgot_pass_btn").on('click', function(e){
+		e.preventDefault();
+		var width = $('body').innerWidth();
+		$('.menujs').css('display','none');
+		$('.upscrollpage').css('display','none');
+		$('.update_site_button').css('display','none');
+		$('#forgotpass').addClass('popupblock');
+		$('#forgotpassbg').addClass('popupblock');
+		$('body, html').addClass('noscroll');
+		$('body').width(width);
+		setTimeout(function(){
+			$('#forgotpass').addClass('popupopacity');
+			$('#forgotpassbg').addClass('popupbgopacity');
+		},200);
+	});
+
+	$('#forgotpass').on('click',function(e){
+		e.stopPropagation()
+	});
+	$('#forgotpassbg').on('click',function(){
+		$('#forgotpass').removeClass('popupopacity');
+		$(this).removeClass('popupbgopacity');
+		setTimeout(function(){
+			$('#forgotpass').removeClass('popupblock');
+			$('#forgotpassbg').removeClass('popupblock');
+			$('body, html').removeClass('noscroll');
+			$('body').width('auto');
+			$('.menujs').width('100%');
+			$('.menujs').removeAttr('style');
+			$('.upscrollpage').removeAttr('style');
+			$('.update_site_button').removeAttr('style');
+		},500);
+	});
+
+	//Отправка формы чтобы восстановить пароль
+	$('#forgotpass_form_mail').submit(function(e){
+		e.preventDefault();
+		var form = $(this);
+		$(this).find('.input').removeClass('error-input');
+		$(this).find('.input').removeClass('succes-input');
+		$(this).find('.info').removeClass('info-error');
+		$(this).find('.info').removeClass('info-succes');
+		var error = 0;
+		var regemail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+	    if(regemail.test($(this).find('.input-email').val())){
+	    	$(this).find('.input-email').addClass('succes-input');
+	    	$(this).find('.input-email').parent().find('.info').addClass('info-succes');
+	    }else{
+	    	$(this).find('.input-email').addClass('error-input');
+	    	$(this).find('.input-email').parent().find('.info').addClass('info-error');
+	    	error++;
+	    }
+	    if(error > 0){
+	    	modal("Неправильно указан email", "Ошибка");
+	    }
+		if(error == 0){
+			var data = $(this).serialize();
+			var action = $(this).attr('action');
+			console.log(action);
+			console.log(data);
+			$.ajax({
+				type: "POST",
+				url: action,
+				data: data,
+				success: function (response) {
+					if(response == "Пользователь с таким email не найден"){
+						modal("Пользователь с таким email не найден", "Ошибка");
+					}else{
+						form.find('.input').val('');
+						form.find('.input').removeClass('error-input');
+						form.find('.input').removeClass('succes-input');
+						form.find('.info').removeClass('info-error');
+						form.find('.info').removeClass('info-succes');
+						form.find('.placeholder').removeClass('placeholder-active');
+						$('.succes').removeClass('succes-ok');
+						succesSendInputforData();
+						$('.forgotpass').removeClass('popupopacity');
+						$('.forgotpassbg').removeClass('popupbgopacity');
+						setTimeout(function(){
+							$('#forgotpass').removeClass('popupblock');
+							$('#forgotpassbg').removeClass('popupblock');
+							$('body, html').removeClass('noscroll');
+							$('body').width('auto');
+							$('.menujs').width('100%');
+							$('.menujs').removeAttr('style');
+							$('.upscrollpage').removeAttr('style');
+							$('.update_site_button').removeAttr('style');
+						},500);
+					}
+					
+					
+				},
+				error: function (response) {
+					
+				},
+			});
+		}
+	});
+
+	//Отправка формы восстановление пароля
+		$("#forgotpass_form").submit(function(event){
+		event.preventDefault();
+		var form = $(this);
+		$(this).find('.input').removeClass('error-input');
+		$(this).find('.input').removeClass('succes-input');
+		$(this).find('.info').removeClass('info-error');
+		$(this).find('.info').removeClass('info-succes');
+		var regpass = /^[a-zA-Z0-9]+$/;
+		var error = 0;
+	     if(regpass.test($(this).find('.input-password').val()) && regpass.test($(this).find('.input-passwordtoo').val()) && $(this).find('.input-password').val()==$(this).find('.input-passwordtoo').val() && $(this).find('.input-password').val().length>7 && $(this).find('.input-password').val().length>7){
+	    	$(this).find('.input-password').addClass('succes-input');
+	    	$(this).find('.input-passwordtoo').addClass('succes-input');
+	    	$(this).find('.input-password').parent().find('.info').addClass('info-succes');
+	    }else{
+	    	$(this).find('.input-password').addClass('error-input');
+	    	$(this).find('.input-passwordtoo').addClass('error-input');
+	    	$(this).find('.input-password').parent().find('.info').addClass('info-error');
+	    	error++;
+	    }
+		if(error == 0){
+			var data = $(this).serialize();
+			$.ajax({
+			  url: "/func.php?func=change_password",
+			  type: "POST",
+			  data: data,
+			  	success: function(result) {
+			  		if(result.length < 2){
+					  	$(this).find('.input').val('');
+						$(this).find('.input').removeClass('error-input');
+						$(this).find('.input').removeClass('succes-input');
+						$(this).find('.info').removeClass('info-error');
+						$(this).find('.info').removeClass('info-succes');
+						$(this).find('.placeholder').removeClass('placeholder-active');
+						$('.succes').removeClass('succes-ok');
+				  		modal("Вы успешно изменили свой пароль<br>Можете войти", "Успешно");
+			  		 	setTimeout(function() {
+						  window.location = "http://"+document.location.host+"/vstuplenie-v-klub/";
+						}, 500);
+				  	}else{
+				  		
+				  	}
+			 	}
+
+			});
+			
+		}
+		});
+
+	//Открытие формы "Изменение данных"
+	$(".change_data_text").on('click', function(e){
+		e.preventDefault();
+		var width = $('body').innerWidth();
+		$('.menujs').css('display','none');
+		$('.upscrollpage').css('display','none');
+		$('.update_site_button').css('display','none');
+		$('#changemydata').addClass('popupblock');
+		$('#changemydatabg').addClass('popupblock');
+		$('body, html').addClass('noscroll');
+		$('body').width(width);
+		setTimeout(function(){
+			$('#changemydata').addClass('popupopacity');
+			$('#changemydatabg').addClass('popupbgopacity');
+		},200);
+	});
+
+	$('#changemydata').on('click',function(e){
+		e.stopPropagation()
+	});
+	$('#changemydatabg').on('click',function(){
+		$('#changemydata').removeClass('popupopacity');
+		$(this).removeClass('popupbgopacity');
+		setTimeout(function(){
+			$('#changemydata').removeClass('popupblock');
+			$('#changemydatabg').removeClass('popupblock');
+			$('body, html').removeClass('noscroll');
+			$('body').width('auto');
+			$('.menujs').width('100%');
+			$('.menujs').removeAttr('style');
+			$('.upscrollpage').removeAttr('style');
+			$('.update_site_button').removeAttr('style');
+		},500);
+	});
+
+	//Изменение личных данных
+	$(".change_mydata_form").submit(function(event){
+	event.preventDefault();
+	var form = $(this);
+	$(this).find('.input').removeClass('error-input');
+	$(this).find('.input').removeClass('succes-input');
+	$(this).find('.info').removeClass('info-error');
+	$(this).find('.info').removeClass('info-succes');
+
+	var error = 0;
+
+    if( $.trim($(this).find('.input-surname').val()).length > 0){
+    	$(this).find('.input-surname').addClass('succes-input');
+    	$(this).find('.input-surname').parent().find('.info').addClass('info-succes');
+    }else{
+		$(this).find('.input-surname').addClass('error-input');
+    	$(this).find('.input-surname').parent().find('.info').addClass('info-error');
+    	error++;
+    }
+    if( $.trim($(this).find('.input-name').val()).length > 0){
+    	$(this).find('.input-name').addClass('succes-input');
+    	$(this).find('.input-name').parent().find('.info').addClass('info-succes');
+    }else{
+		$(this).find('.input-name').addClass('error-input');
+    	$(this).find('.input-name').parent().find('.info').addClass('info-error');
+    	error++;
+    }
+    if($.trim($(this).find('.input-tel').val()).length>16){
+    	$(this).find('.input-tel').addClass('succes-input');
+    	$(this).find('.input-tel').parent().find('.info').addClass('info-succes');
+    }else{
+    	$(this).find('.input-tel').addClass('error-input');
+    	$(this).find('.input-tel').parent().find('.info').addClass('info-error');
+    	error++;
+    }
+
+    if($.trim($(this).find('.input-company').val()).length>0){
+    	$(this).find('.input-company').addClass('succes-input');
+    	$(this).find('.input-company').parent().find('.info').addClass('info-succes');
+    }else{
+    	$(this).find('.input-company').addClass('error-input');
+    	$(this).find('.input-company').parent().find('.info').addClass('info-error'); 
+    	error++;	
+    }
+
+    if($(this).find('.input-region').val().length>0){
+    	$(this).find('.input-region').addClass('succes-input');
+    	$(this).find('.input-region').parent().find('.info').addClass('info-succes');
+
+    }else{
+    	$(this).find('.input-region').addClass('error-input');
+    	$(this).find('.input-region').parent().find('.info').addClass('info-error');
+    	error++;	
+    }
+    if($(this).find('.input-sphere').val().length>0){
+    	$(this).find('.input-sphere').addClass('succes-input');
+    	$(this).find('.input-sphere').parent().find('.info').addClass('info-succes');
+
+    }else{
+    	$(this).find('.input-sphere').addClass('error-input');
+    	$(this).find('.input-sphere').parent().find('.info').addClass('info-error');
+    	error++;	
+    }
+    
+     if($(this).find('.input-typeParty').val().length>0){
+    	$(this).find('.input-typeParty').addClass('succes-input');
+    	$(this).find('.input-typeParty').parent().find('.info').addClass('info-succes');
+
+    }else{
+    	$(this).find('.input-typeParty').addClass('error-input');
+    	$(this).find('.input-typeParty').parent().find('.info').addClass('info-error');
+    	error++;	
+    }
+
+	if(error == 0){
+		var data = $(this).serialize();
+		$.ajax({
+		  url: "/func.php?func=change_my_data",
+		  type: "POST",
+		  data: data,
+		  	success: function(result) {
+		  		if(result.length < 2){
+				  	$(this).find('.input').val('');
+					$(this).find('.input').removeClass('error-input');
+					$(this).find('.input').removeClass('succes-input');
+					$(this).find('.info').removeClass('info-error');
+					$(this).find('.info').removeClass('info-succes');
+					$(this).find('.placeholder').removeClass('placeholder-active');
+					$('.succes').removeClass('succes-ok');
+					succesSendInputforData();
+		  		 	setTimeout(function() {
+					  window.location = window.location.href;
+					}, 500);
+			  	}else{
+			  		
+			  	}
+		 	}
+		});
+	}
+	});
+
+	//Отобразить сайдбар профиля
+	$(".show_left_sidebar_btn").on('click', function(){
+		$('.left_sidebar').addClass('show_left_sidebar');
+		// $(this).css('display','none');
+	});
+
+	//Спрятать сайдбар профиля
+	$(".close_left_sidebar_btn").on('click', function(){
+		$('.left_sidebar').removeClass('show_left_sidebar');
+		// $(".show_left_sidebar_btn").removeAttr('style');
+	});
+
+	//Установить высотку и ширину ifram'ов (видео с youtube)
+	$('iframe').width('100%');
+	$('iframe').height($('iframe').width()/16*9);
+	$(window).resize(function(){
+		$('iframe').height($('iframe').width()/16*9);
+	});
+
+	//Показать/скрыть информацию об организации
+	$(".view_more_link").on('click', function(){
+		$(this).parent().parent(".view_more_block").css('display','none');
+		$(this).parent().parent().next('.view_less_block').removeAttr('style');
+		
+	});
+
+	$(".view_less_link").on('click', function(){
+		$(this).parent().parent(".view_less_block").css('display','none');
+		$(this).parent().parent().prev('.view_more_block').removeAttr('style');
+	});
+
+	//Переключаетль альбомов мероприятий
+	$('ul.tabs__caption').on('click', 'li:not(.active)', function() {
+	    $(this)
+	      .addClass('active').siblings().removeClass('active')
+	      .closest('div.tabs').find('div.tabs__content').removeClass('active').eq($(this).index()).addClass('active');
+	});
+
+	//Записаться на мероприятие
+	$(".already_sign_event").on('click',function(){
+		modal('Вы уже записаны на это мероприятие', 'Ошибка');
+	});
+	$(".reg_event_form").submit(function(event){
+		event.preventDefault();
+		var data = $(this).serialize();
+		$.ajax({
+		        url: "/func.php?func=sign_event",
+		        type: "POST",
+		        data: data,
+		        success: function(response){
+		        	$(".sign_event_btn")
+		        		.removeClass('popup-join-open')
+		        		.removeAttr('data-title')
+		        		.removeAttr('data-id-post')
+		        		.html('Вы записаны')
+		        		.unbind()
+		        		.addClass('already_sign_event');
+		        	setTimeout(function(){
+						$('.popupjoin').removeClass('popupblock');
+						$('.popupjoinform').removeClass('popupblock');
+						$('body, html').removeClass('noscroll');
+						$('body').width('auto');
+						$('.menujs').width('100%');
+						$('.menujs').removeAttr('style');
+						$('.upscrollpage').removeAttr('style');
+					},500);
+		        }
+		});
+	});
+	//Удаление участника из события
+	$(document).on("click",".delete_sign_event_client",function(e) {
+
+		confirm_modal("Удалить этого пользователя из участников мероприятия?", (ans) => {
+			if (ans) {
+				var id_post = $(this).attr('data-artid');
+				var id_client = $(this).attr('data-id_client');
+				$.ajax({
+				        url: "/func.php?func=delete_sign_event_client",
+				        type: "POST",
+				        data: {id_post:id_post, id_client:id_client},
+				        success: function(response){
+				        	$(".all_block_sign_event").html(response);
+				        }
+				});
+			}
+		});
+
+	});
+	//Добавить контакт покупателя в своем личном кабинете
+	$(document).on("click",".add_customer",function(e) {
+		var this_element = $(this);
+		var data_where_search = $(this).attr('data_where_search');
+		var data_company = $(this).attr('data_company');
+		var data_info = $(this).attr('data_info');
+		var data_zapros = $(this).attr('data_zapros');
+		switch (data_where_search) {
+		  case 'Казахстан':
+			var data_contact1 = $(this).attr('data_contact1');
+			var data_contact2 = $(this).attr('data_contact2');
+			var data_contact3 = $(this).attr('data_contact3');
+			var data_contact4 = $(this).attr('data_contact4');
+			var data_contact5 = $(this).attr('data_contact5');
+			var data_contact6 = $(this).attr('data_contact6');
+			var data_contact7 = $(this).attr('data_contact7');
+			$.ajax({
+			        url: "/func.php?func=add_customer",
+			        type: "POST",
+			        data: {
+			        	data_where_search:data_where_search,
+			        	data_company:data_company, 
+			        	data_info:data_info, 
+			        	data_zapros:data_zapros,
+			        	data_contact1:data_contact1,
+			        	data_contact2:data_contact2,
+			        	data_contact3:data_contact3,
+			        	data_contact4:data_contact4,
+			        	data_contact5:data_contact5,
+			        	data_contact6:data_contact6,
+			        	data_contact7:data_contact7
+			        },
+			        success: function(result){
+			        	this_element.parent(".add_customer_or_delete_customer").html(result);
+			        }
+			});
+		    break;
+		  case 'Киргизия':
+			var data_phone = $(this).attr('data_phone');
+			var data_mail = $(this).attr('data_mail');
+			var data_address = $(this).attr('data_address');
+
+			$.ajax({
+			        url: "/func.php?func=add_customer",
+			        type: "POST",
+			        data: {
+			        	data_where_search:data_where_search,
+			        	data_company:data_company, 
+			        	data_info:data_info, 
+			        	data_zapros:data_zapros,
+			        	data_phone:data_phone,
+			        	data_mail:data_mail,
+			        	data_address:data_address
+			        },
+			        success: function(result){
+			        	this_element.parent(".add_customer_or_delete_customer").html(result);
+			        }
+			});
+		    break;
+		  case 'Беларусь':
+		  	var data_phone = $(this).attr('data_phone');
+			var data_mail = $(this).attr('data_mail');
+			var data_address = $(this).attr('data_address');
+			var data_category = $(this).attr('data_category');
+			
+			$.ajax({
+			        url: "/func.php?func=add_customer",
+			        type: "POST",
+			        data: {
+			        	data_where_search:data_where_search,
+			        	data_company:data_company, 
+			        	data_info:data_info, 
+			        	data_zapros:data_zapros,
+			        	data_phone:data_phone,
+			        	data_mail:data_mail,
+			        	data_address:data_address,
+					    data_category:data_category
+			        },
+			        success: function(result){
+			        	this_element.parent(".add_customer_or_delete_customer").html(result);
+			        }
+			});
+		    break;
+		  case 'Индийские импортёры':
+		  	var data_phone = $(this).attr('data_phone');
+			var data_mail = $(this).attr('data_mail');
+			var data_address = $(this).attr('data_address');
+			var data_site = $(this).attr('data_site');
+			
+			$.ajax({
+			        url: "/func.php?func=add_customer",
+			        type: "POST",
+			        data: {
+			        	data_where_search:data_where_search,
+			        	data_company:data_company, 
+			        	data_info:data_info, 
+			        	data_zapros:data_zapros,
+			        	data_phone:data_phone,
+			        	data_mail:data_mail,
+			        	data_address:data_address,
+					    data_site:data_site
+			        },
+			        success: function(result){
+			        	this_element.parent(".add_customer_or_delete_customer").html(result);
+			        }
+			});
+		    break;
+		  case 'Индийские компании':
+		  	var data_phone = $(this).attr('data_phone');
+			var data_address = $(this).attr('data_address');
+			var data_site = $(this).attr('data_site');
+			var data_contacts = $(this).attr('data_contacts');
+			var data_category = $(this).attr('data_category');
+			
+			$.ajax({
+			        url: "/func.php?func=add_customer",
+			        type: "POST",
+			        data: {
+			        	data_where_search:data_where_search,
+			        	data_company:data_company, 
+			        	data_info:data_info, 
+			        	data_zapros:data_zapros,
+			        	data_phone:data_phone,
+			        	data_address:data_address,
+			        	data_site:data_site,
+			        	data_contacts:data_contacts,
+			        	data_category:data_category
+			        },
+			        success: function(result){
+			        	this_element.parent(".add_customer_or_delete_customer").html(result);
+			        }
+			});
+		    break;
+		  case 'Lesprom':
+		  	var data_phone = $(this).attr('data_phone');
+			var data_mail = $(this).attr('data_mail');
+			var data_site = $(this).attr('data_site');
+			var data_country = $(this).attr('data_country');
+			var data_workers = $(this).attr('data_workers');
+			
+			$.ajax({
+			        url: "/func.php?func=add_customer",
+			        type: "POST",
+			        data: {
+			        	data_where_search:data_where_search,
+			        	data_company:data_company, 
+			        	data_info:data_info, 
+			        	data_zapros:data_zapros,
+			        	data_phone:data_phone,
+			        	data_mail:data_mail,
+			        	data_site:data_site,
+			        	data_country:data_country,
+			        	data_workers:data_workers
+			        },
+			        success: function(result){
+			        	this_element.parent(".add_customer_or_delete_customer").html(result);
+			        }
+			});
+		    break;
+		  case 'Food1':
+		  	var data_phone = $(this).attr('data_phone');
+			var data_site = $(this).attr('data_site');
+			var data_country = $(this).attr('data_country');
+			
+			$.ajax({
+			        url: "/func.php?func=add_customer",
+			        type: "POST",
+			        data: {
+			        	data_where_search:data_where_search,
+			        	data_company:data_company, 
+			        	data_info:data_info, 
+			        	data_zapros:data_zapros,
+			        	data_phone:data_phone,
+			        	data_site:data_site,
+			        	data_country:data_country
+			        },
+			        success: function(result){
+			        	this_element.parent(".add_customer_or_delete_customer").html(result);
+			        }
+			});
+		    break;
+		  default:
+		    alert('Ошибка');
+		}
+	});
+	//Убрать контакт покупателя в списке поиска
+	$(document).on("click",".delete_customer",function(e) {
+		var this_element = $(this);
+		var data_where_search = $(this).attr('data_where_search');
+	  	var data_company = $(this).attr('data_company');
+		var data_info = $(this).attr('data_info');
+		var data_zapros = $(this).attr('data_zapros');
+
+		switch (data_where_search) {
+		  case 'Казахстан':
+			var data_contact1 = $(this).attr('data_contact1');
+			var data_contact2 = $(this).attr('data_contact2');
+			var data_contact3 = $(this).attr('data_contact3');
+			var data_contact4 = $(this).attr('data_contact4');
+			var data_contact5 = $(this).attr('data_contact5');
+			var data_contact6 = $(this).attr('data_contact6');
+			var data_contact7 = $(this).attr('data_contact7');
+
+			confirm_modal("Удалить этот контакт из базы?", (ans) => {
+				if (ans) {
+					$.ajax({
+					        url: "/func.php?func=delete_customer",
+					        type: "POST",
+					        data: {
+					        	data_where_search:data_where_search,
+					        	data_company:data_company, 
+					        	data_info:data_info, 
+					        	data_zapros:data_zapros,
+					        	data_contact1:data_contact1,
+					        	data_contact2:data_contact2,
+					        	data_contact3:data_contact3,
+					        	data_contact4:data_contact4,
+					        	data_contact5:data_contact5,
+					        	data_contact6:data_contact6,
+					        	data_contact7:data_contact7
+					        },
+					        success: function(result){
+					        	this_element.parent(".add_customer_or_delete_customer").html(result);
+					        }
+					});
+				}
+			});
+		  	break;
+		  case 'Киргизия':
+		  	var data_phone = $(this).attr('data_phone');
+			var data_mail = $(this).attr('data_mail');
+			var data_address = $(this).attr('data_address');
+
+			confirm_modal("Удалить этот контакт из базы?", (ans) => {
+				if (ans) {
+					$.ajax({
+					        url: "/func.php?func=delete_customer",
+					        type: "POST",
+					        data: {
+					        	data_where_search:data_where_search,
+					        	data_company:data_company, 
+					        	data_info:data_info, 
+					        	data_zapros:data_zapros,
+					        	data_phone:data_phone,
+					        	data_mail:data_mail,
+					        	data_address:data_address
+					        },
+					        success: function(result){
+					        	this_element.parent(".add_customer_or_delete_customer").html(result);
+					        }
+					});
+				}
+			});
+		    break;
+		  case 'Беларусь':
+		  	var data_phone = $(this).attr('data_phone');
+			var data_mail = $(this).attr('data_mail');
+			var data_address = $(this).attr('data_address');
+			var data_category = $(this).attr('data_category');
+
+			confirm_modal("Удалить этот контакт из базы?", (ans) => {
+				if (ans) {
+					$.ajax({
+					        url: "/func.php?func=delete_customer",
+					        type: "POST",
+					        data: {
+					        	data_where_search:data_where_search,
+					        	data_company:data_company, 
+					        	data_info:data_info, 
+					        	data_zapros:data_zapros,
+					        	data_phone:data_phone,
+					        	data_mail:data_mail,
+					        	data_address:data_address,
+					        	data_category:data_category
+					        },
+					        success: function(result){
+					        	this_element.parent(".add_customer_or_delete_customer").html(result);
+					        }
+					});
+				}
+			});
+		    break;
+		  case 'Индийские импортёры':
+			var data_phone = $(this).attr('data_phone');
+			var data_mail = $(this).attr('data_mail');
+			var data_address = $(this).attr('data_address');
+			var data_site = $(this).attr('data_site');
+
+			confirm_modal("Удалить этот контакт из базы?", (ans) => {
+				if (ans) {
+					$.ajax({
+					        url: "/func.php?func=delete_customer",
+					        type: "POST",
+					        data: {
+					        	data_where_search:data_where_search,
+					        	data_company:data_company, 
+					        	data_info:data_info, 
+					        	data_zapros:data_zapros,
+					        	data_phone:data_phone,
+					        	data_mail:data_mail,
+					        	data_address:data_address,
+					        	data_site:data_site
+					        },
+					        success: function(result){
+					        	this_element.parent(".add_customer_or_delete_customer").html(result);
+					        }
+					});
+				}
+			});
+		    break;
+		  case 'Индийские компании':
+		  	var data_phone = $(this).attr('data_phone');
+			var data_address = $(this).attr('data_address');
+			var data_site = $(this).attr('data_site');
+			var data_contacts = $(this).attr('data_contacts');
+			var data_category = $(this).attr('data_category');
+
+			confirm_modal("Удалить этот контакт из базы?", (ans) => {
+				if (ans) {
+					$.ajax({
+					        url: "/func.php?func=delete_customer",
+					        type: "POST",
+					        data: {
+					        	data_where_search:data_where_search,
+					        	data_company:data_company, 
+					        	data_info:data_info, 
+					        	data_zapros:data_zapros,
+					        	data_phone:data_phone,
+					        	data_address:data_address,
+					        	data_site:data_site,
+					        	data_contacts:data_contacts,
+					        	data_category:data_category
+					        },
+					        success: function(result){
+					        	this_element.parent(".add_customer_or_delete_customer").html(result);
+					        }
+					});
+				}
+			});
+		    break;
+		  case 'Lesprom':
+		  	var data_phone = $(this).attr('data_phone');
+			var data_mail = $(this).attr('data_mail');
+			var data_site = $(this).attr('data_site');
+			var data_country = $(this).attr('data_country');
+			var data_workers = $(this).attr('data_workers');
+
+			confirm_modal("Удалить этот контакт из базы?", (ans) => {
+				if (ans) {
+					$.ajax({
+					        url: "/func.php?func=delete_customer",
+					        type: "POST",
+					        data: {
+					        	data_where_search:data_where_search,
+					        	data_company:data_company, 
+					        	data_info:data_info, 
+					        	data_zapros:data_zapros,
+					        	data_phone:data_phone,
+					        	data_mail:data_mail,
+					        	data_site:data_site,
+					        	data_country:data_country,
+					        	data_workers:data_workers
+					        },
+					        success: function(result){
+					        	this_element.parent(".add_customer_or_delete_customer").html(result);
+					        }
+					});
+				}
+			});
+		    break;
+		  case 'Food1':
+		  	var data_phone = $(this).attr('data_phone');
+			var data_site = $(this).attr('data_site');
+			var data_country = $(this).attr('data_country');
+
+			confirm_modal("Удалить этот контакт из базы?", (ans) => {
+				if (ans) {
+					$.ajax({
+					        url: "/func.php?func=delete_customer",
+					        type: "POST",
+					        data: {
+					        	data_where_search:data_where_search,
+					        	data_company:data_company, 
+					        	data_info:data_info, 
+					        	data_zapros:data_zapros,
+					        	data_phone:data_phone,
+					        	data_site:data_site,
+					        	data_country:data_country
+					        },
+					        success: function(result){
+					        	this_element.parent(".add_customer_or_delete_customer").html(result);
+					        }
+					});
+				}
+			});
+		    break;
+		  default:
+		    alert('Ошибка');
+		}
+	});
+
+	//Показать список участников по выбору его региона
+	$("#country_food1").change(function() {
+		var data_country = $(this).val();
+		$(".company_list").html(json_html_food1);
+		$.ajax({
+			url: "/func.php?func=show_сompany_list_by_country",
+			type: "POST",
+			dataType: 'json',
+			data: json_html_food1,
+			cache: false,
+		  	success: function(result) {
+		  		if(result.length>2) 
+		  			$(".company_list").html(result);
+		  		else 
+		  			document.location.reload(true);
+		 	}
+		});
+	});
+
+	//Показать список участников по выбору его региона
+	$("#region_clients").change(function() {
+		show_clients();
+	});
+	//Показать список участников по выбору его типа участия в клубе
+	$('#clients_checkbox_list input[type=checkbox]' ).on( 'change', function(){
+		show_clients();
+	});
+	//Показать список участников по поиску
+	$("#clients_input_search").on('input',function(){
+		show_clients();
+	});
+	//Фильтр для участников
+	function show_clients(){
+		var data = $("#form_show_clients").serialize();
+		$.ajax({
+			url: "/func.php?func=show_clients_list",
+			type: "POST",
+			data: data,
+			cache: false,
+		  	success: function(result) {
+		  		if(result.length>2) 
+		  			$(".typical__wrapp1").html(result);
+		  		else 
+		  			document.location.reload(true);
+		 	}
+		});
+	}
+
+	//Сортировать список участников по фамилии
+	$(document).on("click",".order_clienst_by_FIO",function(e){
+		get_order_field($(this));
+	});
+	//Сортировать список участников по телефону
+	$(document).on("click",".order_clienst_by_TELEPHONE",function(e){
+		get_order_field($(this));
+	});
+	//Сортировать список участников по почте
+	$(document).on("click",".order_clienst_by_EMAIL",function(e){
+		get_order_field($(this));
+	});
+	//Сортировать список участников по компании
+	$(document).on("click",".order_clienst_by_COMPANY",function(e){
+		get_order_field($(this));
+	});
+	//Сортировать список участников по сфере деятельности
+	$(document).on("click",".order_clienst_by_SPHERE",function(e){
+		get_order_field($(this));
+	});
+	//Сортировать список участников по региону
+	$(document).on("click",".order_clienst_by_REGION",function(e){
+		get_order_field($(this));
+	});
+	//Сортировать список участников по типу участия в клубе
+	$(document).on("click",".order_clienst_by_TYPE-PARTY",function(e){
+		get_order_field($(this));
+	});
+	//Сортировать список участников по количеству посещений
+	$(document).on("click",".order_clienst_by_COUNT-SIGN-IN",function(e){
+		get_order_field($(this));
+	});
+	//Сортировать список участников по последнему входу
+	$(document).on("click",".order_clienst_by_LAST-SIGN-IN-DATE",function(e){
+		get_order_field($(this));
+	});
+	//Сортировать список участников по дате регистрации
+	$(document).on("click",".order_clienst_by_DATE-REGISTRATION",function(e){
+		get_order_field($(this));
+	});
+	//Функция получения значения сортировки
+	function get_order_field(data_element){
+		var data_field = data_element.attr('data_field');
+
+		var order_field = $(".order_field_show_clients");
+		var val_order_field = order_field.val();
+
+		if(val_order_field == 'ASC-'  + data_field){
+			val_order_field = 'DESC-' + data_field;
+		}else{
+			val_order_field = 'ASC-' + data_field;
+		}
+
+		order_field.val(val_order_field);
+		show_clients();
+	}
+
+	//Отобразить/убрать параметры поиска участников клуба
+	$('.show_settings_search_clients_btn').on('click', function(){
+		$(this).children('svg').toggleClass("rotate_svg");
+		$('.show_form_show_clients').slideToggle();
+	});
+
+	//Отобразить/убрать отправку писем участникам клуба
+	$('.show_mail_to_clients_btn').on('click', function(){
+		$(this).children('svg').toggleClass("rotate_svg");
+		$('.show_form_mail_to_clients').slideToggle();
+	});
+
+	//Открытие формы "Изменение данных покупателя"
+	$(".change_like_customer").on('click', function(){
+		$(this).toggleClass("blue_color_for_svg");
+		$('.show_add_note_customer').slideToggle('slow');
+	});
+
+	//Отправка формы сохранения/изменения пометки покупателя для себя
+	$(".form_add_note_customer").submit(function(event){
+	event.preventDefault();
+	var form = $(this);
+	$(this).find('.input').removeClass('error-input');
+	$(this).find('.input').removeClass('succes-input');
+	$(this).find('.info').removeClass('info-error');
+	$(this).find('.info').removeClass('info-succes');
+	var error = 0;
+    if( $.trim($(this).find('.input-text').val()).length > 2){
+    	$(this).find('.input-text').addClass('succes-input');
+    	$(this).find('.input-text').parent().find('.info').addClass('info-succes');
+    }else{
+		$(this).find('.input-text').addClass('error-input');
+    	$(this).find('.input-text').parent().find('.info').addClass('info-error');
+    	error++;
+    }
+	if(error == 0){
+		var data = $(this).serialize();
+		$.ajax({
+		  url: "/func.php?func=add_note_customer",
+		  type: "POST",
+		  data: data,
+		  	success: function(result) {
+				form.find('.textarea').removeClass('error-input');
+				form.find('.textarea').removeClass('succes-input');
+				if(result.length > 1) {
+					$(".note_change").html(result);
+				}else{
+		  			form.find('.textarea').val('');
+					form.find('.placeholder').removeClass('placeholder-active');
+				}
+		 	}
+		});
+	}
+	});
+
+
+	//Отправка сообщения всем пользователям
+	$("#form_mail_to_clients").submit(function(event){
+	if (confirm("Отправить сообщения всем пользователям?")) {
+		event.preventDefault();
+		var form = $(this);
+		$(this).find('.input').removeClass('error-input');
+		$(this).find('.input').removeClass('succes-input');
+		$(this).find('.info').removeClass('info-error');
+		$(this).find('.info').removeClass('info-succes');
+		var error = 0;
+	    if( $.trim($(this).find('.input-text').val()).length > 2){
+	    	$(this).find('.input-text').addClass('succes-input');
+	    	$(this).find('.input-text').parent().find('.info').addClass('info-succes');
+	    }else{
+			$(this).find('.input-text').addClass('error-input');
+	    	$(this).find('.input-text').parent().find('.info').addClass('info-error');
+	    	error++;
+	    }
+		if(error == 0){
+			var data = $(this).serialize();
+	  		form.find('.input').val('');
+			form.find('.input').removeClass('error-input');
+			form.find('.input').removeClass('succes-input');
+			form.find('.info').removeClass('info-error');
+			form.find('.info').removeClass('info-succes');
+			form.find('.placeholder').removeClass('placeholder-active');
+	  		form.find('.textarea').val('');
+			form.find('.textarea').removeClass('error-input');
+			form.find('.textarea').removeClass('succes-input');
+			alert('Загрузка...');
+			$.ajax({
+			  url: "/func.php?func=mail_to_clients",
+			  type: "POST",
+			  data: data,
+			  	success: function(result) {
+					alert('Успешно');
+			  		$('.res').html(result);
+			 	}
+			});
+		}
+	}
+	});
+
+	//Отправка сообщения всем пользователям
+	$("#form_add_zapros").submit(function(event){
+		event.preventDefault();
+		var form = $(this);
+		$(this).find('.input').removeClass('error-input');
+		$(this).find('.input').removeClass('succes-input');
+		$(this).find('.info').removeClass('info-error');
+		$(this).find('.info').removeClass('info-succes');
+		var error = 0;
+	    if( $.trim($(this).find('.input-text').val()).length > 2){
+	    	$(this).find('.input-text').addClass('succes-input');
+	    	$(this).find('.input-text').parent().find('.info').addClass('info-succes');
+	    }else{
+			$(this).find('.input-text').addClass('error-input');
+	    	$(this).find('.input-text').parent().find('.info').addClass('info-error');
+	    	error++;
+	    }
+		if(error == 0){
+			if (confirm("Сохранить запрос")) {
+				var data = $(this).serialize();
+				console.log(data);
+		  		form.find('.input').val('');
+				form.find('.input').removeClass('error-input');
+				form.find('.input').removeClass('succes-input');
+				form.find('.info').removeClass('info-error');
+				form.find('.info').removeClass('info-succes');
+				form.find('.placeholder').removeClass('placeholder-active');
+		  		form.find('.textarea').val('');
+				form.find('.textarea').removeClass('error-input');
+				form.find('.textarea').removeClass('succes-input');
+				$.ajax({
+				  url: "/func.php?func=add_inquiries",
+				  type: "POST",
+				  data: data,
+				  	success: function(result) {
+						alert('Успешно');
+				 	}
+				});
+			}
+		}
+	});
+
+	//Поиск клиентов в своей базе через поиск по названию
+	$("#search_customer_in_my_baza").on('input',function(){
+		var data = $("#form_search_customer_in_my_baza").serialize();
+		$.ajax({
+			url: "/func.php?func=search_customer_in_my_baza",
+			type: "POST",
+			data: data,
+			cache: false,
+		  	success: function(result) {
+		  		$(".customer_list").html(result);
+		 	}
+		});
+	});
+	//Поиск клиентов в своей базе через выбор источника откуда осуществлялся поиск
+	$("#where_search_select").change(function(){
+		var data = $("#form_search_customer_in_my_baza").serialize();
+		$.ajax({
+			url: "/func.php?func=search_customer_in_my_baza",
+			type: "POST",
+			data: data,
+			cache: false,
+		  	success: function(result) {
+		  		$(".customer_list").html(result);
+		 	}
+		});
+	});
+
+	//Поиск запросов через поиск по названию
+	$("#input_search_inquiries").on('input',function(){
+		var data = $("#form_search_inquiries_in_profile").serialize();
+		$.ajax({
+			url: "/func.php?func=search_inquiries_in_profile",
+			type: "POST",
+			data: data,
+			cache: false,
+		  	success: function(result) {
+		  		$(".customer_list").html(result);
+		 	}
+		});
+	});
+	//Поиск запросов через выбор страны
+	$("#select_country_inquiries").change(function(){
+		var data = $("#form_search_inquiries_in_profile").serialize();
+		$.ajax({
+			url: "/func.php?func=search_inquiries_in_profile",
+			type: "POST",
+			data: data,
+			cache: false,
+		  	success: function(result) {
+		  		$(".customer_list").html(result);
+		 	}
+		});
+	});
+	//Поиск запросов через выбор категории
+	$("#select_category_inquiries").change(function(){
+		var data = $("#form_search_inquiries_in_profile").serialize();
+		$.ajax({
+			url: "/func.php?func=search_inquiries_in_profile",
+			type: "POST",
+			data: data,
+			cache: false,
+		  	success: function(result) {
+		  		$(".customer_list").html(result);
+		 	}
+		});
+	});
+
+	//Открытие формы "Изменение данных запроса"
+	$(".selected_inquiries").on('click', function(e){
+		e.preventDefault();
+		var id_inquiries = $(this).attr('data-id');
+		$.ajax({
+			url: "/func.php?func=change_data_for_footer_forms_inquirie_form",
+	        type : 'post',
+		 	data: {id_inquiries:id_inquiries},
+	        dataType : 'json',
+	        success : function (result) {
+	        	$('#inquirie_form').find('.inquirie-id').val(result.id);
+	        	$('#inquirie_form').find('.inquirie-name').val(result.name);
+	        	$('#inquirie_form').find('.inquirie-country').val(result.country);
+	        	$('#inquirie_form').find('.inquirie-contacts').val(result.contacts);
+	        	$('#inquirie_form').find('.inquirie-zapros').val(result.zapros);
+	        	$('#inquirie_form').find('.input-category').val(result.category)
+	        },
+	        error : function () {
+	        	alert("Ошибка");
+	        }
+	    });
+		var width = $('body').innerWidth();
+		$('.menujs').css('display','none');
+		$('.upscrollpage').css('display','none');
+		$('.update_site_button').css('display','none');
+		$('#changeinquiries').addClass('popupblock');
+		$('#changeinquiriesbg').addClass('popupblock');
+		$('body, html').addClass('noscroll');
+		$('body').width(width);
+		setTimeout(function(){
+			$('#changeinquiries').addClass('popupopacity');
+			$('#changeinquiriesbg').addClass('popupbgopacity');
+		},200);
+	});
+
+	$('#changeinquiries').on('click',function(e){
+		e.stopPropagation();
+	});
+	$('#changeinquiriesbg').on('click',function(){
+		$('#changeinquiries').removeClass('popupopacity');
+		$(this).removeClass('popupbgopacity');
+		setTimeout(function(){
+			$('#changeinquiries').removeClass('popupblock');
+			$('#changeinquiriesbg').removeClass('popupblock');
+			$('body, html').removeClass('noscroll');
+			$('body').width('auto');
+			$('.menujs').width('100%');
+			$('.menujs').removeAttr('style');
+			$('.upscrollpage').removeAttr('style');
+			$('.update_site_button').removeAttr('style');
+		},500);
+	});
+
+	//Изменение данных запроса
+	$(".change_inquiries_form").submit(function(event){
+	event.preventDefault();
+	var form = $(this);
+	$(this).find('.input').removeClass('error-input');
+	$(this).find('.input').removeClass('succes-input');
+	$(this).find('.info').removeClass('info-error');
+	$(this).find('.info').removeClass('info-succes');
+	var data = $(this).serialize();
+	$.ajax({
+	  url: "/func.php?func=change_inquiries_data",
+	  type: "POST",
+	  data: data,
+	  	success: function(result) {
+	  		if(result.length < 2){
+			  	$(this).find('.input').val('');
+				$(this).find('.input').removeClass('error-input');
+				$(this).find('.input').removeClass('succes-input');
+				$(this).find('.info').removeClass('info-error');
+				$(this).find('.info').removeClass('info-succes');
+				$(this).find('.placeholder').removeClass('placeholder-active');
+				$('.succes').removeClass('succes-ok');
+				succesSendInputforData();
+	  		 	setTimeout(function() {
+				  window.location = window.location.href;
+				}, 500);
+		  	}else{
+		  		
+		  	}
+	 	}
+	});
+	});
+
+	$(".delete_inquiries").on('click', function(e){
+		e.stopPropagation();
+		var id_inquiries = $(this).attr('data-id');
+		confirm_modal("Удалить этот запрос из базы?", (ans) => {
+			if (ans) {
+				$.ajax({
+				        url: "/func.php?func=delete_inquiries",
+				        type: "POST",
+				        data: {id_inquiries:id_inquiries},
+				        success: function(result){
+				  		 	setTimeout(function() {
+							  window.location = window.location.href;
+							}, 500);
+				        }
+				});
+			}
+		});
+	});
+
+	$('.speaker_list_geography_select').change(function(){
+	  var text = $(this).find('option:selected').text()
+	  var $aux = $('<select/>').append($('<option/>').text(text))
+	  $(this).after($aux)
+	  $(this).width($aux.width())
+	  $aux.remove()
+	}).change();
+
+	//Открытие формы "Изменение данных запроса"
+	$(".btn_speakers").on('click', function(e){
+		e.preventDefault();
+		
+		var width = $('body').innerWidth();
+		$('.menujs').css('display','none');
+		$('.upscrollpage').css('display','none');
+		$('.update_site_button').css('display','none');
+		$('#speakers').addClass('popupblock');
+		$('#speakersbg').addClass('popupblock');
+		$('body, html').addClass('noscroll');
+		$('body').width(width);
+		setTimeout(function(){
+			$('#speakers').addClass('popupopacity');
+			$('#speakersbg').addClass('popupbgopacity');
+		},200);
+	});
+
+	$('#speakers').on('click',function(e){
+		e.stopPropagation();
+	});
+	$('#speakersbg').on('click',function(){
+		$('#speakers').removeClass('popupopacity');
+		$(this).removeClass('popupbgopacity');
+		setTimeout(function(){
+			$('#speakers').removeClass('popupblock');
+			$('#speakersbg').removeClass('popupblock');
+			$('body, html').removeClass('noscroll');
+			$('body').width('auto');
+			$('.menujs').width('100%');
+			$('.menujs').removeAttr('style');
+			$('.upscrollpage').removeAttr('style');
+			$('.update_site_button').removeAttr('style');
+		},500);
+	});
+
+	$('.have_info').click(function(){
+		$('.hide_div_speakers').toggleClass('hide_form');
+    });
+
+	//Отправка формы заказа спикеров на мероприятие
+	$(".order_speakers").submit(function(event){
+		event.preventDefault();
+		var form = $(this);
+		$(this).find('.input').removeClass('error-input');
+		$(this).find('.input').removeClass('succes-input');
+		$(this).find('.info').removeClass('info-error');
+		$(this).find('.info').removeClass('info-succes');
+
+		var error = 0;
+		var regemail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+		if(	$.trim($(this).find('.input-fio').val()).length > 0){
+	    	$(this).find('.input-fio').addClass('succes-input');
+	    }else{
+			$(this).find('.input-fio').addClass('error-input');
+	    	error++;
+	    }
+	    if(regemail.test($(this).find('.input-mail').val())){
+	    	$(this).find('.input-mail').addClass('succes-input');
+	    }else{
+	    	$(this).find('.input-mail').addClass('error-input');
+	    	error++;
+	    }
+	    if(	$.trim($(this).find('.input-tel').val()).length > 0){
+	    	$(this).find('.input-tel').addClass('succes-input');
+	    }else{
+			$(this).find('.input-tel').addClass('error-input');
+	    	error++;
+	    }
+	    if(	$.trim($(this).find('.input-company').val()).length > 0){
+	    	$(this).find('.input-company').addClass('succes-input');
+	    }else{
+			$(this).find('.input-company').addClass('error-input');
+	    	error++;
+	    }
+	    if(	$.trim($(this).find('.input-speaker').val()).length > 0){
+	    	$(this).find('.input-speaker').addClass('succes-input');
+	    }else{
+			$(this).find('.input-speaker').addClass('error-input');
+	    	error++;
+	    }
+	    if(	$.trim($(this).find('.input-type_event').val()).length > 0){
+	    	$(this).find('.input-type_event').addClass('succes-input');
+	    }else{
+			$(this).find('.input-type_event').addClass('error-input');
+	    	error++;
+	    }
+	    if(	$.trim($(this).find('.input-money').val()).length > 0){
+	    	$(this).find('.input-money').addClass('succes-input');
+	    }else{
+			$(this).find('.input-money').addClass('error-input');
+	    	error++;
+	    }
+	    if(	$.trim($(this).find('.input-place').val()).length > 0){
+	    	$(this).find('.input-place').addClass('succes-input');
+	    }else{
+			$(this).find('.input-place').addClass('error-input');
+	    	error++;
+	    }
+	    if(	$.trim($(this).find('.input-date').val()).length > 0){
+	    	$(this).find('.input-date').addClass('succes-input');
+	    }else{
+			$(this).find('.input-date').addClass('error-input');
+	    	error++;
+	    }
+	    if(	$.trim($(this).find('.input-time').val()).length > 0){
+	    	$(this).find('.input-time').addClass('succes-input');
+	    }else{
+			$(this).find('.input-time').addClass('error-input');
+	    }
+	    if(	$.trim($(this).find('.input-duration').val()).length > 0){
+	    	$(this).find('.input-duration').addClass('succes-input');
+	    }else{
+			$(this).find('.input-duration').addClass('error-input');
+	    	error++;
+	    }
+	    if(	$.trim($(this).find('.input-comment').val()).length > 0){
+	    	$(this).find('.input-comment').addClass('succes-input');
+	    }else{
+			$(this).find('.input-comment').addClass('error-input');
+	    	error++;
+	    }	    
+
+		if(error == 0){
+			var data = $(this).serialize();
+			$.ajax({
+			  url: "/mail.php",
+			  type: "POST",
+			  data: data,
+			  	success: function(result) {
+				  	$(this).find('.input').val('');
+					$(this).find('.input').removeClass('error-input');
+					$(this).find('.input').removeClass('succes-input');
+					$(this).find('.info').removeClass('info-error');
+					$(this).find('.info').removeClass('info-succes');
+					$(this).find('.placeholder').removeClass('placeholder-active');
+					$('.succes').removeClass('succes-ok');
+					succesSendInputforData();
+					$('#speakers').removeClass('popupopacity');
+					$('#speakersbg').removeClass('popupbgopacity');
+					setTimeout(function(){
+						$('#speakers').removeClass('popupblock');
+						$('#speakersbg').removeClass('popupblock');
+						$('body, html').removeClass('noscroll');
+						$('body').width('auto');
+						$('.menujs').width('100%');
+						$('.menujs').removeAttr('style');
+						$('.upscrollpage').removeAttr('style');
+						$('.update_site_button').removeAttr('style');
+					},500);
+			 	}
+			});
+		}
+	});
+
+	//Обработка спикеров
+	//Показать список спикеров по выбору его страны
+	$("#speakers_geography_select").change(function() {
+		show_speakers();
+	});
+	//Показать список событий по выбору его языка
+	$("#speakers_lang_select").change(function() {
+		show_speakers();
+	});
+
+	//Фильтр для экспертов
+	function show_speakers(){
+		var data = $("#form_show_speakers").serialize();
+		$.ajax({
+			url: "/func.php?func=show_speakers_list",
+			type: "POST",
+			data: data,
+			cache: false,
+		  	success: function(result) {
+		  		if(result.length>2) 
+		  			$(".result__main").html(result);
+		  		else 
+		  			document.location.reload(true);
+		 	}
+		});
+	}
+
+	//Фильтры материалов
+	//Показать список спикеров по выбору его страны
+	$("#materials_country_select").change(function() {
+		filter_materials();
+	});
+	//Показать список событий по выбору его языка
+	$("#materials_theme_select").change(function() {
+		filter_materials();
+	});
+
+	//Фильтр для экспертов
+	function filter_materials(){
+		var data = $("#form_filter_materials").serialize();
+		$.ajax({
+			url: "/func.php?func=filter_materials",
+			type: "POST",
+			data: data,
+			cache: false,
+		  	success: function(result) {
+		  		if(result.length>2) 
+		  			$(".materials_list").html(result);
+		  		else 
+		  			document.location.reload(true);
+		 	}
+		});
+	}
+	$('.multiple-select2').select2({
+		placeholder: "Выберите эксперта"
+	});
+
+	$('.multiple-select2-placeholder').addClass('placeholder-select2');
+
+    $('.checkbox__text').on("click", function () {
+        $(this).siblings().trigger('change');
+    });
+
+    //Кнопка пригласить эксперта в списках и в карточке эксперта
+    $('.invite-speaker-btn').on('click', function(){
+    	var id_speaker = $(this).attr('data-id');
+		window.location = "https://" + window.location.hostname + "/invite-expert/?expert="+id_speaker;
+    });
+
+    //Пригласить спикера
+	$("#invite-speakers-form").submit(function(event){
+	event.preventDefault();
+	var form = $(this);
+	$(this).find('.input').removeClass('error-input');
+	$(this).find('.input').removeClass('succes-input');
+	$(this).find('.select2-container').removeClass('error-input');
+	$(this).find('.select2-container').removeClass('succes-input');
+	var error = 0;
+	var regemail = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+
+    if( $.trim($(this).find('.input-fio').val()).length > 0){
+    	$(this).find('.input-fio').addClass('succes-input');
+    }else{
+		$(this).find('.input-fio').addClass('error-input');
+    	error++;
+    }
+    if(regemail.test($(this).find('.input-email').val())){
+    	$(this).find('.input-email').addClass('succes-input');
+    }else{
+    	$(this).find('.input-email').addClass('error-input');
+    	error++;
+    }
+
+    if($.trim($(this).find('.input-tel').val()).length>16){
+    	$(this).find('.input-tel').addClass('succes-input');
+    }else{
+    	$(this).find('.input-tel').addClass('error-input');
+    	error++;
+    }
+    if( $.trim($(this).find('.input-speakers').val()).length > 0){
+    	$(this).find('.input-speakers').siblings('.select2-container').addClass('succes-input');
+    }else{
+		$(this).find('.input-speakers').siblings('.select2-container').addClass('error-input');
+    	error++;
+    }   
+
+    var data_speakers = $('.multiple-select2').select2('data')
+    var speakers_array = [];
+	data_speakers.forEach(function (item) { 
+	    speakers_array.push(item.text); 
+	})
+
+	if(error == 0){
+		var data = $(this).serialize() + "&Эксперты=" + speakers_array;
+		$.ajax({
+		  url: "/func.php?func=invite-speakers",
+		  type: "POST",
+		  data: data,
+		  	success: function(result) {
+		  		if(result.length < 2){
+				  	$(form).find('.input').val('');
+				  	$(form).find('.textarea').val('');
+					$(form).find('.input').removeClass('error-input');
+					$(form).find('.input').removeClass('succes-input');
+					$(form).find('.select2-container').removeClass('error-input');
+					$(form).find('.select2-container').removeClass('succes-input');
+
+					$('.multiple-select2').val(null).trigger('change');
+
+					$(form).find('.info').removeClass('info-error');
+					$(form).find('.info').removeClass('info-succes');
+					$(form).find('.placeholder').removeClass('placeholder-active');
+					$('.succes').removeClass('succes-ok');
+					mail_after_register(data);
+		  		 	setTimeout(function() {
+			  			modal("Ваша зявка отправлена<br>В скором времени мы с Вами свяжемся","Успешно");
+					}, 500);
+			  	}else{
+			  		alert(result);
+			  	}
+		 	}
+		});	
+	}
+	});
+
+	$('#checkbox_terms_invite_speaker').on('click', function(){
+	    if($(this).prop("checked") == true){
+	        $('#invite-speakers-form').find('.submit').prop('disabled', false); 
+	    }
+	    else if($(this).prop("checked") == false){
+	        $('#invite-speakers-form').find('.submit').prop('disabled', true); 
+	    }
+	});
+
+	let checked_speakers_for_invite = '';
+
+	//Выделить всех избранных экспертов в личном кабинете
+	$( document ).ready(function() {
+		let checked1 = $('.my_events').find('.speaker-checkbox__block input[type="checkbox"]:checked');
+		if(checked1.length > 0){
+			checked_speakers_for_invite = '';
+			checked1.each(function() {
+	            checked_speakers_for_invite += $(this).attr('id') + ',';
+	        });
+	        var strLink ="/invite-expert/?expert=" + checked_speakers_for_invite;
+			$('.invite-all-expert-btn').css('display', 'block');
+    		$('.invite-all-expert-btn').attr("href",strLink);
+		}else{
+			$('.invite-all-expert-btn').css('display', 'none');
+		}
+	});
+
+	$(document).on("click","#select_all_speakers", function(e) {
+	    if($(this).prop('checked')) {
+			$(this).parent().parent().parent().find('.speaker-checkbox__block .checkbox__input input[type="checkbox"]').prop('checked', true);
+			$('.invite-all-expert-btn').css('display', 'block');
+		} else {
+			$(this).parent().parent().parent().find('.speaker-checkbox__block .checkbox__input input[type="checkbox"]').prop('checked', false);
+			$('.invite-all-expert-btn').css('display', 'none');
+		}
+		let checked = $('.my_events').find('.speaker-checkbox__block input[type="checkbox"]:checked');
+		checked_speakers_for_invite = '';
+		checked.each(function() {
+            checked_speakers_for_invite += $(this).attr('id') + ',';
+        });
+
+    	var strLink ="/invite-expert/?expert=" + checked_speakers_for_invite;
+    	$('.invite-all-expert-btn').attr("href",strLink);
+	});
+
+	$('.checkbox-speaker-profile').on('click', function(e){
+		let checked = $('.my_events').find('.speaker-checkbox__block input[type="checkbox"]:checked');
+		let checkboxes = $('.my_events').find('.speaker-checkbox__block input[type="checkbox"]');
+		checked_speakers_for_invite = '';
+		checked.each(function() {
+            checked_speakers_for_invite += $(this).attr('id') + ',';
+        });
+
+        var strLink ="/invite-expert/?expert=" + checked_speakers_for_invite;
+        $('.invite-all-expert-btn').attr("href",strLink);
+		
+		if(checked.length == checkboxes.length){
+			$('#select_all_speakers').prop('checked',true);
+		}else{
+			$('#select_all_speakers').prop('checked',false);
+		}
+		if(checked.length > 0){
+			$('.invite-all-expert-btn').css('display', 'block');
+		}else{
+			$('.invite-all-expert-btn').css('display', 'none');
+		}
+	});
+
+	$('.cookie_agree_btn').on('click', function(){
+		$.cookie('cookie_accept', true, { expires: 30, path: '/' });
+		$('.cookie_accept_form').removeClass('active_cookie_form');
+	});
+	if(!$.cookie('cookie_accept')){
+		$('.cookie_accept_form').addClass('active_cookie_form');
+	}
+	$('.spoiler-head').click(function(){
+		$(this).parents('.spoiler-wrap').toggleClass("active").find('.spoiler-body').slideToggle();
+	})
+	
+	ShowProperties.bind();
+    if($('.speaker-tabs').find('#specifications')[0] !== undefined)
+    {
+        $('.speaker-tabs').find('#specifications').trigger('click');
+        
+    } else 
+    {
+        $('.speaker-tabs').find('#descriptions').trigger('click');
+    }
+
+    function modal(text, header = "Успех"){
+		var width = $('body').innerWidth();
+		$('.menujs').css('display','none');
+		$('.upscrollpage').css('display','none');
+		$('.update_site_button').css('display','none');
+		$('#modal').addClass('popupblock');
+		$('#modalbg').addClass('popupblock');
+		$('body, html').addClass('noscroll');
+		$('body').width(width);
+		setTimeout(function(){
+			$('#modal').addClass('popupopacity');
+			$("#modal").find('.contact__blocktitle').html(header);
+			$("#modal").find('.form_text').html(text);
+			$('#modalbg').addClass('popupbgopacity');
+		},200);
+		$('#modal').on('click',function(e){
+			if(!$(e.target).is('a.close_modal')){
+	          e.stopPropagation();
+	        }
+		});
+		$('#modalbg').on('click',function(){
+			close_modal();
+		});
+		$('.close_modal').on('click',function(){
+			close_modal();
+		});
+		function close_modal(){
+			$('#modal').removeClass('popupopacity');
+			$(this).removeClass('popupbgopacity');
+			setTimeout(function(){
+				$('#modal').removeClass('popupblock');
+				$('#modalbg').removeClass('popupblock');
+				$('body, html').removeClass('noscroll');
+				$('body').width('auto');
+				$('.menujs').width('100%');
+				$('.menujs').removeAttr('style');
+				$('.upscrollpage').removeAttr('style');
+				$('.update_site_button').removeAttr('style');
+			},500);
+		}
+	}
+
+	function confirm_modal(header, handler){
+		var width = $('body').innerWidth();
+		$('.menujs').css('display','none');
+		$('.upscrollpage').css('display','none');
+		$('.update_site_button').css('display','none');
+		$('#confirmmodal').addClass('popupblock');
+		$('#confirmmodalbg').addClass('popupblock');
+		$('body, html').addClass('noscroll');
+		$('body').width(width);
+		setTimeout(function(){
+			$('#confirmmodal').addClass('popupopacity');
+			$("#confirmmodal").find('.contact__blocktitle').html(header);
+			// $("#confirmmodal").find('.form_text').html(text);
+			$('#confirmmodalbg').addClass('popupbgopacity');
+		},200);
+		$('#confirmmodal').on('click',function(e){
+			if( !$(e.target).is('a.ok_confirmmodal') || !$(e.target).is('a.otmena_confirmmodal') ){
+	          e.stopPropagation();
+	        }
+		});
+		$('#confirmmodalbg').on('click',function(){
+			close_modal();
+		});
+		$('.ok_confirmmodal').on('click',function(){
+			handler(true);
+			close_modal();
+		});
+		$('.otmena_confirmmodal').on('click',function(){
+			handler(false);
+			close_modal();
+		});
+		function close_modal(){
+			$('#confirmmodal').removeClass('popupopacity');
+			$('#confirmmodalbg').removeClass('popupbgopacity');
+			setTimeout(function(){
+				$('#confirmmodal').removeClass('popupblock');
+				$('#confirmmodalbg').removeClass('popupblock');
+				$('body, html').removeClass('noscroll');
+				$('body').width('auto');
+				$('.menujs').width('100%');
+				$('.menujs').removeAttr('style');
+				$('.upscrollpage').removeAttr('style');
+				$('.update_site_button').removeAttr('style');
+			},500);
+		}
+	}
 });
+
+var ShowProperties = function () {
+        
+    function bind () 
+    {
+        $('body').on('click', '.spek-tab', showProperties); 
+    }
+    
+    function showProperties (e) 
+    {
+        $(e.currentTarget).addClass('spek-tab-active');
+        $('.speaker-tabs div').not('#'+$(e.currentTarget).attr('id')).removeClass('spek-tab-active');
+        $('.sections-group section').not('.d-none').addClass('d-none');
+        $('.'+$(e.currentTarget).attr('id')+'-section').removeClass('d-none');
+        
+		$('iframe').height($('iframe').width()/16*9);
+    }
+    
+    return {
+        bind: bind
+    }
+    
+}();

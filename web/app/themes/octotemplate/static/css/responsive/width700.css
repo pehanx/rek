@@ -1,0 +1,385 @@
+@media only screen and (max-width: 700px){
+	.news__items>div {
+        height: auto;
+    }
+
+    .news__items>div:nth-child(4n-3) .news__img,
+    .news__items>div:nth-child(4n) .news__img {
+        height: 570px;
+    }
+
+    .news__items>div:nth-child(4n-2) .news__img,
+    .news__items>div:nth-child(4n-1) .news__img {
+        height: 255px;
+    }
+
+    .news__items>div:nth-child(4n-2) a:last-child,
+    .news__items>div:nth-child(4n-1) a:last-child {
+        height: auto;
+    }
+
+    .news__items>div:nth-child(4n-2) .news__img,
+    .news__items>div:nth-child(4n-1) .news__img {
+        height: auto;
+    }
+
+    .news__items>div:nth-child(4n-2) .news__img img,
+    .news__items>div:nth-child(4n-1) .news__img {
+        height: 245px;
+    }
+
+    .news__items>div:nth-child(4n-2) .news__img,
+    .news__items>div:nth-child(4n-1) .news__img {
+        height: 245px;
+    }
+
+    .news__items>div:nth-child(2) {
+        height: auto;
+    }
+
+    .news__maintitle .title {
+        font-size: 32px;
+        line-height: 44px;
+    }
+
+    .menu__logo span {
+        display: none;
+    }
+
+    .headblock__img {
+        width: 700px;
+    }
+
+    .title {
+        font-size: 32px;
+        line-height: 44px;
+    }
+
+    .headblock__title .title {
+        width: 170px;
+    }
+
+    .news__maintitle .title {
+        margin-top: 20px;
+        margin-right: 0px;
+    }
+
+    .news__maintitle .link-text {
+        margin-right: 0px;
+    }
+
+    .link-text {
+        font-size: 16px;
+        line-height: 28px;
+    }
+
+    .upscrollpage svg {
+        width: 22px;
+        height: 12px;
+    }
+
+    .upscrollpage {
+        right: 45px;
+        bottom: 75px;
+    }
+
+    .upscrollpagesteep {
+        width: 50px;
+        height: 50px;
+        bottom: 50px;
+        right: 20px;
+    }
+
+    .news__items>div:nth-child(4n-2) .news__date,
+    .news__items>div:nth-child(4n-1) .news__date {
+        position: static;
+        color: #404040;
+    }
+
+    .news__items>div:nth-child(4n-3) .news__date,
+    .news__items>div:nth-child(4n) .news__date {
+        position: static;
+        color: #404040;
+    }
+
+    .news__items>div:nth-child(4n-3) .news__title,
+    .news__items>div:nth-child(4n) .news__title {
+        position: static;
+        color: #404040;
+    }
+
+    .news__items>div:nth-child(4n-2) .news__title,
+    .news__items>div:nth-child(4n-1) .news__title {
+        position: static;
+        color: #404040;
+    }
+
+    .news__items>div:nth-child(4n-3) .news__date,
+    .news__items>div:nth-child(4n) .news__date {
+        padding: 0px;
+    }
+
+    .news__items>div:nth-child(4n-2) .news__date,
+    .news__items>div:nth-child(4n-1) .news__date {
+        padding: 0px;
+    }
+
+    .news__items>div .news__img {
+        margin-bottom: 10px;
+    }
+
+    .news .news__items>div .news__date {
+        position: static;
+        font-family: 'Open Sans';
+        font-style: normal;
+        font-weight: normal;
+        font-size: 15px;
+        line-height: 20px;
+        color: #404040;
+        border: none;
+        padding: 0px;
+        width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+    }
+    .footer__contact a {
+        margin-left: 0px;
+    }
+
+    .footer__copyright {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+
+    .footer__copyright span {
+        -webkit-box-ordinal-group: 3;
+        -ms-flex-order: 2;
+        order: 2;
+    }
+
+    .footer__links a {
+        font-size: 16px;
+        line-height: 28px;
+    }
+
+    .footer__copyright span {
+        font-size: 16px;
+        line-height: 28px;
+    }
+
+    .footer__copyright a {
+        font-size: 16px;
+        line-height: 28px;
+    }
+
+    .footer__contact a {
+        font-size: 20px;
+        line-height: 32px;
+    }
+    .title-news_or_event-wrapp {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+
+    .title-news_or_event-wrapp .description {
+        margin-left: 0px;
+    }
+
+    .title-news_or_event-wrapp .img {
+        margin-bottom: 15px;
+    }
+
+    .title-news_or_event-wrapp .img {
+        width: 100%;
+    }
+
+    .title-news_or_event-wrapp .description {
+        width: 100%;
+    }
+
+    .typical__wrapp li {
+        margin-left: 35px;
+    }
+
+    .typical__wrapp li:before {
+        left: -35px;
+    }
+
+    .next-news_or_event-wrapp .description {
+        margin-left: 30px;
+    }
+    .usefulpage__container {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+
+    .usefulpage__container>a {
+        margin-bottom: 30px;
+    }
+
+    .usefulpage__container>a {
+        width: 100%;
+    }
+
+    .usefulpage__container>a .useful__img {
+        height: 330px;
+    }
+    .material__img {
+        padding-top: 20px;
+        height: 284px;
+    }
+
+    .material__img div {
+        left: 37px;
+        top: 40px;
+    }
+
+    .material__description .material__head {
+        font-size: 30px;
+        line-height: 40px;
+    }
+
+    .material__description p {
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .material__description .material__date {
+        margin-bottom: 20px;
+    }
+
+    .typical__wrapp h2 {
+        font-size: 24px;
+        line-height: 32px;
+        padding-top: 16px;
+    }
+
+    .material__description p {
+        margin-bottom: 20px;
+    }
+
+    .material__footer .material__footerwrapp {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .material__footer .material__footerimg a .img__bg {
+        top: 22px;
+    }
+
+    .material__footer .material__footerimg img {
+        top: 22px;
+    }
+
+    .material__footer .material__footerimg a .img__bg,
+    .material__footer .material__footerimg img {
+        width: 208px;
+        height: 208px;
+    }
+
+    .material__footer .material__footertitle {
+        position: absolute;
+        top: -20px;
+        left: 0px;
+    }
+
+    .material__footer .underline-hover-link {
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .material__footer .link-hover-down {
+        width: 100%;
+    }
+
+    .material__footer .material__footerdescription {
+        width: 100%;
+    }
+    .contact__block {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+    .otmena_confirmmodal{
+        margin-top: 20px
+    }
+
+    .be-ajax-loadmore-container .contact__block {
+        padding: 15px !important;
+    }
+
+    .result__title div {
+        font-size: 32px;
+        line-height: 44px;
+    }
+
+    .contact__title {
+        font-size: 32px;
+        line-height: 44px;
+    }
+
+    .contact__title {
+        text-align: center;
+    }
+    .notresult {
+        width: calc(100% - 34px);
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+
+    .notresult .notresult__text {
+        margin-bottom: 30px;
+        margin-left: 0px;
+        font-size: 24px;
+        line-height: 36px;
+        width: 140px;
+    }
+
+    .notresult .notresult__img {
+        width: 100%;
+        height: auto;
+    }
+
+    .not-found-materials{
+        margin-bottom: 188px;
+    }
+
+    /*SPEAKER*/
+    .speaker__header{
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+
+    .speaker__image{
+        margin-bottom: 15px;
+        width: 100%;
+        max-width: 100%;
+    }
+    .speaker__description{
+        width: 100%;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+    .speaker__name{
+        margin-top: 0;
+    }
+    .speaker__about {
+        line-height: 22px;
+    }
+    /*END SPEAKER*/
+}

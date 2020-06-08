@@ -1,0 +1,30 @@
+@media only screen and (max-width: 580px){
+	.news__titlecontainer>div {
+        width: 100%;
+        margin: 0px 0px 30px 0px;
+    }
+
+
+    .news__container>div {
+        margin-left: 0px;
+        margin-right: 0px;
+        width: 100%;
+    }
+
+    .news__container>div:first-child .news__img {
+        width: 100%;
+    }
+
+    .news__container>div {
+        margin-bottom: 30px;
+    }
+
+    .news__container>div:nth-child(n+2) .news__title {
+        font-size: 16px;
+        line-height: 22px;
+    }
+
+    .news__container>div:nth-child(n+2) {
+        width: 232px;
+    }
+}

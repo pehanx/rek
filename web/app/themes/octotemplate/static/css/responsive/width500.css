@@ -1,0 +1,9 @@
+@media only screen and (max-width: 500px){
+	.element_block{
+		width: 100%;
+		min-width: unset;
+	}
+	.block_element_block{
+		padding: 0;
+	}
+}

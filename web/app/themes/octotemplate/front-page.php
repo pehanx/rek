@@ -55,21 +55,6 @@ get_header();
                                     <?php endforeach; ?>
                                 </div>
                             <?php endif; ?>
-                    <!-- EMAIL рассылка -->
-                        <!-- <div class="aboutclub__item">
-                            <div class="contact__wrapp">
-                                <form action="/mail.php" method="post" class="regs mailing__form" >
-                                    <span class="text" style="margin-right: 40px; font-size: 14px;)">Подпишитесь на нашу рассылку и получайте приглашение на все мероприятия,<br> проводимые Российским Экспортным Клубом:</span>
-                                    <label class="placeholder">
-                                        <input class="input textup input-email" type="text" name="Почта">
-                                        <span>E-mail</span>
-                                        <p class="info">Укажите вашу электронную почту</p>
-                                    </label>
-                                    <input type="hidden" value="participation" name="type">
-                                    <button class="submit">Подписаться</button>
-                                </form>
-                            </div>
-                        </div> -->
                         </section>
                     <?php elseif ($block['acf_fc_layout'] === 'news' && !$block['hide']): ?>
                         <?php
@@ -79,193 +64,159 @@ get_header();
                                 'posts_per_page' => 6,
                             ]);
                         ?>
-                        <section class="news">
-                            <div class="news__bg"></div>
+                        <section class="ourevents">
+                            <!-- <div class="news__bg"></div> -->
                             <div class="news__maintitle">
                                 <h2 class="title"><?= $block['title']; ?></h2>
-                                <a href="<?= get_permalink(PAGE_NEWS_ID); ?>" class="link-text"><?= $block['archive_link_text']; ?></a>
+                                <!-- <a href="<?= get_permalink(PAGE_NEWS_ID); ?>" class="link-text"><?= $block['archive_link_text']; ?></a> -->
                             </div>
-                            <div class="news__items">
-                                <div>
-                                    <a href="<?= get_permalink($news_query->posts[0]); ?>" class="news__item">
-                                        <div class="news__img">
-                                            <?php
-                                            $image = get_post_image($news_query->posts[0]);
-                                            if ($image): ?>
-                                                <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
-                                            <?php endif; ?>
-                                            <div class="news__img__bg"></div>
-                                        </div>
-                                        <div class="news__date">
-                                            <?= get_the_date('j M Y', $news_query->posts[0]); ?>
-                                        </div>
-                                        <div class="news__title title">
-                                            <?= get_the_title($news_query->posts[0]); ?>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div>
-                                    <a class="news__item"></a>
-                                    <a class="news__item"></a>
-                                    <a href="<?= get_permalink($news_query->posts[1]); ?>" class="news__item">
-                                        <div class="news__img">
-                                            <?php
-                                            $image = get_post_image($news_query->posts[1]);
-                                            if ($image): ?>
-                                                <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
-                                            <?php endif; ?>
-                                            <div class="news__img__bg"></div>
-                                        </div>
-                                        <div class="news__date">
-                                            <?= get_the_date('j M Y', $news_query->posts[1]); ?>
-                                        </div>
-                                        <div class="news__title title">
-                                            <?= get_the_title($news_query->posts[1]); ?>
-                                        </div>
-                                    </a>
-                                </div>
-                                <?php
-                                $rest_news = array_chunk(array_slice($news_query->posts, 2), 4);
-                                if ($rest_news):
-                                    foreach ($rest_news as $key => $news_sublist):
-                                        if ($key % 2 === 0): ?>
-                                            <div>
-                                                <?php foreach (array_slice($news_sublist, 0, 3) as $news): ?>
-                                                    <a href="<?= get_permalink($news->ID); ?>" class="news__item">
-                                                        <div class="news__img">
-                                                            <?php
-                                                            $image = get_post_image($news->ID);
-                                                            if ($image): ?>
-                                                            <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
-                                                            <?php endif; ?>
-                                                            <div class="news__img__bg"></div>
-                                                        </div>
-                                                        <div class="news__date">
-                                                            <?= get_the_date('j M Y', $news->ID); ?>
-                                                        </div>
-                                                        <div class="news__title title">
-                                                            <?= shorten_text(get_the_title($news->ID)); ?>
-                                                        </div>
-                                                    </a>
-                                                <?php endforeach; ?>
+                               <?php if ( $news_query->have_posts() ) : ?>
+                                <div class="result__main events_list">
+                            <div class="news__titlecontainer owl-carousel owl-theme" style="margin-top: 70px">
+                                 <?php while ( $news_query->have_posts()) :
+                                     $news_query->the_post();?>
+                                    <div class="contact__block" style="margin-bottom: 0">
+                                        <a href="<?= get_permalink(); ?>" title="<?= get_the_title(); ?>" class="news__item link-hover-down">
+                                            <div class="news__img">
+                                                <?php
+                                                // $image = get_post_image(get_queried_object_id());
+                                                $image = get_post_image();
+                                                if ($image): ?>
+                                                    <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
+                                                <?php endif; ?>
+                                                <div class="news__img__bg"></div>
                                             </div>
-                                            <?php if (isset($news_sublist[3])): ?>
-                                                <div>
-                                                    <a href="<?= get_permalink($news_sublist[3]->ID); ?>" class="news__item">
-                                                        <div class="news__img">
-                                                            <?php
-                                                            $image = get_post_image($news_sublist[3]->ID);
-                                                            if ($image): ?>
-                                                                <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
-                                                            <?php endif; ?>
-                                                            <div class="news__img__bg"></div>
-                                                        </div>
-                                                        <div class="news__date">
-                                                            <?= get_the_date('j M Y', $news_sublist[3]->ID); ?>
-                                                        </div>
-                                                        <div class="news__title title">
-                                                            <?= shorten_text(get_the_title($news_sublist[3]->ID)); ?>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            <?php endif; ?>
-                                        <?php else: ?>
-                                            <div>
-                                                <a href="<?= get_permalink($news_sublist[0]->ID); ?>" class="news__item">
-                                                    <div class="news__img">
-                                                        <?php
-                                                        $image = get_post_image($news_sublist[0]->ID);
-                                                        if ($image): ?>
-                                                            <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
-                                                        <?php endif; ?>
-                                                        <div class="news__img__bg"></div>
-                                                    </div>
-                                                    <div class="news__date">
-                                                        <?= get_the_date('j M Y', $news_sublist[0]->ID); ?>
-                                                    </div>
-                                                    <div class="news__title title">
-                                                        <?= shorten_text(get_the_title($news_sublist[0]->ID)); ?>
-                                                    </div>
-                                                </a>
+                                            <div class="news__date">
+                                                <?= get_the_date('j M Y'); ?>
                                             </div>
-                                            <?php
-                                            $news_triplet = array_slice($news_sublist, 1, 3);
-                                            if ($news_triplet): ?>
-                                                <div>
-                                                    <?php foreach ($news_triplet as $news): ?>
-                                                        <a href="<?= get_permalink($news->ID); ?>" class="news__item">
-                                                            <div class="news__img">
-                                                                <?php
-                                                                $image = get_post_image($news->ID);
-                                                                if ($image): ?>
-                                                                    <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
-                                                                <?php endif; ?>
-                                                                <div class="news__img__bg"></div>
-                                                            </div>
-                                                            <div class="news__date">
-                                                                <?= get_the_date('j M Y', $news->ID); ?>
-                                                            </div>
-                                                            <div class="news__title title">
-                                                                <?= shorten_text(get_the_title($news->ID)); ?>
-                                                            </div>
-                                                        </a>
-                                                    <?php endforeach; ?>
+                                            <?php if(get_field('city')):?>
+                                            <div class="news__city">
+                                                 <?="г. ".get_field('city'); ?>
+                                            </div>
+                                            <?php endif;?>
+
+                                            <div class="news__title title">
+                                                <div class="underline-hover-link" 
+                                                    style="overflow: hidden;
+                                                            white-space: nowrap;
+                                                            text-overflow: ellipsis;">
+                                                    <?= get_the_title(); ?>
                                                 </div>
-                                            <?php endif; ?>
-                                        <?php endif;
-                                    endforeach;
-                                endif; ?>
+                                               <!--  <span class="underline-hover-link">
+                                                    <?php 
+                                                    $count = 30;
+                                                    $after = "...";
+                                                    $title = get_the_title();
+                                                    if (mb_strlen($title) > $count) $title = mb_substr($title,0,$count);
+                                                    else $after = '';
+                                                    echo $title . $after;
+                                                    ?>
+                                                </span> -->
+                                            </div>
+                                        </a>
+                                    </div>
+                                <?php endwhile; ?>
                             </div>
+                        </div>
+
+                        <?php endif;?>
                         </section>
                         
 
                     <?php elseif ($block['acf_fc_layout'] === 'events' && !$block['hide']): ?>
+                        <?php
+                            $events_query = new WP_Query([
+                                'post_type' => 'event',
+                                'posts_per_page' => 6,
+                                'meta_query'    => array(
+                                array(
+                                    'relation' => 'AND',
+                                    'date' => array(
+                                        'key' => 'start_date',
+                                        'value' => date('Ymd'),
+                                        'compare' => '>'
+                                    ),
+                                    'sticky' => array(
+                                        'key'       => 'sticky_event',
+                                        'compare'   => 'EXISTS',
+                                    ),
+                                )),
+                                'orderby' => array(
+                                    'sticky'     => 'DESC',
+                                    'date'       => 'ASC',
+                                )
+                            ]);
+                        ?>
                         <section class="ourevents">
                             <div class="ourevents__title">
                                 <h2 class="title"><?= $block['title']; ?></h2>
-                                <a href="<?= get_permalink(PAGE_EVENTS_ID); ?>" class="link-text"><?= $block['archive_link_text']; ?></a>
+                                <!-- <a href="<?= get_permalink(PAGE_EVENTS_ID); ?>" class="link-text"><?= $block['archive_link_text']; ?></a> -->
                             </div>
-                            <div class="ourevents__container">
-                                <?php foreach ($block['events'] as $event): ?>
-                                    <div>
-                                         <?php
-                                            $image = get_post_image($event->ID);
-                                            if ($image): ?>
-                                               <?php $url_img = $image['url'] ?>
-                                            <?php endif; ?>
-                                        
-                                        <div class="ourevents__img" style="background-image: url('<?=$url_img?>');">
-                                                 <div class="ourevents__imgbg" ></div>
-                                        </div>
-                                        <div class="ourevents__description">
-                                            <div class="ourevents__title bold-text">
-                                                <?= get_the_title($event->ID); ?>
-                                            </div>
-                                            <div class="ourevents__location text">
+                            
+                            <?php if ( $events_query->have_posts() ) : ?>
+                                <div class="result__main events_list">
+                            <div class="news__titlecontainer owl-carousel owl-theme" style="margin-top: 70px">
+                                 <?php while ( $events_query->have_posts()) :
+                                     $events_query->the_post();?>
+                                    <div class="contact__block" style="margin-bottom: 0">
+                                        <a href="<?= get_permalink(); ?>" title="<?= get_the_title(); ?>" class="news__item link-hover-down">
+                                            <div class="news__img 
+                                                <?php if(get_field('end_date')):?>
+                                                    <?php if(get_field('end_date') < date_i18n('Y-m-d')):?>
+                                                        <?php echo 'filter_gray'; ?>
+                                                    <?php endif;?>
+                                                <?php else:?>
+                                                     <?php if(get_field('start_date') < date_i18n('Y-m-d')):?>
+                                                        <?php echo 'filter_gray'; ?>
+                                                    <?php endif;?>
+                                               <?php endif;?>">
                                                 <?php
-                                                $event_date = get_field('event_date', $event->ID);
-                                                $place = get_field('place', $event->ID);
-                                                if ($event_date) {
-                                                    echo $event_date . '<br>';
-                                                }
-                                                if ($place) {
-                                                    echo $place . '<br>';
-                                                }
-                                                ?>
+                                                // $image = get_post_image(get_queried_object_id());
+                                                $image = get_post_image();
+                                                if ($image): ?>
+                                                    <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
+                                                <?php endif; ?>
+                                                <div class="news__img__bg"></div>
+                                            </div>
+                                            <div class="news__date">
+                                                 <?=get_field('event_date'); ?>
+                                            </div>
+                                            
+                                            <div class="news__city" style="min-height: 20px">
+                                                <?php if(get_field('city')):?>
+                                                 <?="г. ".get_field('city'); ?>
+                                                <?php endif;?>
+                                            </div>
 
+                                            <div class="news__title title">
+                                                <div class="underline-hover-link" 
+                                                    style="overflow: hidden;
+                                                            white-space: nowrap;
+                                                            text-overflow: ellipsis;">
+                                                    <?= get_the_title(); ?>
+                                                </div>
+                                               <!--  <span class="underline-hover-link">
+                                                    <?php 
+                                                    $count = 30;
+                                                    $after = "...";
+                                                    $title = get_the_title();
+                                                    if (mb_strlen($title) > $count) $title = mb_substr($title,0,$count);
+                                                    else $after = '';
+                                                    echo $title . $after;
+                                                    ?>
+                                                </span> -->
                                             </div>
-                                            <div class="ourevents__buttons">
-                                                <a href="javascript:;" class="button popup-join-open" data-title="<?= get_the_title($event->ID); ?>"><?= pll__('Записаться'); ?></a>
-                                                <a href="<?= get_permalink($event->ID); ?>" class="button-underline"><?= pll__('Подробнее'); ?></a>
-                                            </div>
-                                        </div>
+                                        </a>
                                     </div>
-                                <?php endforeach; ?>
+                                <?php endwhile; ?>
                             </div>
+                        </div>
+
+                        <?php endif;?>
                         </section>
 
                     <?php elseif ($block['acf_fc_layout'] === 'blue_line_popup' && !$block['hide']): ?>
-                        <section class="inclub">
+                        <section class="inclub" style="margin-bottom: 0;">
                             <div class="inclub__wrapp">
                                 <div class="inclub__text">
                                     <?= $block['title']; ?>
@@ -275,36 +226,145 @@ get_header();
                         </section>
 
                     <?php elseif ($block['acf_fc_layout'] === 'materials' && !$block['hide']): ?>
-                        <section class="useful">
-                            <div class="useful__wrapp">
-                                <div class="useful__title">
-                                    <h2 class="title"><?= $block['title']; ?></h2>
-                                    <a href="<?= get_permalink(PAGE_MATERIALS_ID); ?>" class="link-text"><?= $block['archive_link_text']; ?></a>
-                                </div>
-                                <?php if ($block['materials']): ?>
-                                    <div class="useful__container">
-                                        <?php foreach ($block['materials'] as $material): ?>
-                                            <a href="<?= get_permalink($material->ID); ?>" class="link-hover-down">
+                       <?php
+                            $materials_query = new WP_Query([
+                                'post_type' => 'material',
+                                'post_status' => 'publish',
+                                'posts_per_page' => 6,
+                            ]);
+                        ?>
+                        <section class="ourevents">
+                            <!-- <div class="news__bg"></div> -->
+                            <div class="news__maintitle">
+                                <h2 class="title"><?= $block['title']; ?></h2>
+                                <!-- <a href="<?= get_permalink(PAGE_NEWS_ID); ?>" class="link-text"><?= $block['archive_link_text']; ?></a> -->
+                            </div>
+                               <?php if ( $materials_query->have_posts() ) : ?>
+                                <div class="result__main events_list">
+                            <div class="news__titlecontainer owl-carousel owl-theme" style="margin-top: 70px">
+                                 <?php while ( $materials_query->have_posts()) :
+                                     $materials_query->the_post();?>
+                                    <div class="contact__block" style="margin-bottom: 0">
+                                        <a href="<?= get_permalink(); ?>" title="<?= get_the_title(); ?>" class="news__item link-hover-down">
+                                            <div class="news__img">
                                                 <?php
-                                                $image = get_post_image($material->ID);
+                                                // $image = get_post_image(get_queried_object_id());
+                                                $image = get_post_image();
                                                 if ($image): ?>
                                                     <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
                                                 <?php endif; ?>
-                                                <div class="useful__containerbg"></div>
-                                                <div class="useful__containertext bold-text">
-                                                    <span class="underline-hover-link">
-                                                        <?= get_the_title($material->ID); ?>
-                                                    </span>
+                                                <div class="news__img__bg"></div>
+                                            </div>
+                                            <div class="news__date">
+                                                <?= get_the_date('j M Y'); ?>
+                                            </div>
+                                            <?php if(get_field('city')):?>
+                                            <div class="news__city">
+                                                 <?="г. ".get_field('city'); ?>
+                                            </div>
+                                            <?php endif;?>
+
+                                            <div class="news__title title">
+                                                <div class="underline-hover-link" 
+                                                    style="overflow: hidden;
+                                                            white-space: nowrap;
+                                                            text-overflow: ellipsis;">
+                                                    <?= get_the_title(); ?>
                                                 </div>
-                                                <div class="useful__containerdate link-text">
-                                                    <?= get_the_date('j M Y', $material->ID); ?>
-                                                </div>
-                                            </a>
-                                        <?php endforeach; ?>
+                                               <!--  <span class="underline-hover-link">
+                                                    <?php 
+                                                    $count = 30;
+                                                    $after = "...";
+                                                    $title = get_the_title();
+                                                    if (mb_strlen($title) > $count) $title = mb_substr($title,0,$count);
+                                                    else $after = '';
+                                                    echo $title . $after;
+                                                    ?>
+                                                </span> -->
+                                            </div>
+                                        </a>
                                     </div>
-                                <?php endif; ?>
+                                <?php endwhile; ?>
+                            </div>
+                        </div>
+
+                        <?php endif;?>
+                        </section>
+
+                        <?php elseif ($block['acf_fc_layout'] === 'mobile_apps' && !$block['hide']): ?>
+                            <style>
+                                .logos_apps{
+                                    display: flex;
+                                    flex-direction: row;
+                                }
+                                .img_logo{
+                                    height:50px !important;
+                                    margin: 5px;
+                                }
+                             
+
+                            @media only screen and (max-width: 600px) {
+                                .logos_apps{
+                                    display: flex;
+                                    flex-direction: column;
+                                }
+                                 .img_logo{
+                                    height:auto !important;
+                                    width: 150px !important
+                                }
+                            }
+                            </style>
+                        <section class="ourevents">
+
+                            <div class="news__maintitle">
+                                <h2 class="title"><?= $block['title']; ?></h2>
+                            </div>
+                            <div class="result__main events_list">
+                                <div class="news__titlecontainer" style="margin-top: 70px;justify-content: center;">
+                                    <div class="contact__block" style="margin-bottom: 0; width: 40%;display: flex;justify-content: center;align-items: center;margin-top: 10px;flex-direction: column;">
+                                            <div class="news__img" style="height: auto;">
+                                                <?php
+                                                $image = get_post_image();
+                                                if ($image): ?>
+                                                    <img src="<?= $block['images_apps']; ?>" style="border-radius: 20px;">
+                                                <?php endif; ?>
+                                                <div class="news__img__bg"></div>
+                                            </div>
+                                            <div class="typical__wrapp" style="width: auto;">
+                                                <p>Доступно в GooglePlay и AppStore</p>
+                                                <div class="logos_apps" style="margin-bottom:10px">
+                                                    <a style="margin-bottom: 0" target="_blank" href="https://apps.apple.com/ru/app/%D1%80%D0%BE%D1%81%D1%81%D0%B8%D0%B9%D1%81%D0%BA%D0%B8%D0%B9-%D1%8D%D0%BA%D1%81%D0%BF%D0%BE%D1%80%D1%82%D0%BD%D1%8B%D0%B9-%D0%BA%D0%BB%D1%83%D0%B1/id1490232250">
+                                                       <img class="img_logo" src="https://russianexport.club/app/uploads/2020/01/Download_on_the_App_Store_Badge_RU_RGB_blk_100317-1.png" alt=""> 
+                                                    </a>
+                                                    <a style="margin-bottom: 0"  target="_blank" href="https://play.google.com/store/apps/details?id=com.g2rcompany">
+                                                       <img class="img_logo" src="https://russianexport.club/app/uploads/2020/01/google-play-badge-e1580302537769.png" alt=""> 
+                                                    </a>
+                                                </div>
+                                                *Для входа в приложение используйте Ваш электронный адрес и пароль, которые вы используете на сайте Российского Экспортного Клуба
+                                            </div>
+                                    </div>
+                                    <div class="contact__block" style="margin-bottom: 0; width: 40%;margin-top: 10px">
+                                        <div class="typical__wrapp" style="width: auto;">
+                                            <ul style="margin-top: 30px;">
+                                                <li style="width: auto;">
+                                                    Будьте в курсе мероприятий и событий в общественной жизни Российского Экспортного Клуба в режиме реального времени
+                                                </li>
+                                                <li style="width: auto;">
+                                                    Общайтесь, с экспортерами со всей России, и не только, меняйся опытом и знаниями
+                                                </li>
+                                                <li style="width: auto;">
+                                                    Получайте полный доступ к полезным материалам и вебинарам
+                                                </li>
+                                                <li style="width: auto;">
+                                                    Используйте возможности мобильного приложения Российский Экспортный Клуб для бизнеса и повседневной жизни
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </section>
+
 
                     <?php endif; ?>
                 <?php endforeach;

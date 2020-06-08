@@ -1,0 +1,87 @@
+@media only screen and (max-width: 750px){
+	.title-news_or_event-wrapp .description__text {
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .button-underline {
+        font-size: 16px;
+        line-height: 22px;
+        height: 22px;
+    }
+
+    .typical__wrapp p,
+    .typical__wrapp li {
+        font-size: 16px;
+        line-height: 28px;
+    }
+
+    .typical__wrapp blockquote {
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .typical__wrapp cite {
+        font-size: 16px;
+        line-height: 28px;
+    }
+
+    .typical__wrapp blockquote {
+        margin-left: 20px;
+    }
+
+    .typical__wrapp blockquote:before {
+        left: -20px;
+    }
+
+    .typical__wrapp blockquote {
+        width: calc(100% - 20px);
+    }
+
+    .typical__wrapp cite {
+        width: calc(100% - 20px);
+    }
+
+    .typical__wrapp .wp-caption-text {
+        font-size: 12px;
+    }
+
+    /*SPEAKER*/
+    .speaker__name {
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .speaker__wrapp {
+        width: calc(100% - 34px);
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+
+    .speaker__wrapp blockquote {
+        font-size: 20px;
+        line-height: 28px;
+        margin-left: 20px;
+    }
+
+    .speaker__wrapp p,
+    .speaker__wrapp li {
+        font-size: 16px;
+        line-height: 28px;
+    }
+    .speaker__wrapp blockquote:before {
+        left: -20px;
+    }
+
+    .speaker__wrapp blockquote {
+        width: calc(100% - 20px);
+    }
+    .spoiler-head{
+        font-size: 16px;
+    }
+    .spoiler-wrap.active .spoiler-head{
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    /*END SPEAKER*/
+}

@@ -1,0 +1,11 @@
+@media only screen and (max-width: 900px){   
+    .event .title-news_or_event-wrapp {
+        padding-top: 0px;
+    }
+    .speaker__header {
+        padding-top: 0px;
+    }
+    .video_speaker_iframe__container{
+    	margin-right: 0;
+    }
+}   

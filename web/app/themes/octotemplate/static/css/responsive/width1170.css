@@ -1,0 +1,29 @@
+@media only screen and (max-width: 1170px){
+	.news__containerpaggination {
+        width: calc(100% - 34px);
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+
+    .news__containerpaggination {
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+
+    .news__container>div:first-child .news__img {
+        width: 460px;
+        height: 520px;
+    }
+
+    .news__container>div:first-child .news__date {
+        left: 425px;
+    }
+
+    .news__container>div:first-child .news__img img {
+        height: 100%;
+    }
+
+    .news__container>div:first-child .news__date {
+        width: 30%;
+    }
+}

@@ -10,7 +10,7 @@ if ($prev_post):
                     <?php
                     $image = get_post_image($prev_post->ID);
                     if ($image): ?>
-                        <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
+                        <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>" style="object-fit: contain;">
                         <div class="img__bg">
                             <svg class="icon__eye" width="45px" height="45px">
                                 <use xlink:href="#eye"></use>

@@ -25,7 +25,7 @@ get_header();
                     <?= $contacts['title']; ?>
                 </div>
                 <?php foreach($contacts['sites'] as $site): ?>
-                    <a href="<?= $site['value']; ?>"><?= $site['value']; ?></a>
+                    <a href="<?= $site['value']; ?>">Russianexport.club</a>
                 <?php endforeach; ?>
 
                 <?php foreach($contacts['emails'] as $email): ?>
@@ -65,9 +65,6 @@ get_header();
                 </form>
             </div>
         <?php endif; ?>
-    </div>
-    <div id="primary-sidebar" class="primary-sidebar widget-area" role="complementary">
-        <?php dynamic_sidebar( 'home_right_1' ); ?>
     </div>
 </section>
 <?php

@@ -1,0 +1,71 @@
+@media only screen and (max-width: 480px){
+	.headblock__img {
+        /*right: -80px;*/
+        right: -250px;
+        top: 0px;
+    }
+
+    .headblock__title {
+        width: 100%;
+    }
+
+    .text {
+        font-size: 16px;
+        line-height: 28px;
+    }
+
+    .mailup .text {
+        text-align: center;
+    }
+
+    .ya-share2__icon {
+        height: 30px !important;
+        width: 30px !important;
+    }
+
+    /*SPEAKERS*/
+
+    /*END SPEAKERS*/
+    .speaker_list_geography_block{
+        flex-direction: column;
+        align-items: start;
+    }
+    .speaker_list_geography_block>div:nth-child(1){
+        margin-right: 0;
+    }
+
+    .speaker_list_geography_block_icon,
+    .speaker_list_geography_block_select{
+        margin-bottom: 20px;
+    }
+
+    .speaker_list_geography_block>div{
+        flex-wrap: wrap;
+        margin-bottom: 0;
+    }
+
+    /*SPEAKER*/
+    .speaker__header{
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+    }
+
+    .speaker__image{
+        margin-bottom: 15px;
+        width: 100%;
+    }
+    .speaker__description{
+        width: 100%;
+    }
+    .speaker__buttons{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .speaker-btn.btn-blue{
+        margin-right: 0;
+    }
+    /*END SPEAKER*/
+}

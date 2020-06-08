@@ -1,0 +1,110 @@
+@media only screen and (max-width: 1250px){
+	.footer__wrap {
+        width: calc(100% - 34px);
+    }
+    .contact__wrapp,
+    .contact__wrapp_calendar {
+        width: 100%;
+    }
+    .useful__wrapp {
+        width: calc(100% - 34px);
+    }
+
+    .useful__title {
+        position: static;
+        margin-bottom: 50px;
+    }
+
+    .useful__title .title {
+        margin-bottom: 0px;
+    }
+
+    .useful__container>a:first-child {
+        width: 900px;
+        margin: 0px auto 30px auto;
+    }
+
+    .useful__container>a {
+        margin-bottom: 30px;
+    }
+    .news__titleblockwrapp {
+        width: calc(100% - 20px);
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .news__titlecontainer>div {
+        margin-left: 7.5px;
+        margin-right: 7.5px;
+    }
+
+    .news__titlecontainer>div {
+        /*width: 47.9%;*/
+        width: 38%;
+    }
+
+    .news__container>div:first-child .news__title {
+        font-size: 36px;
+        line-height: 52px;
+    }
+
+    .news__container {
+        width: calc(100% - 34px);
+        /* padding-left: 17px;
+    padding-right: 17px;*/
+    }
+
+    .news__container>div:first-child .news__title {
+        margin-left: 58px;
+    }
+
+    .news__container>div:first-child .news__date {
+        left: 635px;
+    }
+
+    .news__container>div {
+        margin-bottom: 80px;
+    }
+
+    .news__container>div:nth-child(n+2) {
+        height: auto;
+    }
+
+    .news__container>div:nth-child(n+2) .news__img {
+        margin-bottom: 10px;
+    }
+
+    .news__container>div:nth-child(n+2) .news__date,
+    .news__container>div:nth-child(n+2) .news__title {
+        margin-left: 0px;
+    }
+
+    .news__container>div:nth-child(n+2) {
+        width: 360px;
+    }
+
+    .news__container>div:nth-child(n+2) .news__img {
+        width: 360px;
+        height: 360px;
+    }
+
+    .news__container>div:nth-child(n+2) .news__img img {
+        height: 360px;
+    }
+
+    .news__container>div:nth-child(n+2) a {
+        -webkit-box-pack: start;
+        -ms-flex-pack: start;
+        justify-content: flex-start;
+    }
+
+    .news__container>div:nth-child(n+2) {
+        margin-left: 7.5px;
+        margin-right: 7.5px;
+    }
+
+    .news__container {
+        -ms-flex-pack: distribute;
+        justify-content: space-around;
+    }
+}

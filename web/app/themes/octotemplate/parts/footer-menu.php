@@ -39,8 +39,16 @@ if ($footer_menu): ?>
                 </div>
             </div>
             <div class="footer__copyright">
+                
+                <?php if(isAuth()):?>
+                <div class="footer__blocklink">
+                    <div>
+                        <a href="javascript:;" class="update_site_open">Ваши предложения по улучшению сайта</a>
+                    </div>
+                </div>
+                <?php endif;?>
                 <span><?= pll__('2019 г. Российский экспортный клуб'); ?></span>
-                <div class="footer__lang">
+                <!-- <div class="footer__lang">
                     <?php $language_menu = getMenu('menu-language'); ?>
                     <?php foreach ($language_menu as $menu_item):
                         if ($menu_item['title'] === 'English'): ?>
@@ -49,8 +57,20 @@ if ($footer_menu): ?>
                              <a href="<?= $menu_item['link']; ?>" class="footer__lang-rus"><?= $menu_item['title']; ?></a>
                         <?php endif;
                     endforeach; ?>
-                </div>
+                </div> -->
             </div>
+            <div class="footer__copyright">
+                <span>
+                    <a href="https://russianexport.club/privacy-policy/">Согласие на обработку персональных данных</a>
+                </span>
+            </div>
+            <?php if(current_user_can('editor') || current_user_can('administrator')):?> 
+                <div class="footer__copyright">
+                    <span>
+                        <a href="/uchastniki/">Участники клуба</a>
+                    </span>
+                </div>
+            <?php endif;?>
         </div>
     </div>
 <?php endif; ?>
@@ -59,3 +79,10 @@ if ($footer_menu): ?>
         <use xlink:href="#up"></use>
     </svg>
 </div>
+<?php if(isAuth()):?>
+<div class="update_site_button update_site_open">
+    <svg class="icon__up" width="20px" height="24px">
+        <use xlink:href="#icon-pencil"></use>
+    </svg>
+</div>
+<?php endif;?>

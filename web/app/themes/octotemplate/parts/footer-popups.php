@@ -148,27 +148,38 @@
         $name_placeholder = get_field('name_placeholder', pll_get_post(PAGE_JOIN_US_ID));
         $phone_number_placeholder = get_field('phone_number_placeholder', pll_get_post(PAGE_JOIN_US_ID));
         $email_placeholder = get_field('email_placeholder', pll_get_post(PAGE_JOIN_US_ID));
+        $entity_placeholder = get_field('entity_placeholder', pll_get_post(PAGE_JOIN_US_ID));
         $submit_button_text = get_field('submit_button_text', pll_get_post(PAGE_JOIN_US_ID));
+        if(isAuth()):
+            $my_id = $_SESSION["user_id"];
+            $my_user = $wpdb->get_row( " SELECT * FROM `wp_clients` WHERE id = '$my_id'");
+        endif;
+    
         ?>
         <div class="contact__wrapp">
             <div class="contact__block">
                 <div class="contact__blocktitle">
                     <?= pll__('Записаться'); ?>
                 </div>
-                <form action="/mail.php" class="popup__form">
+                <form class="reg_event_form">
                     <input type="hidden" value="" class="be-event-title" name="Событие">
+                    <input type="hidden" value="" class="id_current_post" name="ID_события">
 
                     <?php if ($name_placeholder): ?>
                         <label class="placeholder">
-                            <input class="input textup input-name" type="text" name="ФИО">
-                            <span><?= $name_placeholder; ?></span>
-                            <p class="info"><?= get_field('name_placeholder'); ?></p>
+                            <input 
+                                class="input textup input-name" 
+                                type="text" 
+                                name="ФИО" 
+                                value="<?=$my_user->surname?> <?=$my_user->name?> <?=$my_user->patronymic?> 
+                                ">
+                            <span>Фамилия, имя и отчество*</span>
                         </label>
                     <?php endif; ?>
 
                     <?php if ($phone_number_placeholder): ?>
                         <label class="placeholder">
-                            <input class="input textup input-tel mask-for-input" type="text" name="Телефонный номер">
+                            <input class="input textup input-tel mask-for-input" type="text" name="Телефонный номер" value="<?=@$my_user->tel?>">
                             <span><?= $phone_number_placeholder; ?></span>
                             <p class="info"><?= get_field('phone_number_placeholder'); ?></p>
                         </label>
@@ -176,11 +187,20 @@
 
                     <?php if ($email_placeholder): ?>
                         <label class="placeholder">
-                            <input class="input textup input-email" type="text" name="Почта">
+                            <input class="input textup input-email" type="text" name="Почта" value="<?=@$my_user->email?>">
                             <span><?= $email_placeholder; ?></span>
                             <p class="info"><?= get_field('email_placeholder'); ?></p>
                         </label>
                     <?php endif; ?>
+
+                    <?php if ($entity_placeholder): ?>
+                        <label class="placeholder">
+                            <input class="input textup input-company" type="text" name="Юридическое_лицо" value="<?=@$my_user->company?>">
+                            <span><?= $entity_placeholder; ?></span>
+                            <p class="info"><?= get_field('entity_description'); ?></p>
+                        </label>
+                    <?php endif; ?>
+
                     <input type="hidden" value="sign_event" name="type">
                     <input class="input textup input-company" type="hidden" value="entity">
                     <input class="input textup" type="hidden" value="region">

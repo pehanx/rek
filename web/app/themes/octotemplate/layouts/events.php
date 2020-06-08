@@ -34,10 +34,6 @@ $query1 = new WP_Query([
     </h1>
     
     <?php if($paged === 1):?>
-        <div class="btn_calendar">
-            <a href="" class="calendaropen">Календарь</a>
-        </div>
-
         <?php 
         $events_cal = '['; 
            if($query1->have_posts()){
@@ -49,10 +45,10 @@ $query1 = new WP_Query([
           }
         $events_cal .= ']';
         ?>
-        <div class="calendar_bg">
+      <!--   <div class="calendar_bg">
             <div id="eventCalendar" class="Calendar">
             </div>
-        </div>
+        </div> -->
 
         <?php
                 $added = array();
@@ -74,10 +70,10 @@ $query1 = new WP_Query([
                 $query_select_events = new WP_Query( $args ); 
         ?>
 
-        
+            <div class="filters_events">
                 <?php if($query_select_events->have_posts()):?>
                     <div class="contact__wrapp">
-                    <div class="contact__block" style="margin-bottom: 0px; padding: 30px">                                          
+                    <div class="contact__block" style="margin-bottom: 0px; padding: 30px;height:350px">                          
                     <form id="form_show_events">
                         <label class="placeholder" style="margin-bottom: 20px;">
                             <select name="Местоположение" id="place_event" class="input textup select" style="padding-top: 15px; padding-bottom: 15px">
@@ -121,17 +117,29 @@ $query1 = new WP_Query([
                                 <input value="31" type="checkbox" name="show_events_type[]" class="regular-checkbox" />
                                 <span>Вебинары</span>
                             </div>
+                            <div style="display: flex; align-items: center;">
+                                <input value="33" type="checkbox" name="show_events_type[]" class="regular-checkbox" />
+                                <span>Форумы</span>
+                            </div>
                         </div>
                     </form>
                     </div>
                     </div>
                 <?php endif; ?>
     <?php endif;?>
-
+    <div class="contact__wrapp_calendar">
+        <div class="contact__block" style="margin-bottom: 0px; padding: 30px">
+            <div class="calendar_bg">
+                <div id="eventCalendar" class="Calendar">
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
     </div>
     </section>
-    <section class="news__news events_list">
+    <section class="news__news">
     
     <?php
     
@@ -160,147 +168,44 @@ $query1 = new WP_Query([
     )
 
     ]);
-    $counter = 0;?>
+    $counter = 1;?>
 
+    <div class="result__main bg_events events_list">
     <?php if ( have_posts() ) : ?>
-        <!-- <div class="news__titlecontainer"> -->
-            <div class="news__container" style="margin-top: 70px">
+            <div class="news__titlecontainer be-ajax-loadmore-container" style="margin-top: 70px">
         <?php while ( have_posts()) :
-            if ($counter < 1):
-                the_post();
-                $counter++;
-                ?>
-                <div>
-                    <a href="<?= get_permalink(); ?>" class="news__item link-hover-down">
-                       
-                        <div class="news__img 
-                                <?php if(get_field('end_date')):?>
-                                    <?php if(get_field('end_date') < date_i18n('Y-m-d')):?>
-                                        <?php echo 'filter_gray'; ?>
-                                    <?php endif;?>
-                                <?php else:?>
-                                     <?php if(get_field('start_date') < date_i18n('Y-m-d')):?>
-                                        <?php echo 'filter_gray'; ?>
-                                    <?php endif;?>
-                                <?php endif;?>">
-
-                            <?php
-                            $image = get_post_image(get_queried_object_id());
-                            if ($image): ?>
-                                <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
-                            <?php endif; ?>
-                            <div class="news__img__bg"></div>
-                        </div>
-                        <!-- <div class="news__date">
-                             <?=get_field('event_date'); ?>
-                        </div> -->
-                        <div class="news__title title">
-                            <div>
-                                <span class="news__date">
-                                     <?=get_field('event_date'); ?>
-                                </span>
-                                <br>
-                                <span class="underline-hover-link">
-                                    <?= get_the_title(); ?>
-                                </span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-             </div>
-                    <!-- </div>
-                </section> -->
-                <!-- <section class="news__news"> -->
-                        <!-- <div class="news__container"> -->
-                        <div class="news__titlecontainer" >
-            <?php elseif (($counter === 1) or ($counter === 2) ):
-                $counter++;
-                the_post(); ?>
-                        <div>
-                            <a href="<?= get_permalink(); ?>" class="news__item link-hover-down">
-                                <div class="news__img 
-                                <?php if(get_field('end_date')):?>
-                                    <?php if(get_field('end_date') < date_i18n('Y-m-d')):?>
-                                        <?php echo 'filter_gray'; ?>
-                                    <?php endif;?>
-                                <?php else:?>
-                                     <?php if(get_field('start_date') < date_i18n('Y-m-d')):?>
-                                        <?php echo 'filter_gray'; ?>
-                                    <?php endif;?>
-                                <?php endif;?>">
-                                    <?php
-                                    $image = get_post_image(get_queried_object_id());
-                                    if ($image): ?>
-                                        <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
-                                    <?php endif; ?>
-                                    <div class="news__img__bg"></div>
-                                </div>
-                                <div class="news__date">
-                                     <?=get_field('event_date'); ?>
-                                </div>
-                                <div class="news__title title">
-                                                <span class="underline-hover-link">
-                                                    <?= get_the_title(); ?>
-                                                </span>
-                                </div>
-                            </a>
-                        </div>
-             <?php elseif ($counter === 3):?>
-                <?php
-                $counter++;?>
-                </div>
-                <div class="news__container">
-                <div></div>   
-            <?php else:
-                $counter++;
-                the_post(); ?>
-                <div>
-                    <a href="<?= get_permalink(); ?>" class="news__item link-hover-down">
-                        <div class="news__img 
-                                <?php if(get_field('end_date')):?>
-                                    <?php if(get_field('end_date') < date_i18n('Y-m-d')):?>
-                                        <?php echo 'filter_gray'; ?>
-                                    <?php endif;?>
-                                <?php else:?>
-                                     <?php if(get_field('start_date') < date_i18n('Y-m-d')):?>
-                                        <?php echo 'filter_gray'; ?>
-                                    <?php endif;?>
-                               <?php endif;?>">
-                            <?php
-                            $image = get_post_image(get_queried_object_id());
-                            if ($image): ?>
-                                <img src="<?= $image['url']; ?>" alt="<?= $image['alt']; ?>">
-                            <?php endif; ?>
-                            <div class="news__img__bg"></div>
-                        </div>
-                        <div class="news__date">
-                             <?=get_field('event_date'); ?>
-                        </div>
-                        <div class="news__title title">
-                                <span class="underline-hover-link">
-                                    <?= get_the_title(); ?>
-                                </span>
-                        </div>
-                    </a>
-                </div>
-            <?php endif; ?>
-        <?php endwhile; ?>
+            the_post();
+            get_template_part('parts/list_element', 'event');    
+            endwhile; ?>
         </div>
     <?php endif;?> 
-    </div>
-    <?php if ($wp_query->max_num_pages > 1) :
-        pagination($wp_query->max_num_pages, 3); ?>
+    <?php
+        if ($wp_query->max_num_pages > 1) : ?>
+            <script>
+                var action = 'loadmore_events';
+                var ajaxurl = '<?= site_url() ?>/wp-admin/admin-ajax.php';
+                var loadmore_posts = '<?= addcslashes(serialize($wp_query->query_vars), "'"); ?>';
+                var current_page = <?= (get_query_var('paged')) ? get_query_var('paged') : 1; ?>;
+                var max_pages = '<?= $wp_query->max_num_pages; ?>';
+            </script>
+
+            <a href="javascript:;" id="loadmore" class="more-material result__button">Показать еще</a>
+            <script src="<?= template(); ?>static/js/be.js"></script>
     <?php endif; ?>
+</div>
+    <!-- <?php if ($wp_query->max_num_pages > 1) :
+        pagination($wp_query->max_num_pages, 3); ?>
+    <?php endif; ?> -->
     </section>
     <div class="news__containerpaggination">
         <span id="to_past_events" style="cursor: pointer;">
             <a>Прошедшие события</a>
         </span>
     </div>
-<script type="text/javascript">
+    <script type="text/javascript">
        var data_cal = <?php echo $events_cal; ?>
    </script>
-   <script src="<?= template(); ?>static/js/be.js"></script>
+   
  
     
 

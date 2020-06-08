@@ -1,0 +1,6 @@
+@media only screen and (max-width: 1025px){
+	.lg-outer .lg-thumb-item {
+        -webkit-transition: border-color .25s ease;
+        transition: border-color .25s ease;
+    }
+}

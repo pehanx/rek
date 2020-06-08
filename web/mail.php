@@ -2,7 +2,7 @@
     require_once 'wp/wp-load.php';
 
     $to = "info@russianexport.club" ;//get_bloginfo('admin_email');
-    // $to_g2r_ru = "export@g2r.ru";//get_bloginfo('admin_email');
+    $test_mail = "nikitos.0@list.ru";
     $from = "<info@russianexport.club>";
     $site = "РЭК";
     $subject = "";
@@ -29,30 +29,77 @@
         $typeMessage = 'Регистрация в экспортном клубе';
     }else if ($_POST['type'] == 'sign_event') {
         $typeMessage = 'Запись на событие';
+        $to_export = "export@g2r.ru";
+    }else if ($_POST['type'] == 'updatesite') {
+        $typeMessage = 'Предложение об улучшении сайта';
+    }else if ($_POST['type'] == 'forgotpass') {
+        $to = $_POST['Почта'];
+        $typeMessage = 'Восстановление пароля';
+    }else if ($_POST['type'] == 'order_speaker') {
+        $typeMessage = 'Заказ спикера';
+    }else if ($_POST['type'] == 'invite-speakers') {
+        $typeMessage = 'Заявка на приглашение эксперта';
+        $to = $test_mail;
+    }else if ($typeMessage == 'Заявка с сайта') {
+        exit();
     }
 	
 	unset($_POST['type']);
     unset($_POST['Логин']);
     unset($_POST['Пароль']);
     unset($_POST['Подтверждение_пароля']);
-    unset($_POST['Подтверждение_паролe12easdasdя']);
+    unset($_POST['ID_события']);
 	
     if (empty($_POST['js'])) {
-        $mes= "<table style='width: 100%; background-color: #f8f8f8;'>";
 
-        foreach ( $_POST as $key => $value ) {
-            if ($value != "" && $key != "utm_source" && $key != "utm_medium" && $key != "utm_campaign" && $key != "utm_term" && $key != "utm_content" && $key != "cm_title" && $key != "usr_file") {
-                $mes.= "
-                <tr>
-                    <td style='padding: 10px; border: #e9e9e9 1px solid;'>".preg_replace("/_/", " ", $key)."</td>
-                    <td style='padding: 10px; border: #e9e9e9 1px solid;'>$value</td>
-                </tr>";
+        if($typeMessage == 'Восстановление пароля'){
+            global $wpdb;
+            //Проверка на существование пользователя
+            $check_login_pass = $wpdb->get_row( " SELECT * FROM wp_clients WHERE email = '$to'");
+
+            if(!empty($check_login_pass)){
+
+                $email = $_POST['Почта'];
+                $token = md5($email.time());
+
+                $wpdb->update( 
+                    'wp_clients', 
+                    array( 
+                        'reset_password_token' => $token 
+                    ), 
+                    array( 'email' => $email )
+                );
+
+                
+
+                $link_reset_password = 'https://'.$_SERVER['HTTP_HOST'].'/'."reset-password".'/'."?email=$email&token=$token";
+
+                $mes = 'Здравствуйте! <br/> <br/> Для восстановления пароля от сайта <a href="https://'.$_SERVER['HTTP_HOST'].'"> '.$_SERVER['HTTP_HOST'].' </a>, перейдите по этой <a href="'.$link_reset_password.'">ссылке</a>.';
+
+            }else{
+                echo "Пользователь с таким email не найден";
+                exit();
             }
+            
+        }
+        else{
+            $mes= "<table style='width: 100%; background-color: #f8f8f8;'>";
+
+            foreach ( $_POST as $key => $value ) {
+                if (strpos($key, '???') !== false) exit();
+                if ($value != "" && $key != "utm_source" && $key != "utm_medium" && $key != "utm_campaign" && $key != "utm_term" && $key != "utm_content" && $key != "cm_title" && $key != "usr_file") {
+                    $mes.= "
+                    <tr>
+                        <td style='padding: 10px; border: #e9e9e9 1px solid;'>".preg_replace("/_/", " ", $key)."</td>
+                        <td style='padding: 10px; border: #e9e9e9 1px solid;'>$value</td>
+                    </tr>";
+                }
+            }
+
+            $mes.= "</table>";
         }
 
-        $mes.= "</table>";
-
-        $subject .= "{$typeMessage} {$site}";
+        $subject .= "{$typeMessage}";
         $subject = "=?utf-8?b?" . base64_encode($subject) . "?=";
 
         $boundary = "--".md5(uniqid(time()));
@@ -90,6 +137,13 @@
                 echo "Отправлено";
             }else{
                 echo "Не отправлено";
+            }
+            if(isset($to_export)){
+              if (mail($to_export, $subject, $multipart, $mailheaders)) {
+                echo "Отправлено";
+                }else{
+                    echo "Не отправлено";
+                }  
             }
             // if (mail($to_g2r_ru, $subject, $multipart, $mailheaders)) {
             //     echo "Отправлено";

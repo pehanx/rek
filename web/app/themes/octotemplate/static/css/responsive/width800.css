@@ -1,0 +1,17 @@
+@media only screen and (max-width: 800px){
+	.news__container>div:nth-child(n+2) {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .news__container {
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
+    .result {
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
+}

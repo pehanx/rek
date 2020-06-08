@@ -185,3 +185,130 @@ function isAuth() {
         return false;
     }
 }
+
+/**
+ * Функция кросспостинга в соцсети
+ */
+function add_blog_soc($text, $the_id, $type_post){
+    
+}
+
+function crosspost_soc($text, $the_id, $type_post){
+
+    $recdb = new wpdb('usernew','xdcM0IKGYzLP0K6Yvvbl','dbnew','localhost');
+    
+    $socdb = new wpdb('usersoc','HisMgqiRI8EG74XlyMPX','dbsoc','localhost');
+
+    $date_now = date('Y-m-d H:i:s');
+
+    //Вставить в таблицу engine4_activity_actions
+    //Вставить в таблицу engine4_sesadvancedactivity_details
+    //Вставить в таблицу engine4_activity_stream
+    $socdb->insert('engine4_activity_actions', array(
+        'type' => 'post',
+        'subject_type' => 'user',
+        'subject_id' => 1,
+        'object_type' => 'sesgroup_group',
+        'object_id' => 1,
+        'body' => $text,
+        'params' => '[]',
+        'date' => $date_now,
+        'modified_date' => $date_now,
+        'privacy' => 'everyone'
+    ));
+
+    $action_id = $socdb->insert_id;
+
+    $recdb->insert('wp_publish_post_soc', array(
+        'id_post_in_soc' => $action_id,
+        'id_post_in_rec' => $the_id
+    ));
+
+    $socdb->insert('engine4_sesadvancedactivity_details', array(
+        'action_id' => $action_id,
+        'sesresource_id' => 1,
+        'sesresource_type' => 'sesgroup_group'
+    ));
+
+    //Вставить хэштег
+    $socdb->insert('engine4_sesadvancedactivity_hashtags', array(
+        'action_id' => $action_id,
+        'title' 	=> $type_post
+    ));
+
+    //1
+    $socdb->insert('engine4_activity_stream', array(
+        'target_type' => 'registered',
+        'target_id' => 0,
+        'subject_type' => 'user',
+        'subject_id' => 1,
+        'object_type' => 'sesgroup_group',
+        'object_id' => 1,
+        'type' => 'post',
+        'action_id' => $action_id
+    ));
+    //2
+    $socdb->insert('engine4_activity_stream', array(
+        'target_type' => 'members',
+        'target_id' => 1,
+        'subject_type' => 'user',
+        'subject_id' => 1,
+        'object_type' => 'sesgroup_group',
+        'object_id' => 1,
+        'type' => 'post',
+        'action_id' => $action_id
+    ));
+    //3
+    $socdb->insert('engine4_activity_stream', array(
+        'target_type' => 'parent',
+        'target_id' => 1,
+        'subject_type' => 'user',
+        'subject_id' => 1,
+        'object_type' => 'sesgroup_group',
+        'object_id' => 1,
+        'type' => 'post',
+        'action_id' => $action_id
+    ));
+    //4
+    $socdb->insert('engine4_activity_stream', array(
+        'target_type' => 'owner',
+        'target_id' => 1,
+        'subject_type' => 'user',
+        'subject_id' => 1,
+        'object_type' => 'sesgroup_group',
+        'object_id' => 1,
+        'type' => 'post',
+        'action_id' => $action_id
+    ));
+    //5
+    $socdb->insert('engine4_activity_stream', array(
+        'target_type' => 'everyone',
+        'target_id' => 0,
+        'subject_type' => 'user',
+        'subject_id' => 1,
+        'object_type' => 'sesgroup_group',
+        'object_id' => 1,
+        'type' => 'post',
+        'action_id' => $action_id
+    ));
+}
+
+/**
+ * Функция обновления кросспостинга в соцсети
+ */
+function crosspost_soc_update($text, $id_soc){
+    
+    $socdb = new wpdb('usersoc','HisMgqiRI8EG74XlyMPX','dbsoc','localhost');
+
+    $date_now = date('Y-m-d H:i:s');
+
+    //Обновить таблицу engine4_activity_actions
+    $socdb->update('engine4_activity_actions', array(
+            'body' => $text,
+            'modified_date' => $date_now
+        ),
+        array(
+            'action_id' => $id_soc
+        )
+    );
+}

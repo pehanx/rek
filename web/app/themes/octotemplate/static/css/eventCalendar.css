@@ -1,17 +1,17 @@
 /*= CORE CSS */
 
 .eventCalendar-hidden {
-	display: none;
+	/*display: none;*/
 }
 
 .eventCalendar-wrap {
 	position: relative;
 	overflow: hidden;
-	margin: 50px auto;
+	/*margin: 50px auto;*/
 }
 
 .eventCalendar-arrow {
-	position: absolute;
+	position: absolute !important;
 	z-index: 5;
 }
 

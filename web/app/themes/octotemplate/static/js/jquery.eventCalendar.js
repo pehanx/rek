@@ -103,6 +103,10 @@
 			flags.wrap.on('click','.eventCalendar-day a',function(e){
 			//flags.wrap.find('.eventCalendar-day a').live('click',function(e){
 				e.preventDefault();
+				setTimeout(function(){
+					$('.eventCalendar-list-wrap').css('display','block');
+					$('.eventCalendar-wrap').css('height',auto);
+				},100);
 				var year = flags.wrap.attr('data-current-year'),
 					month = flags.wrap.attr('data-current-month'),
 					day = $(this).parent().attr('rel');
@@ -112,6 +116,10 @@
 			flags.wrap.on('click','.eventCalendar-monthTitle', function(e){
 			//flags.wrap.find('.eventCalendar-monthTitle').live('click',function(e){
 				e.preventDefault();
+				setTimeout(function(){
+					$('.eventCalendar-list-wrap').css('display','block');
+					$('.eventCalendar-wrap').css('height',auto);
+				},100);
 				var year = flags.wrap.attr('data-current-year'),
 					month = flags.wrap.attr('data-current-month');
 
@@ -329,11 +337,13 @@
 
 			if (day !== '') {
 				formatedDate = moment(year+" "+jsMonth+" "+day, "YYYY MM DD").format("LL");
-				subtitle.html(eventsOpts.locales.txt_SpecificEvents_prev + formatedDate + " " + eventsOpts.locales.txt_SpecificEvents_after);
+				// subtitle.html(eventsOpts.locales.txt_SpecificEvents_prev + formatedDate + " " + eventsOpts.locales.txt_SpecificEvents_after);
+				subtitle.html(eventsOpts.locales.txt_SpecificEvents_prev  + " " + eventsOpts.locales.txt_SpecificEvents_after);
 				//eventStringDate = moment(eventDate).format(eventsOpts.dateFormat);
 			} else {
 				formatedDate = moment(year+" "+jsMonth, "YYYY MM").format("MMMM");
-				subtitle.html(eventsOpts.locales.txt_SpecificEvents_prev + formatedDate + " " + eventsOpts.locales.txt_SpecificEvents_after);
+				// subtitle.html(eventsOpts.locales.txt_SpecificEvents_prev + formatedDate + " " + eventsOpts.locales.txt_SpecificEvents_after);
+				subtitle.html(eventsOpts.locales.txt_SpecificEvents_prev  + " " + eventsOpts.locales.txt_SpecificEvents_after);
 			}
 
 			if (direction === 'eventCalendar-prev') {

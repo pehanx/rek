@@ -1,5 +1,6 @@
 <?php
-$prev_post = get_previous_post();
+// $prev_post = get_previous_post();
+$prev_post = get_next_post();
 if ($prev_post):
     $prev_post_link = get_permalink($prev_post->ID);
     ?>

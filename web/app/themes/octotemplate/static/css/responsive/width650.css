@@ -1,0 +1,10 @@
+@media only screen and (max-width: 650px){
+	.news__container>div:nth-child(n+2) .news__img {
+        width: 232px;
+        height: 232px;
+    }
+
+    .news__container>div:nth-child(n+2) .news__img img {
+        height: 100%;
+    }
+}
